@@ -11,8 +11,9 @@
 module Css.Internal
     ( -- * Utilities
       -- ** merge
-      merge
-    , extractWithMap
+      buildWithMap
+    , extract
+    , merge
     ) where
 
 
@@ -20,13 +21,50 @@ import Prelude hiding (compare, foldl)
 
 import Data.Bits                  (xor)
 import Data.List                  (partition)
-import Data.Map                   (Map, empty, insert)
+import Data.Map                   (Map, empty, foldrWithKey, insert)
 import Data.Text.Lazy             (Text, foldl)
 import Data.Text.Lazy.Builder     (Builder, singleton, toLazyText)
 import Data.Text.Lazy.Builder.Int (decimal)
 import Html                       (Html(..), Attribute(..), Translatable(..))
 
 import qualified Html
+
+
+buildWithMap :: Map Builder Builder -> Html lng -> Builder
+buildWithMap map html = case html of
+    ParentNode "<head"  "</head>" attributes children -> buildHead map attributes children
+    ParentNode startTag endTag    []         []       -> startTag <>                      singleton '>' <>                     endTag
+    ParentNode startTag endTag    attributes []       -> startTag <> build' attributes <> singleton '>' <>                     endTag
+    ParentNode startTag endTag    []         children -> startTag <>                      singleton '>' <> build'' children <> endTag
+    ParentNode startTag endTag    attributes children -> startTag <> build' attributes <> singleton '>' <> build'' children <> endTag
+    LeafNode   startTag           []                  -> startTag <>                      singleton '>'
+    LeafNode   startTag           attributes          -> startTag <> build' attributes <> singleton '>'
+    RootNode   startTag                      []       -> startTag
+    RootNode   startTag                      children -> startTag <>                                       build'' children
+    TextNode   text                                   -> text
+    IntlNode   intl                                   -> text
+      where text = defaultLanguage intl
+  where
+    build'  = Html.build
+    build'' = foldr ((<>) . buildWithMap map) mempty
+
+
+buildHead :: Map Builder Builder -> [Attribute] -> [Html lng] -> Builder
+buildHead map attributes children = "<head" <> Html.build attributes <> singleton '>' <> build' children <> buildCss map <> "</head>"
+  where
+    build' = foldr ((<>) . buildWithMap map) mempty
+
+
+buildCss :: Map Builder Builder -> Builder
+buildCss map = "<style>" <> buildStyles map <> "</style>"
+
+
+buildStyles :: Map Builder Builder -> Builder
+buildStyles = foldrWithKey (\key value acc -> acc <> singleton '.' <> key <> singleton '{' <> value <> singleton '}') mempty
+
+
+extract :: Html lng -> (Map Builder Builder, Html lng)
+extract = extractWithMap empty
 
 
 extractWithMap :: Map Builder Builder -> Html lng -> (Map Builder Builder, Html lng)

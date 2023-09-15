@@ -7,25 +7,15 @@ module Css
     , initial
     , accentColor
     , alignContent
-    , extract
     ) where
 
 
 import Prelude
 
-import Css.Internal (merge, extractWithMap)
+import Css.Internal (buildWithMap, extract)
 import Data.Foldable (fold)
-import Data.List (partition)
-import Data.Map (Map, empty)
 import Data.Text.Lazy.Builder (Builder, singleton)
 import Html (Attribute(..), Html(..), Translatable(..))
-
-import qualified Data.Map as Map
-import qualified Html
-
-
-extract :: Html lng -> (Map Builder Builder, Html lng)
-extract = extractWithMap empty
 
 
 css :: [Builder] -> Attribute
@@ -33,25 +23,9 @@ css = TextAttribute " css=\"" . fold
 
 
 build :: Html lng -> Builder
-build = buildWithMap Map.empty
-
-
-buildWithMap :: Map Builder Builder -> Html lng -> Builder
-buildWithMap map html = case html of
-    ParentNode startTag endTag []         []       -> startTag <>                      singleton '>' <>                     endTag
-    ParentNode startTag endTag attributes []       -> startTag <> build' attributes <> singleton '>' <>                     endTag
-    ParentNode startTag endTag []         children -> startTag <>                      singleton '>' <> build'' children <> endTag
-    ParentNode startTag endTag attributes children -> startTag <> build' attributes <> singleton '>' <> build'' children <> endTag
-    LeafNode   startTag        []                  -> startTag <>                      singleton '>'
-    LeafNode   startTag        attributes          -> startTag <> build' attributes <> singleton '>'
-    RootNode   startTag                   []       -> startTag
-    RootNode   startTag                   children -> startTag <>                                       build'' children
-    TextNode   text                                -> text
-    IntlNode   intl                                -> text
-      where text = defaultLanguage intl
+build html = buildWithMap map html'
   where
-    build'  = Html.build -- . merge
-    build'' = foldr ((<>) . buildWithMap map) mempty
+    (map, html') = extract html
 
 
 -- Values
