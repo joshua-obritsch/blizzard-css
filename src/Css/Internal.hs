@@ -14,6 +14,8 @@ module Css.Internal
       extractAndHash
       -- ** extractAndHashIntl
     , extractAndHashIntl
+      -- ** prop
+    , prop
     ) where
 
 
@@ -41,6 +43,10 @@ extractAndHashIntl :: Translatable a => (a -> Builder) -> Html a -> Builder
 extractAndHashIntl lang html = buildIntlWithMap lang map html'
   where
     (map, html') = extractWithMap empty html
+
+
+prop :: Builder -> Builder -> Builder
+prop key value = key <> value <> singleton ';'
 
 
 buildWithMap :: Map Builder Builder -> Html lng -> Builder
