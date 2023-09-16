@@ -7,13 +7,13 @@
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Intl" module provides a set of utility functions for merging and condensing CSS.
+-- The "Css.Internal" module provides a set of utility functions for hashing and building CSS.
 module Css.Internal
     ( -- * Utilities
-      -- ** merge
-      buildWithMap
-    , extract
-    , merge
+      -- ** extractAndHash
+      extractAndHash
+      -- ** extractAndHashIntl
+    , extractAndHashIntl
     ) where
 
 
@@ -25,34 +25,64 @@ import Data.Map                   (Map, empty, foldrWithKey, insert)
 import Data.Text.Lazy             (Text, foldl)
 import Data.Text.Lazy.Builder     (Builder, singleton, toLazyText)
 import Data.Text.Lazy.Builder.Int (decimal)
-import Html                       (Html(..), Attribute(..), Translatable(..))
+import Html                       (Html(..), Attribute(..), Buildable(..), Translatable(..))
 
-import qualified Html
+
+-- UTILITIES
+
+
+extractAndHash :: Html lng -> Builder
+extractAndHash html = buildWithMap map html'
+  where
+    (map, html') = extractWithMap empty html
+
+
+extractAndHashIntl :: Translatable a => (a -> Builder) -> Html a -> Builder
+extractAndHashIntl lang html = buildIntlWithMap lang map html'
+  where
+    (map, html') = extractWithMap empty html
 
 
 buildWithMap :: Map Builder Builder -> Html lng -> Builder
 buildWithMap map html = case html of
     ParentNode "<head"  "</head>" attributes children -> buildHead map attributes children
-    ParentNode startTag endTag    []         []       -> startTag <>                      singleton '>' <>                     endTag
-    ParentNode startTag endTag    attributes []       -> startTag <> build' attributes <> singleton '>' <>                     endTag
-    ParentNode startTag endTag    []         children -> startTag <>                      singleton '>' <> build'' children <> endTag
-    ParentNode startTag endTag    attributes children -> startTag <> build' attributes <> singleton '>' <> build'' children <> endTag
-    LeafNode   startTag           []                  -> startTag <>                      singleton '>'
-    LeafNode   startTag           attributes          -> startTag <> build' attributes <> singleton '>'
+    ParentNode startTag endTag    []         []       -> startTag <>                     singleton '>' <>                    endTag
+    ParentNode startTag endTag    attributes []       -> startTag <> build attributes <> singleton '>' <>                    endTag
+    ParentNode startTag endTag    []         children -> startTag <>                     singleton '>' <> build' children <> endTag
+    ParentNode startTag endTag    attributes children -> startTag <> build attributes <> singleton '>' <> build' children <> endTag
+    LeafNode   startTag           []                  -> startTag <>                     singleton '>'
+    LeafNode   startTag           attributes          -> startTag <> build attributes <> singleton '>'
     RootNode   startTag                      []       -> startTag
-    RootNode   startTag                      children -> startTag <>                                       build'' children
+    RootNode   startTag                      children -> startTag <>                                      build' children
     TextNode   text                                   -> text
     IntlNode   intl                                   -> text
       where text = defaultLanguage intl
   where
-    build'  = Html.build
-    build'' = foldr ((<>) . buildWithMap map) mempty
+    build' = foldr ((<>) . buildWithMap map) mempty
+
+
+buildIntlWithMap :: Translatable a => (a -> Builder) -> Map Builder Builder -> Html a -> Builder
+buildIntlWithMap lang map html = case html of
+    ParentNode "<head"  "</head>" attributes children -> buildHead map attributes children
+    ParentNode startTag endTag    []         []       -> startTag <>                     singleton '>' <>                    endTag
+    ParentNode startTag endTag    attributes []       -> startTag <> build attributes <> singleton '>' <>                    endTag
+    ParentNode startTag endTag    []         children -> startTag <>                     singleton '>' <> build' children <> endTag
+    ParentNode startTag endTag    attributes children -> startTag <> build attributes <> singleton '>' <> build' children <> endTag
+    LeafNode   startTag           []                  -> startTag <>                     singleton '>'
+    LeafNode   startTag           attributes          -> startTag <> build attributes <> singleton '>'
+    RootNode   startTag                      []       -> startTag
+    RootNode   startTag                      children -> startTag <>                                      build' children
+    TextNode   text                                   -> text
+    IntlNode   intl                                   -> text
+      where text = lang intl
+  where
+    build' = foldr ((<>) . buildIntlWithMap lang map) mempty
 
 
 buildHead :: Map Builder Builder -> [Attribute] -> [Html lng] -> Builder
-buildHead map attributes children = "<head" <> Html.build attributes <> singleton '>' <> build' children <> buildCss map <> "</head>"
+buildHead map attributes children = "<head" <> build attributes <> singleton '>' <> build' children <> buildCss map <> "</head>"
   where
-    build' = foldr ((<>) . buildWithMap map) mempty
+    build' = foldr ((<>) . build) mempty
 
 
 buildCss :: Map Builder Builder -> Builder
@@ -61,10 +91,6 @@ buildCss map = "<style>" <> buildStyles map <> "</style>"
 
 buildStyles :: Map Builder Builder -> Builder
 buildStyles = foldrWithKey (\key value acc -> acc <> singleton '.' <> key <> singleton '{' <> value <> singleton '}') mempty
-
-
-extract :: Html lng -> (Map Builder Builder, Html lng)
-extract = extractWithMap empty
 
 
 extractWithMap :: Map Builder Builder -> Html lng -> (Map Builder Builder, Html lng)
@@ -91,7 +117,7 @@ extractWithMap map html = case html of
 extractList :: Map Builder Builder -> [Html lng] -> (Map Builder Builder, [Html lng])
 extractList map = foldr (\child (map', list) -> insert list (extractWithMap map' child)) (map, [])
   where
-    insert list (map'', child) = (map'', child : list)
+    insert list (map', child) = (map', child : list)
 
 
 merge :: Map Builder Builder -> [Attribute] -> (Map Builder Builder, [Attribute])

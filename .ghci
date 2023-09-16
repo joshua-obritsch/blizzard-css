@@ -1,0 +1,15 @@
+:set -w
+:set -isrc
+:set -XOverloadedStrings
+:load Css Css.Attributes Css.Intl
+
+import Prelude
+
+import Css
+import Css.Intl (translate)
+
+import qualified Css.Attributes as Attr
+import qualified Html as Html
+import qualified Html.Attributes as Attr
+import qualified Html.Events as Evnt
+import qualified Html.Intl as Html

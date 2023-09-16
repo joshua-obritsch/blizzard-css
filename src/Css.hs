@@ -12,20 +12,13 @@ module Css
 
 import Prelude
 
-import Css.Internal (buildWithMap, extract)
-import Data.Foldable (fold)
+import Css.Internal           (extractAndHash)
 import Data.Text.Lazy.Builder (Builder, singleton)
-import Html (Attribute(..), Html(..), Translatable(..))
-
-
-css :: [Builder] -> Attribute
-css = TextAttribute " css=\"" . fold
+import Html                   (Html(..), Translatable(..))
 
 
 build :: Html lng -> Builder
-build html = buildWithMap map html'
-  where
-    (map, html') = extract html
+build = extractAndHash
 
 
 -- Values
