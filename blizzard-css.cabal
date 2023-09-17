@@ -28,6 +28,7 @@ library
                       , Css.Colors
                       , Css.Intl
                       , Css.Properties
+                      , Css.Units
                       , Css.Values
     other-modules:      Css.Internal
     hs-source-dirs:     src

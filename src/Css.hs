@@ -11,12 +11,14 @@ module Css
       build
     , module Css.Colors
     , module Css.Properties
+    , module Css.Units
     , module Css.Values
     ) where
 
 
 import Css.Colors     hiding (tan)
 import Css.Properties hiding (all, filter)
+import Css.Units
 import Css.Values     hiding (color)
 
 import Css.Internal           (extractAndHash)
