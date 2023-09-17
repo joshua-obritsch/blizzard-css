@@ -26,5 +26,7 @@ library
     exposed-modules:    Css
                       , Css.Attributes
                       , Css.Intl
+                      , Css.Properties
+                      , Css.Values
     other-modules:      Css.Internal
     hs-source-dirs:     src
