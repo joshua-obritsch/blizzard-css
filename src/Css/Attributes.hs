@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.Intl
+-- | Module    : Css.Attributes
 -- Copyright   : (c) Joshua Obritsch, 2021
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Intl" module provides a set of functions for internationalization and merging attributes in HTML.
+-- The "Css.Attributes" module provides a set of functions for generating CSS.
 module Css.Attributes
     ( -- * Attributes
       -- ** css

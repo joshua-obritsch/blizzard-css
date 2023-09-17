@@ -1,3 +1,4 @@
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Module    : Css.Units
@@ -6,7 +7,7 @@
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Units" module provides a set of functions for CSS units.
+-- The "Css.Units" module provides a set of functions for generating CSS units.
 module Css.Units
     ( -- * Units
       -- ** ch
@@ -56,7 +57,9 @@ module Css.Units
     ) where
 
 
-import Data.Text.Lazy.Builder (Builder)
+import Prelude hiding (rem)
+
+import Data.Text.Lazy.Builder (Builder, singleton)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
 
 
@@ -65,138 +68,142 @@ import Data.Text.Lazy.Builder.RealFloat (realFloat)
 
 -- | Generates a CSS @ch@ unit.
 ch :: Double -> Builder
-ch = unit "ch"
+ch = units "ch"
 {-# INLINE ch #-}
 
 
 -- | Generates a CSS @cm@ unit.
 cm :: Double -> Builder
-cm = unit "cm"
+cm = units "cm"
 {-# INLINE cm #-}
 
 
 -- | Generates a CSS @deg@ unit.
 deg :: Double -> Builder
-deg = unit "deg"
+deg = units "deg"
 {-# INLINE deg #-}
 
 
 -- | Generates a CSS @em@ unit.
 em :: Double -> Builder
-em = unit "em"
+em = units "em"
 {-# INLINE em #-}
 
 
 -- | Generates a CSS @ex@ unit.
 ex :: Double -> Builder
-ex = unit "ex"
+ex = units "ex"
 {-# INLINE ex #-}
 
 
 -- | Generates a CSS @grad@ unit.
 grad :: Double -> Builder
-grad = unit "grad"
+grad = units "grad"
 {-# INLINE grad #-}
 
 
 -- | Generates a CSS @in@ unit.
 in_ :: Double -> Builder
-in_ = unit "in"
+in_ = units "in"
 {-# INLINE in_ #-}
 
 
 -- | Generates a CSS @mm@ unit.
 mm :: Double -> Builder
-mm = unit "mm"
+mm = units "mm"
 {-# INLINE mm #-}
 
 
 -- | Generates a CSS @ms@ unit.
 ms :: Double -> Builder
-ms = unit "ms"
+ms = units "ms"
 {-# INLINE ms #-}
 
 
 -- | Generates a CSS @pc@ unit.
 pc :: Double -> Builder
-pc = unit "pc"
+pc = units "pc"
 {-# INLINE pc #-}
 
 
 -- | Generates a CSS @\%@ unit.
 pct :: Double -> Builder
-pct = unit "%"
+pct = unitc '%'
 {-# INLINE pct #-}
 
 
 -- | Generates a CSS @pt@ unit.
 pt :: Double -> Builder
-pt = unit "pt"
+pt = units "pt"
 {-# INLINE pt #-}
 
 
 -- | Generates a CSS @px@ unit.
 px :: Double -> Builder
-px = unit "px"
+px = units "px"
 {-# INLINE px #-}
 
 
 -- | Generates a CSS @q@ unit.
 q :: Double -> Builder
-q = unit "q"
+q = units "q"
 {-# INLINE q #-}
 
 
 -- | Generates a CSS @rad@ unit.
 rad :: Double -> Builder
-rad = unit "rad"
+rad = units "rad"
 {-# INLINE rad #-}
 
 
 -- | Generates a CSS @rem@ unit.
 rem :: Double -> Builder
-rem = unit "rem"
+rem = units "rem"
 {-# INLINE rem #-}
 
 
 -- | Generates a CSS @s@ unit.
 s :: Double -> Builder
-s = unit "s"
+s = unitc 's'
 {-# INLINE s #-}
 
 
 -- | Generates a CSS @turn@ unit.
 turn :: Double -> Builder
-turn = unit "turn"
+turn = units "turn"
 {-# INLINE turn #-}
 
 
 -- | Generates a CSS @vh@ unit.
 vh :: Double -> Builder
-vh = unit "vh"
+vh = units "vh"
 {-# INLINE vh #-}
 
 
 -- | Generates a CSS @vmax@ unit.
 vmax :: Double -> Builder
-vmax = unit "vmax"
+vmax = units "vmax"
 {-# INLINE vmax #-}
 
 
 -- | Generates a CSS @vmin@ unit.
 vmin :: Double -> Builder
-vmin = unit "vmin"
+vmin = units "vmin"
 {-# INLINE vmin #-}
 
 
 -- | Generates a CSS @vw@ unit.
 vw :: Double -> Builder
-vw = unit "vw"
+vw = units "vw"
 {-# INLINE vw #-}
 
 
 -- HELPER FUNCTIONS
 
 
-unit :: Builder -> Double -> Builder
-unit suffix value = realFloat value <> suffix
+unitc :: Char -> Double -> Builder
+unitc suffix value = realFloat value <> singleton suffix
+
+
+units :: Builder -> Double -> Builder
+units suffix value = realFloat value <> suffix

@@ -7,7 +7,7 @@
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Colors" module provides a set of functions for CSS colors.
+-- The "Css.Colors" module provides a set of functions for generating CSS colors.
 module Css.Colors
     ( -- * Colors
       -- ** aliceblue

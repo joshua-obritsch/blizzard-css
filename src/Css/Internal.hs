@@ -14,18 +14,13 @@ module Css.Internal
       extractAndHash
       -- ** extractAndHashIntl
     , extractAndHashIntl
-      -- ** prop
-    , prop
-      -- ** props
-    , props
     ) where
 
 
 import Prelude hiding (compare, foldl)
 
 import Data.Bits                  (xor)
-import Data.Foldable              (fold)
-import Data.List                  (intersperse, partition)
+import Data.List                  (partition)
 import Data.Map                   (Map, empty, foldrWithKey, insert)
 import Data.Text.Lazy             (Text, foldl)
 import Data.Text.Lazy.Builder     (Builder, singleton, toLazyText)
@@ -48,14 +43,7 @@ extractAndHashIntl lang html = buildIntlWithMap lang map html'
     (map, html') = extractWithMap empty html
 
 
-prop :: Builder -> Builder -> Builder
-prop key value = key <> value <> singleton ';'
-
-
-props :: Builder -> [Builder] -> Builder
-props key value = key <> value' <> singleton ';'
-  where
-    value' = fold $ intersperse (singleton ' ') value
+-- HELPER FUNCTIONS
 
 
 buildWithMap :: Map Builder Builder -> Html lng -> Builder

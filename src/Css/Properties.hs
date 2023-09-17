@@ -661,8 +661,9 @@ module Css.Properties
 
 import Prelude hiding (all, filter)
 
-import Css.Internal           (prop, props)
-import Data.Text.Lazy.Builder (Builder)
+import Data.Foldable          (fold)
+import Data.List              (intersperse)
+import Data.Text.Lazy.Builder (Builder, singleton)
 
 
 -- PROPERTIES
@@ -2604,3 +2605,16 @@ writingMode = prop "writing-mode:"
 zIndex :: Builder -> Builder
 zIndex = prop "z-index:"
 {-# INLINE zIndex #-}
+
+
+-- HELPER FUNCTIONS
+
+
+prop :: Builder -> Builder -> Builder
+prop key value = key <> value <> singleton ';'
+
+
+props :: Builder -> [Builder] -> Builder
+props key value = key <> value' <> singleton ';'
+  where
+    value' = fold $ intersperse (singleton ' ') value
