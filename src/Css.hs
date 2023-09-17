@@ -9,11 +9,13 @@ module Css
     ( -- * Constructors
       -- ** build
       build
+    , module Css.Colors
     , module Css.Properties
     , module Css.Values
     ) where
 
 
+import Css.Colors     hiding (tan)
 import Css.Properties hiding (all, filter)
 import Css.Values     hiding (color)
 
