@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Module    : Css.Colors
--- Copyright   : (c) Joshua Obritsch, 2021
+-- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
