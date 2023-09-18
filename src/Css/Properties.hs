@@ -2615,6 +2615,4 @@ prop key value = key <> value <> singleton ';'
 
 
 props :: Builder -> [Builder] -> Builder
-props key value = key <> value' <> singleton ';'
-  where
-    value' = fold $ intersperse (singleton ' ') value
+props key value = key <> value' <> singleton ';' where value' = fold $ intersperse (singleton ' ') value
