@@ -19,13 +19,14 @@ module Css.Internal
 
 import Prelude hiding (compare, foldl)
 
-import Data.Bits                  (xor)
-import Data.List                  (partition)
-import Data.Map                   (Map, empty, foldrWithKey, insert)
-import Data.Text.Lazy             (Text, foldl)
-import Data.Text.Lazy.Builder     (Builder, singleton, toLazyText)
-import Data.Text.Lazy.Builder.Int (decimal)
-import Html                       (Html(..), Attribute(..), Buildable(..), Translatable(..))
+import Data.Bits                        (xor)
+import Data.List                        (partition)
+import Data.Map                         (Map, empty, foldrWithKey, insert)
+import Data.Text.Lazy                   (Text, foldl)
+import Data.Text.Lazy.Builder           (Builder, singleton, toLazyText)
+import Data.Text.Lazy.Builder.Int       (decimal)
+import Data.Text.Lazy.Builder.RealFloat (realFloat)
+import Html                             (Html(..), Attribute(..), Buildable(..), Translatable(..))
 
 
 -- UTILITIES
