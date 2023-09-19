@@ -54,6 +54,7 @@ module Css.Units
     , vmin
       -- ** vw
     , vw
+    , rgb
     ) where
 
 
@@ -62,15 +63,72 @@ import Prelude hiding (rem)
 import Data.Text.Lazy.Builder           (Builder, singleton)
 import Data.Text.Lazy.Builder.Int       (decimal)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
+import Html                             (Buildable(..))
+
+
+newtype Length = Length { unLength :: Builder }
+
+
+instance Buildable Length where
+    build = unLength
+
+
+newtype Percentage = Percentage { unPercentage :: Builder }
+
+
+class IntegerOrPercentage a where
+    integerOrPercentage :: a -> Builder
+
+
+instance IntegerOrPercentage Integer where
+    integerOrPercentage = decimal . fromInteger
+
+
+instance IntegerOrPercentage Percentage where
+    integerOrPercentage = unPercentage
+
+
+newtype Color = Color { unColor :: Builder }
+  deriving Show
+
+
+rgb :: (IntegerOrPercentage a, IntegerOrPercentage b, IntegerOrPercentage c) => a -> b -> c -> Color
+rgb red green blue
+    =  Color
+    $  "rgb("
+    <> integerOrPercentage red
+    <> singleton ','
+    <> integerOrPercentage green
+    <> singleton ','
+    <> integerOrPercentage blue
+    <> singleton ')'
+
+
+ch :: Double -> Length
+ch value = Length $ realFloat value <> "ch"
+
+
+pct :: Double -> Percentage
+pct value = Percentage $ realFloat value <> singleton '%'
+
+
+data AccentColor
+
+
+--data Css
+
+
+--accentColor :: AccentColor -> Css
+--accentColor
 
 
 -- UNITS
 
 
 -- | Generates a CSS @ch@ unit.
-ch :: Builder -> Builder
-ch = units "ch"
-{-# INLINE ch #-}
+--ch :: Builder -> Builder
+--ch = units "ch"
+-- {-# INLINE ch #-}
 
 
 -- | Generates a CSS @cm@ unit.
@@ -128,9 +186,9 @@ pc = units "pc"
 
 
 -- | Generates a CSS @\%@ unit.
-pct :: Builder -> Builder
-pct = unitc '%'
-{-# INLINE pct #-}
+--pct :: Builder -> Builder
+--pct = unitc '%'
+-- {-# INLINE pct #-}
 
 
 -- | Generates a CSS @pt@ unit.

@@ -39,7 +39,7 @@ module Css.Functions
       -- ** repeating-radial-gradient
     , repeatingRadialGradient
       -- ** rgb
-    , rgb
+    --, rgb
       -- ** rgba
     , rgba
       -- ** var
