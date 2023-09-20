@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -55,6 +56,8 @@ module Css.Units
       -- ** vw
     , vw
     , rgb
+    , accentColor
+    , Auto(..)
     ) where
 
 
@@ -112,14 +115,31 @@ pct :: Double -> Percentage
 pct value = Percentage $ realFloat value <> singleton '%'
 
 
-data AccentColor
+--class Auto a where auto :: a
+newtype Auto = Auto { unAuto :: Builder }
+
+
+auto :: Auto
+auto = Auto "auto"
+
+
+instance AccentColor Auto where
+    unAccentColor = unAuto
+
+
+instance AccentColor IntegerOrPercentage where
+    unAccentColor = integerOrPercentage
+
+
+class AccentColor a where
+    unAccentColor :: a -> Builder
 
 
 --data Css
 
 
---accentColor :: AccentColor -> Css
---accentColor
+accentColor :: AccentColor a => a -> Builder
+accentColor = unAccentColor
 
 
 -- UNITS

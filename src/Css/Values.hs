@@ -11,9 +11,9 @@
 module Css.Values
     ( -- * Property Values
       -- ** auto
-      auto
+      --auto
       -- ** color
-    , color
+      color
       -- ** inherit
     , inherit
       -- ** initial

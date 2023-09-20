@@ -11,9 +11,9 @@
 module Css.Properties
     ( -- * Properties
       -- ** accent-color
-      accentColor
+      --accentColor
       -- ** align-content
-    , alignContent
+      alignContent
       -- ** align-items
     , alignItems
       -- ** align-self
