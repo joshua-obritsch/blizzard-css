@@ -9,1201 +9,1402 @@
 --
 -- The "Css.Colors" module provides a set of functions for generating CSS colors.
 module Css.Colors
-    ( -- * Colors
-      -- ** aliceblue
-      aliceblue
-      -- ** antiquewhite
+    ( -- * Types
+      -- ** Color
+      Color
+
+      -- * Values
+
+      -- ** currentcolor
+    , currentcolor
+
+      -- ** \<hex-color\>
+    , hex
+
+      -- ** \<named-color\>
+      -- *** aliceblue
+    , aliceblue
+      -- *** antiquewhite
     , antiquewhite
-      -- ** aqua
+      -- *** aqua
     , aqua
-      -- ** aquamarine
+      -- *** aquamarine
     , aquamarine
-      -- ** azure
+      -- *** azure
     , azure
-      -- ** beige
+      -- *** beige
     , beige
-      -- ** bisque
+      -- *** bisque
     , bisque
-      -- ** black
+      -- *** black
     , black
-      -- ** blanchedalmond
+      -- *** blanchedalmond
     , blanchedalmond
-      -- ** blue
+      -- *** blue
     , blue
-      -- ** blueviolet
+      -- *** blueviolet
     , blueviolet
-      -- ** brown
+      -- *** brown
     , brown
-      -- ** burlywood
+      -- *** burlywood
     , burlywood
-      -- ** cadetblue
+      -- *** cadetblue
     , cadetblue
-      -- ** chartreuse
+      -- *** chartreuse
     , chartreuse
-      -- ** chocolate
+      -- *** chocolate
     , chocolate
-      -- ** coral
+      -- *** coral
     , coral
-      -- ** cornflowerblue
+      -- *** cornflowerblue
     , cornflowerblue
-      -- ** cornsilk
+      -- *** cornsilk
     , cornsilk
-      -- ** crimson
+      -- *** crimson
     , crimson
-      -- ** cyan
+      -- *** cyan
     , cyan
-      -- ** darkblue
+      -- *** darkblue
     , darkblue
-      -- ** darkcyan
+      -- *** darkcyan
     , darkcyan
-      -- ** darkgoldenrod
+      -- *** darkgoldenrod
     , darkgoldenrod
-      -- ** darkgray
+      -- *** darkgray
     , darkgray
-      -- ** darkgreen
+      -- *** darkgreen
     , darkgreen
-      -- ** darkgrey
+      -- *** darkgrey
     , darkgrey
-      -- ** darkkhaki
+      -- *** darkkhaki
     , darkkhaki
-      -- ** darkmagenta
+      -- *** darkmagenta
     , darkmagenta
-      -- ** darkolivegreen
+      -- *** darkolivegreen
     , darkolivegreen
-      -- ** darkorange
+      -- *** darkorange
     , darkorange
-      -- ** darkorchid
+      -- *** darkorchid
     , darkorchid
-      -- ** darkred
+      -- *** darkred
     , darkred
-      -- ** darksalmon
+      -- *** darksalmon
     , darksalmon
-      -- ** darkseagreen
+      -- *** darkseagreen
     , darkseagreen
-      -- ** darkslateblue
+      -- *** darkslateblue
     , darkslateblue
-      -- ** darkslategray
+      -- *** darkslategray
     , darkslategray
-      -- ** darkslategrey
+      -- *** darkslategrey
     , darkslategrey
-      -- ** darkturquoise
+      -- *** darkturquoise
     , darkturquoise
-      -- ** darkviolet
+      -- *** darkviolet
     , darkviolet
-      -- ** deeppink
+      -- *** deeppink
     , deeppink
-      -- ** deepskyblue
+      -- *** deepskyblue
     , deepskyblue
-      -- ** dimgray
+      -- *** dimgray
     , dimgray
-      -- ** dimgrey
+      -- *** dimgrey
     , dimgrey
-      -- ** dodgerblue
+      -- *** dodgerblue
     , dodgerblue
-      -- ** firebrick
+      -- *** firebrick
     , firebrick
-      -- ** floralwhite
+      -- *** floralwhite
     , floralwhite
-      -- ** forestgreen
+      -- *** forestgreen
     , forestgreen
-      -- ** fuchsia
+      -- *** fuchsia
     , fuchsia
-      -- ** gainsboro
+      -- *** gainsboro
     , gainsboro
-      -- ** ghostwhite
+      -- *** ghostwhite
     , ghostwhite
-      -- ** gold
+      -- *** gold
     , gold
-      -- ** goldenrod
+      -- *** goldenrod
     , goldenrod
-      -- ** gray
+      -- *** gray
     , gray
-      -- ** green
+      -- *** green
     , green
-      -- ** greenyellow
+      -- *** greenyellow
     , greenyellow
-      -- ** grey
+      -- *** grey
     , grey
-      -- ** honeydew
+      -- *** honeydew
     , honeydew
-      -- ** hotpink
+      -- *** hotpink
     , hotpink
-      -- ** indianred
+      -- *** indianred
     , indianred
-      -- ** indigo
+      -- *** indigo
     , indigo
-      -- ** ivory
+      -- *** ivory
     , ivory
-      -- ** khaki
+      -- *** khaki
     , khaki
-      -- ** lavender
+      -- *** lavender
     , lavender
-      -- ** lavenderblush
+      -- *** lavenderblush
     , lavenderblush
-      -- ** lawngreen
+      -- *** lawngreen
     , lawngreen
-      -- ** lemonchiffon
+      -- *** lemonchiffon
     , lemonchiffon
-      -- ** lightblue
+      -- *** lightblue
     , lightblue
-      -- ** lightcoral
+      -- *** lightcoral
     , lightcoral
-      -- ** lightcyan
+      -- *** lightcyan
     , lightcyan
-      -- ** lightgoldenrodyellow
+      -- *** lightgoldenrodyellow
     , lightgoldenrodyellow
-      -- ** lightgray
+      -- *** lightgray
     , lightgray
-      -- ** lightgreen
+      -- *** lightgreen
     , lightgreen
-      -- ** lightgrey
+      -- *** lightgrey
     , lightgrey
-      -- ** lightpink
+      -- *** lightpink
     , lightpink
-      -- ** lightsalmon
+      -- *** lightsalmon
     , lightsalmon
-      -- ** lightseagreen
+      -- *** lightseagreen
     , lightseagreen
-      -- ** lightskyblue
+      -- *** lightskyblue
     , lightskyblue
-      -- ** lightslategray
+      -- *** lightslategray
     , lightslategray
-      -- ** lightslategrey
+      -- *** lightslategrey
     , lightslategrey
-      -- ** lightsteelblue
+      -- *** lightsteelblue
     , lightsteelblue
-      -- ** lightyellow
+      -- *** lightyellow
     , lightyellow
-      -- ** lime
+      -- *** lime
     , lime
-      -- ** limegreen
+      -- *** limegreen
     , limegreen
-      -- ** linen
+      -- *** linen
     , linen
-      -- ** magenta
+      -- *** magenta
     , magenta
-      -- ** maroon
+      -- *** maroon
     , maroon
-      -- ** mediumaquamarine
+      -- *** mediumaquamarine
     , mediumaquamarine
-      -- ** mediumblue
+      -- *** mediumblue
     , mediumblue
-      -- ** mediumorchid
+      -- *** mediumorchid
     , mediumorchid
-      -- ** mediumpurple
+      -- *** mediumpurple
     , mediumpurple
-      -- ** mediumseagreen
+      -- *** mediumseagreen
     , mediumseagreen
-      -- ** mediumslateblue
+      -- *** mediumslateblue
     , mediumslateblue
-      -- ** mediumspringgreen
+      -- *** mediumspringgreen
     , mediumspringgreen
-      -- ** mediumturquoise
+      -- *** mediumturquoise
     , mediumturquoise
-      -- ** mediumvioletred
+      -- *** mediumvioletred
     , mediumvioletred
-      -- ** midnightblue
+      -- *** midnightblue
     , midnightblue
-      -- ** mintcream
+      -- *** mintcream
     , mintcream
-      -- ** mistyrose
+      -- *** mistyrose
     , mistyrose
-      -- ** moccasin
+      -- *** moccasin
     , moccasin
-      -- ** navajowhite
+      -- *** navajowhite
     , navajowhite
-      -- ** navy
+      -- *** navy
     , navy
-      -- ** oldlace
+      -- *** oldlace
     , oldlace
-      -- ** olive
+      -- *** olive
     , olive
-      -- ** olivedrab
+      -- *** olivedrab
     , olivedrab
-      -- ** orange
+      -- *** orange
     , orange
-      -- ** orangered
+      -- *** orangered
     , orangered
-      -- ** orchid
+      -- *** orchid
     , orchid
-      -- ** palegoldenrod
+      -- *** palegoldenrod
     , palegoldenrod
-      -- ** palegreen
+      -- *** palegreen
     , palegreen
-      -- ** paleturquoise
+      -- *** paleturquoise
     , paleturquoise
-      -- ** palevioletred
+      -- *** palevioletred
     , palevioletred
-      -- ** papayawhip
+      -- *** papayawhip
     , papayawhip
-      -- ** peachpuff
+      -- *** peachpuff
     , peachpuff
-      -- ** peru
+      -- *** peru
     , peru
-      -- ** pink
+      -- *** pink
     , pink
-      -- ** plum
+      -- *** plum
     , plum
-      -- ** powderblue
+      -- *** powderblue
     , powderblue
-      -- ** purple
+      -- *** purple
     , purple
-      -- ** rebeccapurple
+      -- *** rebeccapurple
     , rebeccapurple
-      -- ** red
+      -- *** red
     , red
-      -- ** rosybrown
+      -- *** rosybrown
     , rosybrown
-      -- ** royalblue
+      -- *** royalblue
     , royalblue
-      -- ** saddlebrown
+      -- *** saddlebrown
     , saddlebrown
-      -- ** salmon
+      -- *** salmon
     , salmon
-      -- ** sandybrown
+      -- *** sandybrown
     , sandybrown
-      -- ** seagreen
+      -- *** seagreen
     , seagreen
-      -- ** seashell
+      -- *** seashell
     , seashell
-      -- ** sienna
+      -- *** sienna
     , sienna
-      -- ** silver
+      -- *** silver
     , silver
-      -- ** skyblue
+      -- *** skyblue
     , skyblue
-      -- ** slateblue
+      -- *** slateblue
     , slateblue
-      -- ** slategray
+      -- *** slategray
     , slategray
-      -- ** slategrey
+      -- *** slategrey
     , slategrey
-      -- ** snow
+      -- *** snow
     , snow
-      -- ** springgreen
+      -- *** springgreen
     , springgreen
-      -- ** steelblue
+      -- *** steelblue
     , steelblue
-      -- ** tan
+      -- *** tan
     , tan
-      -- ** teal
+      -- *** teal
     , teal
-      -- ** thistle
+      -- *** thistle
     , thistle
-      -- ** tomato
+      -- *** tomato
     , tomato
-      -- ** transparent
+      -- *** transparent
     , transparent
-      -- ** turquoise
+      -- *** turquoise
     , turquoise
-      -- ** violet
+      -- *** violet
     , violet
-      -- ** wheat
+      -- *** wheat
     , wheat
-      -- ** white
+      -- *** white
     , white
-      -- ** whitesmoke
+      -- *** whitesmoke
     , whitesmoke
-      -- ** yellow
+      -- *** yellow
     , yellow
-      -- ** yellowgreen
+      -- *** yellowgreen
     , yellowgreen
+
+      -- ** \<system-color\>
+      -- *** AccentColor
+    , accentColor
+      -- *** AccentColorText
+    , accentColorText
+      -- *** ActiveText
+    , activeText
+      -- *** ButtonBorder
+    , buttonBorder
+      -- *** ButtonFace
+    , buttonFace
+      -- *** ButtonText
+    , buttonText
+      -- *** Canvas
+    , canvas
+      -- *** CanvasText
+    , canvasText
+      -- *** Field
+    , field
+      -- *** FieldText
+    , fieldText
+      -- *** GrayText
+    , grayText
+      -- *** Highlight
+    , highlight
+      -- *** HighlightText
+    , highlightText
+      -- *** LinkText
+    , linkText
+      -- *** Mark
+    , mark
+      -- *** MarkText
+    , markText
+      -- *** VisitedText
+    , visitedText
     ) where
 
 
 import Prelude hiding (tan)
 
-import Data.Text.Lazy.Builder (Builder)
+import Css.Internal           (showHex)
+import Data.Text.Lazy         (unpack)
+import Data.Text.Lazy.Builder (Builder, toLazyText)
+import Data.Word              (Word32)
+import Html                   (Buildable(..))
 
 
--- | Generates the CSS color @aliceblue@.
-aliceblue :: Builder
-aliceblue = "aliceblue"
+class Hue a where
+    toHue :: a -> Builder
+
+
+hsl :: (Hue a) => a -> Builder
+hsl a = toHue a
+
+
+-- TYPES
+
+
+newtype Color = Color { unColor :: Builder }
+
+
+instance Buildable Color where
+    build = unColor
+
+
+instance Show Color where
+    show = unpack . toLazyText . build
+
+
+-- CURRENTCOLOR VALUES
+
+
+-- | Generates a CSS @currentcolor@ value.
+currentcolor :: Color
+currentcolor = Color "currentcolor"
+{-# INLINE currentcolor #-}
+
+
+-- HEX COLOR VALUES
+
+
+-- | Generates a CSS @\#@ \<hex-color\> value.
+hex :: Word32 -> Color
+hex = Color . showHex
+{-# INLINE hex #-}
+
+
+-- NAMED COLOR VALUES
+
+
+-- | Generates the CSS @aliceblue@ \<named-color\> value.
+aliceblue :: Color
+aliceblue = Color "aliceblue"
 {-# INLINE aliceblue #-}
 
 
--- | Generates the CSS color @antiquewhite@.
-antiquewhite :: Builder
-antiquewhite = "antiquewhite"
+-- | Generates the CSS @antiquewhite@ \<named-color\> value.
+antiquewhite :: Color
+antiquewhite = Color "antiquewhite"
 {-# INLINE antiquewhite #-}
 
 
--- | Generates the CSS color @aqua@.
-aqua :: Builder
-aqua = "aqua"
+-- | Generates the CSS @aqua@ \<named-color\> value.
+aqua :: Color
+aqua = Color "aqua"
 {-# INLINE aqua #-}
 
 
--- | Generates the CSS color @aquamarine@.
-aquamarine :: Builder
-aquamarine = "aquamarine"
+-- | Generates the CSS @aquamarine@ \<named-color\> value.
+aquamarine :: Color
+aquamarine = Color "aquamarine"
 {-# INLINE aquamarine #-}
 
 
--- | Generates the CSS color @azure@.
-azure :: Builder
-azure = "azure"
+-- | Generates the CSS @azure@ \<named-color\> value.
+azure :: Color
+azure = Color "azure"
 {-# INLINE azure #-}
 
 
--- | Generates the CSS color @beige@.
-beige :: Builder
-beige = "beige"
+-- | Generates the CSS @beige@ \<named-color\> value.
+beige :: Color
+beige = Color "beige"
 {-# INLINE beige #-}
 
 
--- | Generates the CSS color @bisque@.
-bisque :: Builder
-bisque = "bisque"
+-- | Generates the CSS @bisque@ \<named-color\> value.
+bisque :: Color
+bisque = Color "bisque"
 {-# INLINE bisque #-}
 
 
--- | Generates the CSS color @black@.
-black :: Builder
-black = "black"
+-- | Generates the CSS @black@ \<named-color\> value.
+black :: Color
+black = Color "black"
 {-# INLINE black #-}
 
 
--- | Generates the CSS color @blanchedalmond@.
-blanchedalmond :: Builder
-blanchedalmond = "blanchedalmond"
+-- | Generates the CSS @blanchedalmond@ \<named-color\> value.
+blanchedalmond :: Color
+blanchedalmond = Color "blanchedalmond"
 {-# INLINE blanchedalmond #-}
 
 
--- | Generates the CSS color @blue@.
-blue :: Builder
-blue = "blue"
+-- | Generates the CSS @blue@ \<named-color\> value.
+blue :: Color
+blue = Color "blue"
 {-# INLINE blue #-}
 
 
--- | Generates the CSS color @blueviolet@.
-blueviolet :: Builder
-blueviolet = "blueviolet"
+-- | Generates the CSS @blueviolet@ \<named-color\> value.
+blueviolet :: Color
+blueviolet = Color "blueviolet"
 {-# INLINE blueviolet #-}
 
 
--- | Generates the CSS color @brown@.
-brown :: Builder
-brown = "brown"
+-- | Generates the CSS @brown@ \<named-color\> value.
+brown :: Color
+brown = Color "brown"
 {-# INLINE brown #-}
 
 
--- | Generates the CSS color @burlywood@.
-burlywood :: Builder
-burlywood = "burlywood"
+-- | Generates the CSS @burlywood@ \<named-color\> value.
+burlywood :: Color
+burlywood = Color "burlywood"
 {-# INLINE burlywood #-}
 
 
--- | Generates the CSS color @cadetblue@.
-cadetblue :: Builder
-cadetblue = "cadetblue"
+-- | Generates the CSS @cadetblue@ \<named-color\> value.
+cadetblue :: Color
+cadetblue = Color "cadetblue"
 {-# INLINE cadetblue #-}
 
 
--- | Generates the CSS color @chartreuse@.
-chartreuse :: Builder
-chartreuse = "chartreuse"
+-- | Generates the CSS @chartreuse@ \<named-color\> value.
+chartreuse :: Color
+chartreuse = Color "chartreuse"
 {-# INLINE chartreuse #-}
 
 
--- | Generates the CSS color @chocolate@.
-chocolate :: Builder
-chocolate = "chocolate"
+-- | Generates the CSS @chocolate@ \<named-color\> value.
+chocolate :: Color
+chocolate = Color "chocolate"
 {-# INLINE chocolate #-}
 
 
--- | Generates the CSS color @coral@.
-coral :: Builder
-coral = "coral"
+-- | Generates the CSS @coral@ \<named-color\> value.
+coral :: Color
+coral = Color "coral"
 {-# INLINE coral #-}
 
 
--- | Generates the CSS color @cornflowerblue@.
-cornflowerblue :: Builder
-cornflowerblue = "cornflowerblue"
+-- | Generates the CSS @cornflowerblue@ \<named-color\> value.
+cornflowerblue :: Color
+cornflowerblue = Color "cornflowerblue"
 {-# INLINE cornflowerblue #-}
 
 
--- | Generates the CSS color @cornsilk@.
-cornsilk :: Builder
-cornsilk = "cornsilk"
+-- | Generates the CSS @cornsilk@ \<named-color\> value.
+cornsilk :: Color
+cornsilk = Color "cornsilk"
 {-# INLINE cornsilk #-}
 
 
--- | Generates the CSS color @crimson@.
-crimson :: Builder
-crimson = "crimson"
+-- | Generates the CSS @crimson@ \<named-color\> value.
+crimson :: Color
+crimson = Color "crimson"
 {-# INLINE crimson #-}
 
 
--- | Generates the CSS color @cyan@.
-cyan :: Builder
-cyan = "cyan"
+-- | Generates the CSS @cyan@ \<named-color\> value.
+cyan :: Color
+cyan = Color "cyan"
 {-# INLINE cyan #-}
 
 
--- | Generates the CSS color @darkblue@.
-darkblue :: Builder
-darkblue = "darkblue"
+-- | Generates the CSS @darkblue@ \<named-color\> value.
+darkblue :: Color
+darkblue = Color "darkblue"
 {-# INLINE darkblue #-}
 
 
--- | Generates the CSS color @darkcyan@.
-darkcyan :: Builder
-darkcyan = "darkcyan"
+-- | Generates the CSS @darkcyan@ \<named-color\> value.
+darkcyan :: Color
+darkcyan = Color "darkcyan"
 {-# INLINE darkcyan #-}
 
 
--- | Generates the CSS color @darkgoldenrod@.
-darkgoldenrod :: Builder
-darkgoldenrod = "darkgoldenrod"
+-- | Generates the CSS @darkgoldenrod@ \<named-color\> value.
+darkgoldenrod :: Color
+darkgoldenrod = Color "darkgoldenrod"
 {-# INLINE darkgoldenrod #-}
 
 
--- | Generates the CSS color @darkgray@.
-darkgray :: Builder
-darkgray = "darkgray"
+-- | Generates the CSS @darkgray@ \<named-color\> value.
+darkgray :: Color
+darkgray = Color "darkgray"
 {-# INLINE darkgray #-}
 
 
--- | Generates the CSS color @darkgreen@.
-darkgreen :: Builder
-darkgreen = "darkgreen"
+-- | Generates the CSS @darkgreen@ \<named-color\> value.
+darkgreen :: Color
+darkgreen = Color "darkgreen"
 {-# INLINE darkgreen #-}
 
 
--- | Generates the CSS color @darkgrey@.
-darkgrey :: Builder
-darkgrey = "darkgrey"
+-- | Generates the CSS @darkgrey@ \<named-color\> value.
+darkgrey :: Color
+darkgrey = Color "darkgrey"
 {-# INLINE darkgrey #-}
 
 
--- | Generates the CSS color @darkkhaki@.
-darkkhaki :: Builder
-darkkhaki = "darkkhaki"
+-- | Generates the CSS @darkkhaki@ \<named-color\> value.
+darkkhaki :: Color
+darkkhaki = Color "darkkhaki"
 {-# INLINE darkkhaki #-}
 
 
--- | Generates the CSS color @darkmagenta@.
-darkmagenta :: Builder
-darkmagenta = "darkmagenta"
+-- | Generates the CSS @darkmagenta@ \<named-color\> value.
+darkmagenta :: Color
+darkmagenta = Color "darkmagenta"
 {-# INLINE darkmagenta #-}
 
 
--- | Generates the CSS color @darkolivegreen@.
-darkolivegreen :: Builder
-darkolivegreen = "darkolivegreen"
+-- | Generates the CSS @darkolivegreen@ \<named-color\> value.
+darkolivegreen :: Color
+darkolivegreen = Color "darkolivegreen"
 {-# INLINE darkolivegreen #-}
 
 
--- | Generates the CSS color @darkorange@.
-darkorange :: Builder
-darkorange = "darkorange"
+-- | Generates the CSS @darkorange@ \<named-color\> value.
+darkorange :: Color
+darkorange = Color "darkorange"
 {-# INLINE darkorange #-}
 
 
--- | Generates the CSS color @darkorchid@.
-darkorchid :: Builder
-darkorchid = "darkorchid"
+-- | Generates the CSS @darkorchid@ \<named-color\> value.
+darkorchid :: Color
+darkorchid = Color "darkorchid"
 {-# INLINE darkorchid #-}
 
 
--- | Generates the CSS color @darkred@.
-darkred :: Builder
-darkred = "darkred"
+-- | Generates the CSS @darkred@ \<named-color\> value.
+darkred :: Color
+darkred = Color "darkred"
 {-# INLINE darkred #-}
 
 
--- | Generates the CSS color @darksalmon@.
-darksalmon :: Builder
-darksalmon = "darksalmon"
+-- | Generates the CSS @darksalmon@ \<named-color\> value.
+darksalmon :: Color
+darksalmon = Color "darksalmon"
 {-# INLINE darksalmon #-}
 
 
--- | Generates the CSS color @darkseagreen@.
-darkseagreen :: Builder
-darkseagreen = "darkseagreen"
+-- | Generates the CSS @darkseagreen@ \<named-color\> value.
+darkseagreen :: Color
+darkseagreen = Color "darkseagreen"
 {-# INLINE darkseagreen #-}
 
 
--- | Generates the CSS color @darkslateblue@.
-darkslateblue :: Builder
-darkslateblue = "darkslateblue"
+-- | Generates the CSS @darkslateblue@ \<named-color\> value.
+darkslateblue :: Color
+darkslateblue = Color "darkslateblue"
 {-# INLINE darkslateblue #-}
 
 
--- | Generates the CSS color @darkslategray@.
-darkslategray :: Builder
-darkslategray = "darkslategray"
+-- | Generates the CSS @darkslategray@ \<named-color\> value.
+darkslategray :: Color
+darkslategray = Color "darkslategray"
 {-# INLINE darkslategray #-}
 
 
--- | Generates the CSS color @darkslategrey@.
-darkslategrey :: Builder
-darkslategrey = "darkslategrey"
+-- | Generates the CSS @darkslategrey@ \<named-color\> value.
+darkslategrey :: Color
+darkslategrey = Color "darkslategrey"
 {-# INLINE darkslategrey #-}
 
 
--- | Generates the CSS color @darkturquoise@.
-darkturquoise :: Builder
-darkturquoise = "darkturquoise"
+-- | Generates the CSS @darkturquoise@ \<named-color\> value.
+darkturquoise :: Color
+darkturquoise = Color "darkturquoise"
 {-# INLINE darkturquoise #-}
 
 
--- | Generates the CSS color @darkviolet@.
-darkviolet :: Builder
-darkviolet = "darkviolet"
+-- | Generates the CSS @darkviolet@ \<named-color\> value.
+darkviolet :: Color
+darkviolet = Color "darkviolet"
 {-# INLINE darkviolet #-}
 
 
--- | Generates the CSS color @deeppink@.
-deeppink :: Builder
-deeppink = "deeppink"
+-- | Generates the CSS @deeppink@ \<named-color\> value.
+deeppink :: Color
+deeppink = Color "deeppink"
 {-# INLINE deeppink #-}
 
 
--- | Generates the CSS color @deepskyblue@.
-deepskyblue :: Builder
-deepskyblue = "deepskyblue"
+-- | Generates the CSS @deepskyblue@ \<named-color\> value.
+deepskyblue :: Color
+deepskyblue = Color "deepskyblue"
 {-# INLINE deepskyblue #-}
 
 
--- | Generates the CSS color @dimgray@.
-dimgray :: Builder
-dimgray = "dimgray"
+-- | Generates the CSS @dimgray@ \<named-color\> value.
+dimgray :: Color
+dimgray = Color "dimgray"
 {-# INLINE dimgray #-}
 
 
--- | Generates the CSS color @dimgrey@.
-dimgrey :: Builder
-dimgrey = "dimgrey"
+-- | Generates the CSS @dimgrey@ \<named-color\> value.
+dimgrey :: Color
+dimgrey = Color "dimgrey"
 {-# INLINE dimgrey #-}
 
 
--- | Generates the CSS color @dodgerblue@.
-dodgerblue :: Builder
-dodgerblue = "dodgerblue"
+-- | Generates the CSS @dodgerblue@ \<named-color\> value.
+dodgerblue :: Color
+dodgerblue = Color "dodgerblue"
 {-# INLINE dodgerblue #-}
 
 
--- | Generates the CSS color @firebrick@.
-firebrick :: Builder
-firebrick = "firebrick"
+-- | Generates the CSS @firebrick@ \<named-color\> value.
+firebrick :: Color
+firebrick = Color "firebrick"
 {-# INLINE firebrick #-}
 
 
--- | Generates the CSS color @floralwhite@.
-floralwhite :: Builder
-floralwhite = "floralwhite"
+-- | Generates the CSS @floralwhite@ \<named-color\> value.
+floralwhite :: Color
+floralwhite = Color "floralwhite"
 {-# INLINE floralwhite #-}
 
 
--- | Generates the CSS color @forestgreen@.
-forestgreen :: Builder
-forestgreen = "forestgreen"
+-- | Generates the CSS @forestgreen@ \<named-color\> value.
+forestgreen :: Color
+forestgreen = Color "forestgreen"
 {-# INLINE forestgreen #-}
 
 
--- | Generates the CSS color @fuchsia@.
-fuchsia :: Builder
-fuchsia = "fuchsia"
+-- | Generates the CSS @fuchsia@ \<named-color\> value.
+fuchsia :: Color
+fuchsia = Color "fuchsia"
 {-# INLINE fuchsia #-}
 
 
--- | Generates the CSS color @gainsboro@.
-gainsboro :: Builder
-gainsboro = "gainsboro"
+-- | Generates the CSS @gainsboro@ \<named-color\> value.
+gainsboro :: Color
+gainsboro = Color "gainsboro"
 {-# INLINE gainsboro #-}
 
 
--- | Generates the CSS color @ghostwhite@.
-ghostwhite :: Builder
-ghostwhite = "ghostwhite"
+-- | Generates the CSS @ghostwhite@ \<named-color\> value.
+ghostwhite :: Color
+ghostwhite = Color "ghostwhite"
 {-# INLINE ghostwhite #-}
 
 
--- | Generates the CSS color @gold@.
-gold :: Builder
-gold = "gold"
+-- | Generates the CSS @gold@ \<named-color\> value.
+gold :: Color
+gold = Color "gold"
 {-# INLINE gold #-}
 
 
--- | Generates the CSS color @goldenrod@.
-goldenrod :: Builder
-goldenrod = "goldenrod"
+-- | Generates the CSS @goldenrod@ \<named-color\> value.
+goldenrod :: Color
+goldenrod = Color "goldenrod"
 {-# INLINE goldenrod #-}
 
 
--- | Generates the CSS color @gray@.
-gray :: Builder
-gray = "gray"
+-- | Generates the CSS @gray@ \<named-color\> value.
+gray :: Color
+gray = Color "gray"
 {-# INLINE gray #-}
 
 
--- | Generates the CSS color @green@.
-green :: Builder
-green = "green"
+-- | Generates the CSS @green@ \<named-color\> value.
+green :: Color
+green = Color "green"
 {-# INLINE green #-}
 
 
--- | Generates the CSS color @greenyellow@.
-greenyellow :: Builder
-greenyellow = "greenyellow"
+-- | Generates the CSS @greenyellow@ \<named-color\> value.
+greenyellow :: Color
+greenyellow = Color "greenyellow"
 {-# INLINE greenyellow #-}
 
 
--- | Generates the CSS color @grey@.
-grey :: Builder
-grey = "grey"
+-- | Generates the CSS @grey@ \<named-color\> value.
+grey :: Color
+grey = Color "grey"
 {-# INLINE grey #-}
 
 
--- | Generates the CSS color @honeydew@.
-honeydew :: Builder
-honeydew = "honeydew"
+-- | Generates the CSS @honeydew@ \<named-color\> value.
+honeydew :: Color
+honeydew = Color "honeydew"
 {-# INLINE honeydew #-}
 
 
--- | Generates the CSS color @hotpink@.
-hotpink :: Builder
-hotpink = "hotpink"
+-- | Generates the CSS @hotpink@ \<named-color\> value.
+hotpink :: Color
+hotpink = Color "hotpink"
 {-# INLINE hotpink #-}
 
 
--- | Generates the CSS color @indianred@.
-indianred :: Builder
-indianred = "indianred"
+-- | Generates the CSS @indianred@ \<named-color\> value.
+indianred :: Color
+indianred = Color "indianred"
 {-# INLINE indianred #-}
 
 
--- | Generates the CSS color @indigo@.
-indigo :: Builder
-indigo = "indigo"
+-- | Generates the CSS @indigo@ \<named-color\> value.
+indigo :: Color
+indigo = Color "indigo"
 {-# INLINE indigo #-}
 
 
--- | Generates the CSS color @ivory@.
-ivory :: Builder
-ivory = "ivory"
+-- | Generates the CSS @ivory@ \<named-color\> value.
+ivory :: Color
+ivory = Color "ivory"
 {-# INLINE ivory #-}
 
 
--- | Generates the CSS color @khaki@.
-khaki :: Builder
-khaki = "khaki"
+-- | Generates the CSS @khaki@ \<named-color\> value.
+khaki :: Color
+khaki = Color "khaki"
 {-# INLINE khaki #-}
 
 
--- | Generates the CSS color @lavender@.
-lavender :: Builder
-lavender = "lavender"
+-- | Generates the CSS @lavender@ \<named-color\> value.
+lavender :: Color
+lavender = Color "lavender"
 {-# INLINE lavender #-}
 
 
--- | Generates the CSS color @lavenderblush@.
-lavenderblush :: Builder
-lavenderblush = "lavenderblush"
+-- | Generates the CSS @lavenderblush@ \<named-color\> value.
+lavenderblush :: Color
+lavenderblush = Color "lavenderblush"
 {-# INLINE lavenderblush #-}
 
 
--- | Generates the CSS color @lawngreen@.
-lawngreen :: Builder
-lawngreen = "lawngreen"
+-- | Generates the CSS @lawngreen@ \<named-color\> value.
+lawngreen :: Color
+lawngreen = Color "lawngreen"
 {-# INLINE lawngreen #-}
 
 
--- | Generates the CSS color @lemonchiffon@.
-lemonchiffon :: Builder
-lemonchiffon = "lemonchiffon"
+-- | Generates the CSS @lemonchiffon@ \<named-color\> value.
+lemonchiffon :: Color
+lemonchiffon = Color "lemonchiffon"
 {-# INLINE lemonchiffon #-}
 
 
--- | Generates the CSS color @lightblue@.
-lightblue :: Builder
-lightblue = "lightblue"
+-- | Generates the CSS @lightblue@ \<named-color\> value.
+lightblue :: Color
+lightblue = Color "lightblue"
 {-# INLINE lightblue #-}
 
 
--- | Generates the CSS color @lightcoral@.
-lightcoral :: Builder
-lightcoral = "lightcoral"
+-- | Generates the CSS @lightcoral@ \<named-color\> value.
+lightcoral :: Color
+lightcoral = Color "lightcoral"
 {-# INLINE lightcoral #-}
 
 
--- | Generates the CSS color @lightcyan@.
-lightcyan :: Builder
-lightcyan = "lightcyan"
+-- | Generates the CSS @lightcyan@ \<named-color\> value.
+lightcyan :: Color
+lightcyan = Color "lightcyan"
 {-# INLINE lightcyan #-}
 
 
--- | Generates the CSS color @lightgoldenrodyellow@.
-lightgoldenrodyellow :: Builder
-lightgoldenrodyellow = "lightgoldenrodyellow"
+-- | Generates the CSS @lightgoldenrodyellow@ \<named-color\> value.
+lightgoldenrodyellow :: Color
+lightgoldenrodyellow = Color "lightgoldenrodyellow"
 {-# INLINE lightgoldenrodyellow #-}
 
 
--- | Generates the CSS color @lightgray@.
-lightgray :: Builder
-lightgray = "lightgray"
+-- | Generates the CSS @lightgray@ \<named-color\> value.
+lightgray :: Color
+lightgray = Color "lightgray"
 {-# INLINE lightgray #-}
 
 
--- | Generates the CSS color @lightgreen@.
-lightgreen :: Builder
-lightgreen = "lightgreen"
+-- | Generates the CSS @lightgreen@ \<named-color\> value.
+lightgreen :: Color
+lightgreen = Color "lightgreen"
 {-# INLINE lightgreen #-}
 
 
--- | Generates the CSS color @lightgrey@.
-lightgrey :: Builder
-lightgrey = "lightgrey"
+-- | Generates the CSS @lightgrey@ \<named-color\> value.
+lightgrey :: Color
+lightgrey = Color "lightgrey"
 {-# INLINE lightgrey #-}
 
 
--- | Generates the CSS color @lightpink@.
-lightpink :: Builder
-lightpink = "lightpink"
+-- | Generates the CSS @lightpink@ \<named-color\> value.
+lightpink :: Color
+lightpink = Color "lightpink"
 {-# INLINE lightpink #-}
 
 
--- | Generates the CSS color @lightsalmon@.
-lightsalmon :: Builder
-lightsalmon = "lightsalmon"
+-- | Generates the CSS @lightsalmon@ \<named-color\> value.
+lightsalmon :: Color
+lightsalmon = Color "lightsalmon"
 {-# INLINE lightsalmon #-}
 
 
--- | Generates the CSS color @lightseagreen@.
-lightseagreen :: Builder
-lightseagreen = "lightseagreen"
+-- | Generates the CSS @lightseagreen@ \<named-color\> value.
+lightseagreen :: Color
+lightseagreen = Color "lightseagreen"
 {-# INLINE lightseagreen #-}
 
 
--- | Generates the CSS color @lightskyblue@.
-lightskyblue :: Builder
-lightskyblue = "lightskyblue"
+-- | Generates the CSS @lightskyblue@ \<named-color\> value.
+lightskyblue :: Color
+lightskyblue = Color "lightskyblue"
 {-# INLINE lightskyblue #-}
 
 
--- | Generates the CSS color @lightslategray@.
-lightslategray :: Builder
-lightslategray = "lightslategray"
+-- | Generates the CSS @lightslategray@ \<named-color\> value.
+lightslategray :: Color
+lightslategray = Color "lightslategray"
 {-# INLINE lightslategray #-}
 
 
--- | Generates the CSS color @lightslategrey@.
-lightslategrey :: Builder
-lightslategrey = "lightslategrey"
+-- | Generates the CSS @lightslategrey@ \<named-color\> value.
+lightslategrey :: Color
+lightslategrey = Color "lightslategrey"
 {-# INLINE lightslategrey #-}
 
 
--- | Generates the CSS color @lightsteelblue@.
-lightsteelblue :: Builder
-lightsteelblue = "lightsteelblue"
+-- | Generates the CSS @lightsteelblue@ \<named-color\> value.
+lightsteelblue :: Color
+lightsteelblue = Color "lightsteelblue"
 {-# INLINE lightsteelblue #-}
 
 
--- | Generates the CSS color @lightyellow@.
-lightyellow :: Builder
-lightyellow = "lightyellow"
+-- | Generates the CSS @lightyellow@ \<named-color\> value.
+lightyellow :: Color
+lightyellow = Color "lightyellow"
 {-# INLINE lightyellow #-}
 
 
--- | Generates the CSS color @lime@.
-lime :: Builder
-lime = "lime"
+-- | Generates the CSS @lime@ \<named-color\> value.
+lime :: Color
+lime = Color "lime"
 {-# INLINE lime #-}
 
 
--- | Generates the CSS color @limegreen@.
-limegreen :: Builder
-limegreen = "limegreen"
+-- | Generates the CSS @limegreen@ \<named-color\> value.
+limegreen :: Color
+limegreen = Color "limegreen"
 {-# INLINE limegreen #-}
 
 
--- | Generates the CSS color @linen@.
-linen :: Builder
-linen = "linen"
+-- | Generates the CSS @linen@ \<named-color\> value.
+linen :: Color
+linen = Color "linen"
 {-# INLINE linen #-}
 
 
--- | Generates the CSS color @magenta@.
-magenta :: Builder
-magenta = "magenta"
+-- | Generates the CSS @magenta@ \<named-color\> value.
+magenta :: Color
+magenta = Color "magenta"
 {-# INLINE magenta #-}
 
 
--- | Generates the CSS color @maroon@.
-maroon :: Builder
-maroon = "maroon"
+-- | Generates the CSS @maroon@ \<named-color\> value.
+maroon :: Color
+maroon = Color "maroon"
 {-# INLINE maroon #-}
 
 
--- | Generates the CSS color @mediumaquamarine@.
-mediumaquamarine :: Builder
-mediumaquamarine = "mediumaquamarine"
+-- | Generates the CSS @mediumaquamarine@ \<named-color\> value.
+mediumaquamarine :: Color
+mediumaquamarine = Color "mediumaquamarine"
 {-# INLINE mediumaquamarine #-}
 
 
--- | Generates the CSS color @mediumblue@.
-mediumblue :: Builder
-mediumblue = "mediumblue"
+-- | Generates the CSS @mediumblue@ \<named-color\> value.
+mediumblue :: Color
+mediumblue = Color "mediumblue"
 {-# INLINE mediumblue #-}
 
 
--- | Generates the CSS color @mediumorchid@.
-mediumorchid :: Builder
-mediumorchid = "mediumorchid"
+-- | Generates the CSS @mediumorchid@ \<named-color\> value.
+mediumorchid :: Color
+mediumorchid = Color "mediumorchid"
 {-# INLINE mediumorchid #-}
 
 
--- | Generates the CSS color @mediumpurple@.
-mediumpurple :: Builder
-mediumpurple = "mediumpurple"
+-- | Generates the CSS @mediumpurple@ \<named-color\> value.
+mediumpurple :: Color
+mediumpurple = Color "mediumpurple"
 {-# INLINE mediumpurple #-}
 
 
--- | Generates the CSS color @mediumseagreen@.
-mediumseagreen :: Builder
-mediumseagreen = "mediumseagreen"
+-- | Generates the CSS @mediumseagreen@ \<named-color\> value.
+mediumseagreen :: Color
+mediumseagreen = Color "mediumseagreen"
 {-# INLINE mediumseagreen #-}
 
 
--- | Generates the CSS color @mediumslateblue@.
-mediumslateblue :: Builder
-mediumslateblue = "mediumslateblue"
+-- | Generates the CSS @mediumslateblue@ \<named-color\> value.
+mediumslateblue :: Color
+mediumslateblue = Color "mediumslateblue"
 {-# INLINE mediumslateblue #-}
 
 
--- | Generates the CSS color @mediumspringgreen@.
-mediumspringgreen :: Builder
-mediumspringgreen = "mediumspringgreen"
+-- | Generates the CSS @mediumspringgreen@ \<named-color\> value.
+mediumspringgreen :: Color
+mediumspringgreen = Color "mediumspringgreen"
 {-# INLINE mediumspringgreen #-}
 
 
--- | Generates the CSS color @mediumturquoise@.
-mediumturquoise :: Builder
-mediumturquoise = "mediumturquoise"
+-- | Generates the CSS @mediumturquoise@ \<named-color\> value.
+mediumturquoise :: Color
+mediumturquoise = Color "mediumturquoise"
 {-# INLINE mediumturquoise #-}
 
 
--- | Generates the CSS color @mediumvioletred@.
-mediumvioletred :: Builder
-mediumvioletred = "mediumvioletred"
+-- | Generates the CSS @mediumvioletred@ \<named-color\> value.
+mediumvioletred :: Color
+mediumvioletred = Color "mediumvioletred"
 {-# INLINE mediumvioletred #-}
 
 
--- | Generates the CSS color @midnightblue@.
-midnightblue :: Builder
-midnightblue = "midnightblue"
+-- | Generates the CSS @midnightblue@ \<named-color\> value.
+midnightblue :: Color
+midnightblue = Color "midnightblue"
 {-# INLINE midnightblue #-}
 
 
--- | Generates the CSS color @mintcream@.
-mintcream :: Builder
-mintcream = "mintcream"
+-- | Generates the CSS @mintcream@ \<named-color\> value.
+mintcream :: Color
+mintcream = Color "mintcream"
 {-# INLINE mintcream #-}
 
 
--- | Generates the CSS color @mistyrose@.
-mistyrose :: Builder
-mistyrose = "mistyrose"
+-- | Generates the CSS @mistyrose@ \<named-color\> value.
+mistyrose :: Color
+mistyrose = Color "mistyrose"
 {-# INLINE mistyrose #-}
 
 
--- | Generates the CSS color @moccasin@.
-moccasin :: Builder
-moccasin = "moccasin"
+-- | Generates the CSS @moccasin@ \<named-color\> value.
+moccasin :: Color
+moccasin = Color "moccasin"
 {-# INLINE moccasin #-}
 
 
--- | Generates the CSS color @navajowhite@.
-navajowhite :: Builder
-navajowhite = "navajowhite"
+-- | Generates the CSS @navajowhite@ \<named-color\> value.
+navajowhite :: Color
+navajowhite = Color "navajowhite"
 {-# INLINE navajowhite #-}
 
 
--- | Generates the CSS color @navy@.
-navy :: Builder
-navy = "navy"
+-- | Generates the CSS @navy@ \<named-color\> value.
+navy :: Color
+navy = Color "navy"
 {-# INLINE navy #-}
 
 
--- | Generates the CSS color @oldlace@.
-oldlace :: Builder
-oldlace = "oldlace"
+-- | Generates the CSS @oldlace@ \<named-color\> value.
+oldlace :: Color
+oldlace = Color "oldlace"
 {-# INLINE oldlace #-}
 
 
--- | Generates the CSS color @olive@.
-olive :: Builder
-olive = "olive"
+-- | Generates the CSS @olive@ \<named-color\> value.
+olive :: Color
+olive = Color "olive"
 {-# INLINE olive #-}
 
 
--- | Generates the CSS color @olivedrab@.
-olivedrab :: Builder
-olivedrab = "olivedrab"
+-- | Generates the CSS @olivedrab@ \<named-color\> value.
+olivedrab :: Color
+olivedrab = Color "olivedrab"
 {-# INLINE olivedrab #-}
 
 
--- | Generates the CSS color @orange@.
-orange :: Builder
-orange = "orange"
+-- | Generates the CSS @orange@ \<named-color\> value.
+orange :: Color
+orange = Color "orange"
 {-# INLINE orange #-}
 
 
--- | Generates the CSS color @orangered@.
-orangered :: Builder
-orangered = "orangered"
+-- | Generates the CSS @orangered@ \<named-color\> value.
+orangered :: Color
+orangered = Color "orangered"
 {-# INLINE orangered #-}
 
 
--- | Generates the CSS color @orchid@.
-orchid :: Builder
-orchid = "orchid"
+-- | Generates the CSS @orchid@ \<named-color\> value.
+orchid :: Color
+orchid = Color "orchid"
 {-# INLINE orchid #-}
 
 
--- | Generates the CSS color @palegoldenrod@.
-palegoldenrod :: Builder
-palegoldenrod = "palegoldenrod"
+-- | Generates the CSS @palegoldenrod@ \<named-color\> value.
+palegoldenrod :: Color
+palegoldenrod = Color "palegoldenrod"
 {-# INLINE palegoldenrod #-}
 
 
--- | Generates the CSS color @palegreen@.
-palegreen :: Builder
-palegreen = "palegreen"
+-- | Generates the CSS @palegreen@ \<named-color\> value.
+palegreen :: Color
+palegreen = Color "palegreen"
 {-# INLINE palegreen #-}
 
 
--- | Generates the CSS color @paleturquoise@.
-paleturquoise :: Builder
-paleturquoise = "paleturquoise"
+-- | Generates the CSS @paleturquoise@ \<named-color\> value.
+paleturquoise :: Color
+paleturquoise = Color "paleturquoise"
 {-# INLINE paleturquoise #-}
 
 
--- | Generates the CSS color @palevioletred@.
-palevioletred :: Builder
-palevioletred = "palevioletred"
+-- | Generates the CSS @palevioletred@ \<named-color\> value.
+palevioletred :: Color
+palevioletred = Color "palevioletred"
 {-# INLINE palevioletred #-}
 
 
--- | Generates the CSS color @papayawhip@.
-papayawhip :: Builder
-papayawhip = "papayawhip"
+-- | Generates the CSS @papayawhip@ \<named-color\> value.
+papayawhip :: Color
+papayawhip = Color "papayawhip"
 {-# INLINE papayawhip #-}
 
 
--- | Generates the CSS color @peachpuff@.
-peachpuff :: Builder
-peachpuff = "peachpuff"
+-- | Generates the CSS @peachpuff@ \<named-color\> value.
+peachpuff :: Color
+peachpuff = Color "peachpuff"
 {-# INLINE peachpuff #-}
 
 
--- | Generates the CSS color @peru@.
-peru :: Builder
-peru = "peru"
+-- | Generates the CSS @peru@ \<named-color\> value.
+peru :: Color
+peru = Color "peru"
 {-# INLINE peru #-}
 
 
--- | Generates the CSS color @pink@.
-pink :: Builder
-pink = "pink"
+-- | Generates the CSS @pink@ \<named-color\> value.
+pink :: Color
+pink = Color "pink"
 {-# INLINE pink #-}
 
 
--- | Generates the CSS color @plum@.
-plum :: Builder
-plum = "plum"
+-- | Generates the CSS @plum@ \<named-color\> value.
+plum :: Color
+plum = Color "plum"
 {-# INLINE plum #-}
 
 
--- | Generates the CSS color @powderblue@.
-powderblue :: Builder
-powderblue = "powderblue"
+-- | Generates the CSS @powderblue@ \<named-color\> value.
+powderblue :: Color
+powderblue = Color "powderblue"
 {-# INLINE powderblue #-}
 
 
--- | Generates the CSS color @purple@.
-purple :: Builder
-purple = "purple"
+-- | Generates the CSS @purple@ \<named-color\> value.
+purple :: Color
+purple = Color "purple"
 {-# INLINE purple #-}
 
 
--- | Generates the CSS color @rebeccapurple@.
-rebeccapurple :: Builder
-rebeccapurple = "rebeccapurple"
+-- | Generates the CSS @rebeccapurple@ \<named-color\> value.
+rebeccapurple :: Color
+rebeccapurple = Color "rebeccapurple"
 {-# INLINE rebeccapurple #-}
 
 
--- | Generates the CSS color @red@.
-red :: Builder
-red = "red"
+-- | Generates the CSS @red@ \<named-color\> value.
+red :: Color
+red = Color "red"
 {-# INLINE red #-}
 
 
--- | Generates the CSS color @rosybrown@.
-rosybrown :: Builder
-rosybrown = "rosybrown"
+-- | Generates the CSS @rosybrown@ \<named-color\> value.
+rosybrown :: Color
+rosybrown = Color "rosybrown"
 {-# INLINE rosybrown #-}
 
 
--- | Generates the CSS color @royalblue@.
-royalblue :: Builder
-royalblue = "royalblue"
+-- | Generates the CSS @royalblue@ \<named-color\> value.
+royalblue :: Color
+royalblue = Color "royalblue"
 {-# INLINE royalblue #-}
 
 
--- | Generates the CSS color @saddlebrown@.
-saddlebrown :: Builder
-saddlebrown = "saddlebrown"
+-- | Generates the CSS @saddlebrown@ \<named-color\> value.
+saddlebrown :: Color
+saddlebrown = Color "saddlebrown"
 {-# INLINE saddlebrown #-}
 
 
--- | Generates the CSS color @salmon@.
-salmon :: Builder
-salmon = "salmon"
+-- | Generates the CSS @salmon@ \<named-color\> value.
+salmon :: Color
+salmon = Color "salmon"
 {-# INLINE salmon #-}
 
 
--- | Generates the CSS color @sandybrown@.
-sandybrown :: Builder
-sandybrown = "sandybrown"
+-- | Generates the CSS @sandybrown@ \<named-color\> value.
+sandybrown :: Color
+sandybrown = Color "sandybrown"
 {-# INLINE sandybrown #-}
 
 
--- | Generates the CSS color @seagreen@.
-seagreen :: Builder
-seagreen = "seagreen"
+-- | Generates the CSS @seagreen@ \<named-color\> value.
+seagreen :: Color
+seagreen = Color "seagreen"
 {-# INLINE seagreen #-}
 
 
--- | Generates the CSS color @seashell@.
-seashell :: Builder
-seashell = "seashell"
+-- | Generates the CSS @seashell@ \<named-color\> value.
+seashell :: Color
+seashell = Color "seashell"
 {-# INLINE seashell #-}
 
 
--- | Generates the CSS color @sienna@.
-sienna :: Builder
-sienna = "sienna"
+-- | Generates the CSS @sienna@ \<named-color\> value.
+sienna :: Color
+sienna = Color "sienna"
 {-# INLINE sienna #-}
 
 
--- | Generates the CSS color @silver@.
-silver :: Builder
-silver = "silver"
+-- | Generates the CSS @silver@ \<named-color\> value.
+silver :: Color
+silver = Color "silver"
 {-# INLINE silver #-}
 
 
--- | Generates the CSS color @skyblue@.
-skyblue :: Builder
-skyblue = "skyblue"
+-- | Generates the CSS @skyblue@ \<named-color\> value.
+skyblue :: Color
+skyblue = Color "skyblue"
 {-# INLINE skyblue #-}
 
 
--- | Generates the CSS color @slateblue@.
-slateblue :: Builder
-slateblue = "slateblue"
+-- | Generates the CSS @slateblue@ \<named-color\> value.
+slateblue :: Color
+slateblue = Color "slateblue"
 {-# INLINE slateblue #-}
 
 
--- | Generates the CSS color @slategray@.
-slategray :: Builder
-slategray = "slategray"
+-- | Generates the CSS @slategray@ \<named-color\> value.
+slategray :: Color
+slategray = Color "slategray"
 {-# INLINE slategray #-}
 
 
--- | Generates the CSS color @slategrey@.
-slategrey :: Builder
-slategrey = "slategrey"
+-- | Generates the CSS @slategrey@ \<named-color\> value.
+slategrey :: Color
+slategrey = Color "slategrey"
 {-# INLINE slategrey #-}
 
 
--- | Generates the CSS color @snow@.
-snow :: Builder
-snow = "snow"
+-- | Generates the CSS @snow@ \<named-color\> value.
+snow :: Color
+snow = Color "snow"
 {-# INLINE snow #-}
 
 
--- | Generates the CSS color @springgreen@.
-springgreen :: Builder
-springgreen = "springgreen"
+-- | Generates the CSS @springgreen@ \<named-color\> value.
+springgreen :: Color
+springgreen = Color "springgreen"
 {-# INLINE springgreen #-}
 
 
--- | Generates the CSS color @steelblue@.
-steelblue :: Builder
-steelblue = "steelblue"
+-- | Generates the CSS @steelblue@ \<named-color\> value.
+steelblue :: Color
+steelblue = Color "steelblue"
 {-# INLINE steelblue #-}
 
 
--- | Generates the CSS color @tan@.
-tan :: Builder
-tan = "tan"
+-- | Generates the CSS @tan@ \<named-color\> value.
+tan :: Color
+tan = Color "tan"
 {-# INLINE tan #-}
 
 
--- | Generates the CSS color @teal@.
-teal :: Builder
-teal = "teal"
+-- | Generates the CSS @teal@ \<named-color\> value.
+teal :: Color
+teal = Color "teal"
 {-# INLINE teal #-}
 
 
--- | Generates the CSS color @thistle@.
-thistle :: Builder
-thistle = "thistle"
+-- | Generates the CSS @thistle@ \<named-color\> value.
+thistle :: Color
+thistle = Color "thistle"
 {-# INLINE thistle #-}
 
 
--- | Generates the CSS color @tomato@.
-tomato :: Builder
-tomato = "tomato"
+-- | Generates the CSS @tomato@ \<named-color\> value.
+tomato :: Color
+tomato = Color "tomato"
 {-# INLINE tomato #-}
 
 
--- | Generates the CSS color @transparent@.
-transparent :: Builder
-transparent = "transparent"
+-- | Generates the CSS @transparent@ \<named-color\> value.
+transparent :: Color
+transparent = Color "transparent"
 {-# INLINE transparent #-}
 
 
--- | Generates the CSS color @turquoise@.
-turquoise :: Builder
-turquoise = "turquoise"
+-- | Generates the CSS @turquoise@ \<named-color\> value.
+turquoise :: Color
+turquoise = Color "turquoise"
 {-# INLINE turquoise #-}
 
 
--- | Generates the CSS color @violet@.
-violet :: Builder
-violet = "violet"
+-- | Generates the CSS @violet@ \<named-color\> value.
+violet :: Color
+violet = Color "violet"
 {-# INLINE violet #-}
 
 
--- | Generates the CSS color @wheat@.
-wheat :: Builder
-wheat = "wheat"
+-- | Generates the CSS @wheat@ \<named-color\> value.
+wheat :: Color
+wheat = Color "wheat"
 {-# INLINE wheat #-}
 
 
--- | Generates the CSS color @white@.
-white :: Builder
-white = "white"
+-- | Generates the CSS @white@ \<named-color\> value.
+white :: Color
+white = Color "white"
 {-# INLINE white #-}
 
 
--- | Generates the CSS color @whitesmoke@.
-whitesmoke :: Builder
-whitesmoke = "whitesmoke"
+-- | Generates the CSS @whitesmoke@ \<named-color\> value.
+whitesmoke :: Color
+whitesmoke = Color "whitesmoke"
 {-# INLINE whitesmoke #-}
 
 
--- | Generates the CSS color @yellow@.
-yellow :: Builder
-yellow = "yellow"
+-- | Generates the CSS @yellow@ \<named-color\> value.
+yellow :: Color
+yellow = Color "yellow"
 {-# INLINE yellow #-}
 
--- | Generates the CSS color @yellowgreen@.
-yellowgreen :: Builder
-yellowgreen = "yellowgreen"
+
+-- | Generates the CSS @yellowgreen@ \<named-color\> value.
+yellowgreen :: Color
+yellowgreen = Color "yellowgreen"
 {-# INLINE yellowgreen #-}
+
+
+-- SYSTEM COLOR VALUES
+
+
+-- | Generates the CSS @AccentColor@ \<system-color\> value.
+accentColor :: Color
+accentColor = Color "AccentColor"
+{-# INLINE accentColor #-}
+
+
+-- | Generates the CSS @AccentColorText@ \<system-color\> value.
+accentColorText :: Color
+accentColorText = Color "AccentColorText"
+{-# INLINE accentColorText #-}
+
+
+-- | Generates the CSS @ActiveText@ \<system-color\> value.
+activeText :: Color
+activeText = Color "ActiveText"
+{-# INLINE activeText #-}
+
+
+-- | Generates the CSS @ButtonBorder@ \<system-color\> value.
+buttonBorder :: Color
+buttonBorder = Color "ButtonBorder"
+{-# INLINE buttonBorder #-}
+
+
+-- | Generates the CSS @ButtonFace@ \<system-color\> value.
+buttonFace :: Color
+buttonFace = Color "ButtonFace"
+{-# INLINE buttonFace #-}
+
+
+-- | Generates the CSS @ButtonText@ \<system-color\> value.
+buttonText :: Color
+buttonText = Color "ButtonText"
+{-# INLINE buttonText #-}
+
+
+-- | Generates the CSS @Canvas@ \<system-color\> value.
+canvas :: Color
+canvas = Color "Canvas"
+{-# INLINE canvas #-}
+
+
+-- | Generates the CSS @CanvasText@ \<system-color\> value.
+canvasText :: Color
+canvasText = Color "CanvasText"
+{-# INLINE canvasText #-}
+
+
+-- | Generates the CSS @Field@ \<system-color\> value.
+field :: Color
+field = Color "Field"
+{-# INLINE field #-}
+
+
+-- | Generates the CSS @FieldText@ \<system-color\> value.
+fieldText :: Color
+fieldText = Color "FieldText"
+{-# INLINE fieldText #-}
+
+
+-- | Generates the CSS @GrayText@ \<system-color\> value.
+grayText :: Color
+grayText = Color "GrayText"
+{-# INLINE grayText #-}
+
+
+-- | Generates the CSS @Highlight@ \<system-color\> value.
+highlight :: Color
+highlight = Color "Highlight"
+{-# INLINE highlight #-}
+
+
+-- | Generates the CSS @HighlightText@ \<system-color\> value.
+highlightText :: Color
+highlightText = Color "HighlightText"
+{-# INLINE highlightText #-}
+
+
+-- | Generates the CSS @LinkText@ \<system-color\> value.
+linkText :: Color
+linkText = Color "LinkText"
+{-# INLINE linkText #-}
+
+
+-- | Generates the CSS @Mark@ \<system-color\> value.
+mark :: Color
+mark = Color "Mark"
+{-# INLINE mark #-}
+
+
+-- | Generates the CSS @MarkText@ \<system-color\> value.
+markText :: Color
+markText = Color "MarkText"
+{-# INLINE markText #-}
+
+
+-- | Generates the CSS @VisitedText@ \<system-color\> value.
+visitedText :: Color
+visitedText = Color "VisitedText"
+{-# INLINE visitedText #-}

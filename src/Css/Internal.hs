@@ -16,18 +16,22 @@ module Css.Internal
     , extractAndHash
       -- ** extractAndHashIntl
     , extractAndHashIntl
+      -- ** toHex
+    , showHex
     ) where
 
 
 import Prelude hiding (compare, foldl)
 
 import Data.Bits                        (xor)
+import Data.Char                        (intToDigit)
 import Data.List                        (partition)
 import Data.Map                         (Map, empty, foldrWithKey, insert)
 import Data.Text.Lazy                   (Text, foldl)
-import Data.Text.Lazy.Builder           (Builder, singleton, toLazyText)
+import Data.Text.Lazy.Builder           (Builder, fromString, singleton, toLazyText)
 import Data.Text.Lazy.Builder.Int       (decimal)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
+import Data.Word                        (Word32)
 import Html                             (Html(..), Attribute(..), Buildable(..), Translatable(..))
 
 
@@ -48,6 +52,15 @@ extractAndHashIntl :: Translatable a => (a -> Builder) -> Html a -> Builder
 extractAndHashIntl lang html = buildIntlWithMap lang map html'
   where
     (map, html') = extractWithMap empty html
+
+
+showHex :: Word32 -> Builder
+showHex = fromString . ('#' :) . reverse . showHex' . fromIntegral
+  where
+    showHex' 0   = "0"
+    showHex' num = split $ num `divMod` 16
+
+    split (quotient, remainder) = if quotient == 0 then [intToDigit remainder] else intToDigit remainder : showHex' quotient
 
 
 -- HELPER FUNCTIONS

@@ -134,7 +134,6 @@ module Css.Numeric
     , vw
 
       -- ** \<percentage\>
-      -- *** \%
     , pct
 
       -- ** \<resolution\>
