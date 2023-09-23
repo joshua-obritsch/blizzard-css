@@ -26,10 +26,9 @@ library
     exposed-modules:    Css
                       , Css.Attributes
                       , Css.Colors
-                      , Css.Dimension
                       , Css.Functions
+                      , Css.Numeric
                       , Css.Intl
-                      , Css.Percentage
                       , Css.Properties
                       , Css.Values
     other-modules:      Css.Internal

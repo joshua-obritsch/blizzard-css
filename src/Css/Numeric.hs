@@ -1,29 +1,35 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.Dimension
+-- | Module    : Css.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Dimension" module provides a set of functions for generating CSS \<dimension\> units.
-module Css.Dimension
+-- The "Css.Numeric" module provides a set of functions for generating CSS numeric types.
+module Css.Numeric
     ( -- * Types
-      -- ** Dimension
-      Dimension(..)
       -- ** Angle
-    , Angle(..)
+      Angle
       -- ** Length
-    , Length(..)
+    , Length
+      -- ** Percentage
+    , Percentage
       -- ** Resolution
-    , Resolution(..)
+    , Resolution
       -- ** Time
-    , Time(..)
+    , Time
 
       -- * Classes
-      -- ** ToDimension
-    , ToDimension(..)
+      -- ** Dimension
+    , Dimension(..)
+      -- ** AnglePercentage
+    , AnglePercentage(..)
+      -- ** LengthPercentage
+    , LengthPercentage(..)
+      -- ** TimePercentage
+    , TimePercentage(..)
 
       -- * Units
 
@@ -127,6 +133,10 @@ module Css.Dimension
       -- *** vw
     , vw
 
+      -- ** \<percentage\>
+      -- *** \%
+    , pct
+
       -- ** \<resolution\>
       -- *** dpcm
     , dpcm
@@ -156,17 +166,6 @@ import Html                   (Buildable(..))
 -- TYPES
 
 
-newtype Dimension = Dimension { unDimension :: Builder }
-
-
-instance Buildable Dimension where
-    build = unDimension
-
-
-instance Show Dimension where
-    show = unpack . toLazyText . build
-
-
 newtype Angle = Angle { unAngle :: Builder }
 
 
@@ -178,8 +177,12 @@ instance Show Angle where
     show = unpack . toLazyText . build
 
 
-instance ToDimension Angle where
-    toDimension = Dimension . unAngle
+instance Dimension Angle where
+    toDimension = InternalDimension . unAngle
+
+
+instance AnglePercentage Angle where
+    toAnglePercentage = InternalAnglePercentage . unAngle
 
 
 newtype Length = Length { unLength :: Builder }
@@ -193,8 +196,35 @@ instance Show Length where
     show = unpack . toLazyText . build
 
 
-instance ToDimension Length where
-    toDimension = Dimension . unLength
+instance Dimension Length where
+    toDimension = InternalDimension . unLength
+
+
+instance LengthPercentage Length where
+    toLengthPercentage = InternalLengthPercentage . unLength
+
+
+newtype Percentage = Percentage { unPercentage :: Builder }
+
+
+instance Buildable Percentage where
+    build = unPercentage
+
+
+instance Show Percentage where
+    show = unpack . toLazyText . build
+
+
+instance AnglePercentage Percentage where
+    toAnglePercentage = InternalAnglePercentage . unPercentage
+
+
+instance LengthPercentage Percentage where
+    toLengthPercentage = InternalLengthPercentage . unPercentage
+
+
+instance TimePercentage Percentage where
+    toTimePercentage = InternalTimePercentage . unPercentage
 
 
 newtype Resolution = Resolution { unResolution :: Builder }
@@ -208,8 +238,8 @@ instance Show Resolution where
     show = unpack . toLazyText . build
 
 
-instance ToDimension Resolution where
-    toDimension = Dimension . unResolution
+instance Dimension Resolution where
+    toDimension = InternalDimension . unResolution
 
 
 newtype Time = Time { unTime :: Builder }
@@ -223,15 +253,31 @@ instance Show Time where
     show = unpack . toLazyText . build
 
 
-instance ToDimension Time where
-    toDimension = Dimension . unTime
+instance Dimension Time where
+    toDimension = InternalDimension . unTime
+
+
+instance TimePercentage Time where
+    toTimePercentage = InternalTimePercentage . unTime
 
 
 -- CLASSES
 
 
-class ToDimension a where
-    toDimension :: a -> Dimension
+class Dimension a where
+    toDimension :: a -> InternalDimension
+
+
+class AnglePercentage a where
+    toAnglePercentage :: a -> InternalAnglePercentage
+
+
+class LengthPercentage a where
+    toLengthPercentage :: a -> InternalLengthPercentage
+
+
+class TimePercentage a where
+    toTimePercentage :: a -> InternalTimePercentage
 
 
 -- ANGLE UNITS
@@ -528,6 +574,14 @@ vw = Length . fromDouble "vw"
 {-# INLINE vw #-}
 
 
+-- PERCENTAGE UNITS
+
+
+-- | Generates a CSS @\%@ \<percentage\> unit.
+pct :: Double -> Percentage
+pct = Percentage . fromDouble "%"
+
+
 -- RESOLUTION UNITS
 
 
@@ -568,3 +622,50 @@ ms = Time . fromDouble "ms"
 s :: Double -> Time
 s = Time . fromDouble "s"
 {-# INLINE s #-}
+
+
+-- PRIVATE TYPES
+
+
+newtype InternalDimension = InternalDimension { unDimension :: Builder }
+
+
+instance Buildable InternalDimension where
+    build = unDimension
+
+
+instance Show InternalDimension where
+    show = unpack . toLazyText . build
+
+
+newtype InternalAnglePercentage = InternalAnglePercentage { unAnglePercentage :: Builder }
+
+
+instance Buildable InternalAnglePercentage where
+    build = unAnglePercentage
+
+
+instance Show InternalAnglePercentage where
+    show = unpack . toLazyText . build
+
+
+newtype InternalLengthPercentage = InternalLengthPercentage { unLengthPercentage :: Builder }
+
+
+instance Buildable InternalLengthPercentage where
+    build = unLengthPercentage
+
+
+instance Show InternalLengthPercentage where
+    show = unpack . toLazyText . build
+
+
+newtype InternalTimePercentage = InternalTimePercentage { unTimePercentage :: Builder }
+
+
+instance Buildable InternalTimePercentage where
+    build = unTimePercentage
+
+
+instance Show InternalTimePercentage where
+    show = unpack . toLazyText . build
