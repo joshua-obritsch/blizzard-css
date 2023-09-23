@@ -10,8 +10,10 @@
 -- The "Css.Internal" module provides a set of utility functions for hashing and building CSS.
 module Css.Internal
     ( -- * Utilities
+      -- ** fromDouble
+      fromDouble
       -- ** extractAndHash
-      extractAndHash
+    , extractAndHash
       -- ** extractAndHashIntl
     , extractAndHashIntl
     ) where
@@ -30,6 +32,10 @@ import Html                             (Html(..), Attribute(..), Buildable(..),
 
 
 -- UTILITIES
+
+
+fromDouble :: Builder -> Double -> Builder
+fromDouble suffix value = realFloat value <> suffix
 
 
 extractAndHash :: Html lng -> Builder

@@ -60,6 +60,62 @@ import Html                             (Buildable(..))
 import qualified Data.Text.Lazy.Read as Read
 
 
+    {-
+class IntegerOrPercentage a where
+    integerOrPercentage :: a -> Builder
+
+
+instance IntegerOrPercentage Integer where
+    integerOrPercentage = decimal . fromInteger
+
+
+instance IntegerOrPercentage Percentage where
+    integerOrPercentage = unPercentage
+
+
+newtype Color = Color { unColor :: Builder }
+  deriving Show
+
+
+rgb :: (IntegerOrPercentage a, IntegerOrPercentage b, IntegerOrPercentage c) => a -> b -> c -> Color
+rgb red green blue
+    =  Color
+    $  "rgb("
+    <> integerOrPercentage red
+    <> singleton ','
+    <> integerOrPercentage green
+    <> singleton ','
+    <> integerOrPercentage blue
+    <> singleton ')'
+
+
+--class Auto a where auto :: a
+newtype Auto = Auto { unAuto :: Builder }
+
+
+auto :: Auto
+auto = Auto "auto"
+
+
+instance AccentColor Auto where
+    unAccentColor = unAuto
+
+
+--instance AccentColor IntegerOrPercentage where
+    --unAccentColor = integerOrPercentage
+
+
+class AccentColor a where
+    unAccentColor :: a -> Builder
+
+
+--data Css
+
+
+accentColor :: AccentColor a => a -> Builder
+accentColor = unAccentColor
+-}
+
 instance Num Builder where
     (+) a b     = a <> singleton '+' <> b
     (-) a b     = a <> singleton '-' <> b

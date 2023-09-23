@@ -26,10 +26,11 @@ library
     exposed-modules:    Css
                       , Css.Attributes
                       , Css.Colors
+                      , Css.Dimension
                       , Css.Functions
                       , Css.Intl
+                      , Css.Percentage
                       , Css.Properties
-                      , Css.Units
                       , Css.Values
     other-modules:      Css.Internal
     hs-source-dirs:     src

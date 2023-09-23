@@ -10,17 +10,19 @@ module Css
       -- ** build
       build
     , module Css.Colors
+    , module Css.Dimension
     , module Css.Functions
+    , module Css.Percentage
     , module Css.Properties
-    , module Css.Units
     , module Css.Values
     ) where
 
 
 import Css.Colors     hiding (tan)
+import Css.Dimension  hiding (rem)
 import Css.Functions
+import Css.Percentage
 import Css.Properties hiding (all, filter)
-import Css.Units      hiding (rem)
 import Css.Values     hiding (color)
 
 import Css.Internal           (extractAndHash)
