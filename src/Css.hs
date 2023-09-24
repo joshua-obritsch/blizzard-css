@@ -11,6 +11,7 @@ module Css
       build
     , module Css.Colors
     , module Css.Functions
+    , module Css.Keywords
     , module Css.Numeric
     , module Css.Properties
     , module Css.Values
@@ -19,6 +20,7 @@ module Css
 
 import Css.Colors     hiding (tan)
 import Css.Functions
+import Css.Keywords
 import Css.Numeric    hiding (rem)
 import Css.Properties hiding (all, filter)
 import Css.Values     hiding (color)

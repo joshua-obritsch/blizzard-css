@@ -12,6 +12,8 @@ module Css.Internal
     ( -- * Utilities
       -- ** fromDouble
       fromDouble
+      -- ** lazyShow
+    , lazyShow
       -- ** extractAndHash
     , extractAndHash
       -- ** extractAndHashIntl
@@ -27,7 +29,7 @@ import Data.Bits                        (xor)
 import Data.Char                        (intToDigit)
 import Data.List                        (partition)
 import Data.Map                         (Map, empty, foldrWithKey, insert)
-import Data.Text.Lazy                   (Text, foldl)
+import Data.Text.Lazy                   (Text, foldl, unpack)
 import Data.Text.Lazy.Builder           (Builder, fromString, singleton, toLazyText)
 import Data.Text.Lazy.Builder.Int       (decimal)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
@@ -38,8 +40,15 @@ import Html                             (Html(..), Attribute(..), Buildable(..),
 -- UTILITIES
 
 
+instance Buildable Double where build = realFloat
+
+
 fromDouble :: Builder -> Double -> Builder
 fromDouble suffix value = realFloat value <> suffix
+
+
+lazyShow :: Buildable a => a -> String
+lazyShow = unpack . toLazyText . build
 
 
 extractAndHash :: Html lng -> Builder

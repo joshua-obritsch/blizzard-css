@@ -27,6 +27,7 @@ library
                       , Css.Attributes
                       , Css.Colors
                       , Css.Functions
+                      , Css.Keywords
                       , Css.Numeric
                       , Css.Intl
                       , Css.Properties

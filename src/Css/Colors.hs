@@ -356,24 +356,35 @@ module Css.Colors
     , markText
       -- *** VisitedText
     , visitedText
+    , hsl
+    , hsla
+    , rgb
+    , rgba
     ) where
 
 
 import Prelude hiding (tan)
 
-import Css.Internal           (showHex)
-import Data.Text.Lazy         (unpack)
-import Data.Text.Lazy.Builder (Builder, toLazyText)
+import Css.Internal           (lazyShow, showHex)
+import Css.Keywords           (None)
+import Css.Numeric            (Angle, Percentage)
+import Data.Text.Lazy.Builder (Builder, singleton)
 import Data.Word              (Word32)
 import Html                   (Buildable(..))
 
 
-class Hue a where
-    toHue :: a -> Builder
+{- TODO: Add this later
+class None a where none :: a
+class Inherit a where inherit :: a
 
 
-hsl :: (Hue a) => a -> Builder
-hsl a = toHue a
+instance None Builder where none = "none"
+instance Inherit Builder where inherit = "inherit"
+
+
+newtype Saturation = Saturation Builder
+    deriving (None, Inherit)
+-}
 
 
 -- TYPES
@@ -382,12 +393,98 @@ hsl a = toHue a
 newtype Color = Color { unColor :: Builder }
 
 
-instance Buildable Color where
-    build = unColor
+instance Buildable Color where build = unColor
+instance Show      Color where show  = lazyShow
 
 
-instance Show Color where
-    show = unpack . toLazyText . build
+class Hue a where unHue :: a -> Builder
+
+
+instance Hue Angle  where unHue = build
+instance Hue Double where unHue = build
+instance Hue None   where unHue = build
+
+
+class Saturation a where unSaturation :: a -> Builder
+
+
+instance Saturation Percentage where unSaturation = build
+instance Saturation None       where unSaturation = build
+
+
+class Lightness a where unLightness :: a -> Builder
+
+
+instance Lightness Percentage where unLightness = build
+instance Lightness None       where unLightness = build
+
+
+class AlphaValue a where unAlphaValue :: a -> Builder
+
+
+instance AlphaValue Double     where unAlphaValue = build
+instance AlphaValue Percentage where unAlphaValue = build
+instance AlphaValue None       where unAlphaValue = build
+
+
+class RgbValue a where unRgbValue :: a -> Builder
+
+
+instance RgbValue Double     where unRgbValue = build
+instance RgbValue Percentage where unRgbValue = build
+instance RgbValue None       where unRgbValue = build
+
+
+hsl :: (Hue a, Saturation b, Lightness c) => a -> b -> c -> Color
+hsl hue saturation lightness
+    =  Color
+    $  "hsl("
+    <> unHue hue
+    <> singleton ' '
+    <> unSaturation saturation
+    <> singleton ' '
+    <> unLightness lightness
+    <> singleton ')'
+
+
+hsla :: (Hue a, Saturation b, Lightness c, AlphaValue d) => a -> b -> c -> d -> Color
+hsla hue saturation lightness alpha
+    =  Color
+    $  "hsl("
+    <> unHue hue
+    <> singleton ' '
+    <> unSaturation saturation
+    <> singleton ' '
+    <> unLightness lightness
+    <> " / "
+    <> unAlphaValue alpha
+    <> singleton ')'
+
+
+rgb :: (RgbValue a, RgbValue b, RgbValue c) => a -> b -> c -> Color
+rgb red green blue
+    =  Color
+    $  "rgb("
+    <> unRgbValue red
+    <> singleton ' '
+    <> unRgbValue green
+    <> singleton ' '
+    <> unRgbValue blue
+    <> singleton ')'
+
+
+rgba :: (RgbValue a, RgbValue b, RgbValue c, AlphaValue d) => a -> b -> c -> d -> Color
+rgba red green blue alpha
+    =  Color
+    $  "rgb("
+    <> unRgbValue red
+    <> singleton ' '
+    <> unRgbValue green
+    <> singleton ' '
+    <> unRgbValue blue
+    <> " / "
+    <> unAlphaValue alpha
+    <> singleton ')'
 
 
 -- CURRENTCOLOR VALUES

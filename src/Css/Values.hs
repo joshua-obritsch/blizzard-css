@@ -15,9 +15,9 @@ module Css.Values
       -- ** color
       color
       -- ** inherit
-    , inherit
+    --, inherit
       -- ** initial
-    , initial
+    --, initial
     ) where
 
 

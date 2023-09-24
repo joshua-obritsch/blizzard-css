@@ -21,9 +21,9 @@ module Css.Functions
       -- ** cubic-bezier
     , cubicBezier
       -- ** hsl
-    , hsl
+    --, hsl
       -- ** hsla
-    , hsla
+    --, hsla
       -- ** linear-gradient
     , linearGradient
       -- ** max
@@ -41,7 +41,7 @@ module Css.Functions
       -- ** rgb
     --, rgb
       -- ** rgba
-    , rgba
+    --, rgba
       -- ** var
     , var
     ) where

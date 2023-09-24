@@ -10,34 +10,16 @@
 -- The "Css.Numeric" module provides a set of functions for generating CSS numeric types.
 module Css.Numeric
     ( -- * Types
-      -- ** Dimension
-      Dimension
       -- ** Angle
-    , Angle
+      Angle
       -- ** Length
     , Length
+      -- ** Percentage
+    , Percentage
       -- ** Resolution
     , Resolution
       -- ** Time
     , Time
-      -- ** Percentage
-    , Percentage
-      -- ** AnglePercentage
-    , AnglePercentage
-      -- ** LengthPercentage
-    , LengthPercentage
-      -- ** TimePercentage
-    , TimePercentage
-
-      -- * Classes
-      -- ** ToDimension
-    , ToDimension(..)
-      -- ** ToAnglePercentage
-    , ToAnglePercentage(..)
-      -- ** ToLengthPercentage
-    , ToLengthPercentage(..)
-      -- ** ToTimePercentage
-    , ToTimePercentage(..)
 
       -- * Units
 
@@ -164,171 +146,47 @@ module Css.Numeric
 
 import Prelude hiding (rem)
 
-import Css.Internal           (fromDouble)
-import Data.Text.Lazy         (unpack)
-import Data.Text.Lazy.Builder (Builder, toLazyText)
+import Css.Internal           (fromDouble, lazyShow)
+import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
 
 
 -- TYPES
 
 
-newtype Dimension = Dimension Builder
+newtype Angle = Angle { unAngle :: Builder }
 
 
-instance Buildable Dimension where
-    build (Dimension value) = value
+instance Buildable Angle where build = unAngle
+instance Show      Angle where show  = lazyShow
 
 
-instance Show Dimension where
-    show = unpack . toLazyText . build
+newtype Length = Length { unLength :: Builder }
 
 
-newtype Angle = Angle Builder
+instance Buildable Length where build = unLength
+instance Show      Length where show  = lazyShow
 
 
-instance Buildable Angle where
-    build (Angle value) = value
+newtype Percentage = Percentage { unPercentage :: Builder }
 
 
-instance Show Angle where
-    show = unpack . toLazyText . build
+instance Buildable Percentage where build = unPercentage
+instance Show      Percentage where show  = lazyShow
 
 
-instance ToDimension Angle where
-    toDimension (Angle value) = Dimension value
+newtype Resolution = Resolution { unResolution :: Builder }
 
 
-instance ToAnglePercentage Angle where
-    toAnglePercentage (Angle value) = AnglePercentage value
+instance Buildable Resolution where build = unResolution
+instance Show      Resolution where show  = lazyShow
 
 
-newtype Length = Length Builder
+newtype Time = Time { unTime :: Builder }
 
 
-instance Buildable Length where
-    build (Length value) = value
-
-
-instance Show Length where
-    show = unpack . toLazyText . build
-
-
-instance ToDimension Length where
-    toDimension (Length value) = Dimension value
-
-
-instance ToLengthPercentage Length where
-    toLengthPercentage (Length value) = LengthPercentage value
-
-
-newtype Resolution = Resolution Builder
-
-
-instance Buildable Resolution where
-    build (Resolution value) = value
-
-
-instance Show Resolution where
-    show = unpack . toLazyText . build
-
-
-instance ToDimension Resolution where
-    toDimension (Resolution value) = Dimension value
-
-
-newtype Time = Time Builder
-
-
-instance Buildable Time where
-    build (Time value) = value
-
-
-instance Show Time where
-    show = unpack . toLazyText . build
-
-
-instance ToDimension Time where
-    toDimension (Time value) = Dimension value
-
-
-instance ToTimePercentage Time where
-    toTimePercentage (Time value) = TimePercentage value
-
-
-newtype Percentage = Percentage Builder
-
-
-instance Buildable Percentage where
-    build (Percentage value) = value
-
-
-instance Show Percentage where
-    show = unpack . toLazyText . build
-
-
-instance ToAnglePercentage Percentage where
-    toAnglePercentage (Percentage value) = AnglePercentage value
-
-
-instance ToLengthPercentage Percentage where
-    toLengthPercentage (Percentage value) = LengthPercentage value
-
-
-instance ToTimePercentage Percentage where
-    toTimePercentage (Percentage value) = TimePercentage value
-
-
-newtype AnglePercentage = AnglePercentage Builder
-
-
-instance Buildable AnglePercentage where
-    build (AnglePercentage value) = value
-
-
-instance Show AnglePercentage where
-    show = unpack . toLazyText . build
-
-
-newtype LengthPercentage = LengthPercentage Builder
-
-
-instance Buildable LengthPercentage where
-    build (LengthPercentage value) = value
-
-
-instance Show LengthPercentage where
-    show = unpack . toLazyText . build
-
-
-newtype TimePercentage = TimePercentage Builder
-
-
-instance Buildable TimePercentage where
-    build (TimePercentage value) = value
-
-
-instance Show TimePercentage where
-    show = unpack . toLazyText . build
-
-
--- CLASSES
-
-
-class ToDimension a where
-    toDimension :: a -> Dimension
-
-
-class ToAnglePercentage a where
-    toAnglePercentage :: a -> AnglePercentage
-
-
-class ToLengthPercentage a where
-    toLengthPercentage :: a -> LengthPercentage
-
-
-class ToTimePercentage a where
-    toTimePercentage :: a -> TimePercentage
+instance Buildable Time where build = unTime
+instance Show      Time where show  = lazyShow
 
 
 -- ANGLE UNITS
