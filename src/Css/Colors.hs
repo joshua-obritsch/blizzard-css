@@ -373,20 +373,6 @@ import Data.Word              (Word32)
 import Html                   (Buildable(..))
 
 
-{- TODO: Add this later
-class None a where none :: a
-class Inherit a where inherit :: a
-
-
-instance None Builder where none = "none"
-instance Inherit Builder where inherit = "inherit"
-
-
-newtype Saturation = Saturation Builder
-    deriving (None, Inherit)
--}
-
-
 -- TYPES
 
 
@@ -397,93 +383,218 @@ instance Buildable Color where build = unColor
 instance Show      Color where show  = lazyShow
 
 
-class Hue a where unHue :: a -> Builder
+newtype Colorspace = Colorspace { unColorspace :: Builder }
 
 
-instance Hue Angle  where unHue = build
-instance Hue Double where unHue = build
-instance Hue None   where unHue = build
+instance Buildable Colorspace where build = unColorspace
+instance Show      Colorspace where show  = lazyShow
 
 
-class Saturation a where unSaturation :: a -> Builder
+class NumberAngleNone a where unNumberAngleNone :: a -> Builder
 
 
-instance Saturation Percentage where unSaturation = build
-instance Saturation None       where unSaturation = build
+instance NumberAngleNone Percentage where unNumberAngleNone = build
+instance NumberAngleNone None       where unNumberAngleNone = build
 
 
-class Lightness a where unLightness :: a -> Builder
+class PercentageNone a where unPercentageNone :: a -> Builder
 
 
-instance Lightness Percentage where unLightness = build
-instance Lightness None       where unLightness = build
+instance PercentageNone Percentage where unPercentageNone = build
+instance PercentageNone None       where unPercentageNone = build
 
 
-class AlphaValue a where unAlphaValue :: a -> Builder
+class NumberPercentageNone a where unNumberPercentageNone :: a -> Builder
 
 
-instance AlphaValue Double     where unAlphaValue = build
-instance AlphaValue Percentage where unAlphaValue = build
-instance AlphaValue None       where unAlphaValue = build
+instance NumberPercentageNone Percentage where unNumberPercentageNone = build
+instance NumberPercentageNone None       where unNumberPercentageNone = build
 
 
-class RgbValue a where unRgbValue :: a -> Builder
-
-
-instance RgbValue Double     where unRgbValue = build
-instance RgbValue Percentage where unRgbValue = build
-instance RgbValue None       where unRgbValue = build
-
-
-hsl :: (Hue a, Saturation b, Lightness c) => a -> b -> c -> Color
+hsl :: (NumberAngleNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
 hsl hue saturation lightness
     =  Color
     $  "hsl("
-    <> unHue hue
+    <> unNumberAngleNone hue
     <> singleton ' '
-    <> unSaturation saturation
+    <> unPercentageNone saturation
     <> singleton ' '
-    <> unLightness lightness
+    <> unPercentageNone lightness
     <> singleton ')'
 
 
-hsla :: (Hue a, Saturation b, Lightness c, AlphaValue d) => a -> b -> c -> d -> Color
+hsla :: (NumberAngleNone a, PercentageNone b, PercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
 hsla hue saturation lightness alpha
     =  Color
     $  "hsl("
-    <> unHue hue
+    <> unNumberAngleNone hue
     <> singleton ' '
-    <> unSaturation saturation
+    <> unPercentageNone saturation
     <> singleton ' '
-    <> unLightness lightness
+    <> unPercentageNone lightness
     <> " / "
-    <> unAlphaValue alpha
+    <> unNumberPercentageNone alpha
     <> singleton ')'
 
 
-rgb :: (RgbValue a, RgbValue b, RgbValue c) => a -> b -> c -> Color
+rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
 rgb red green blue
     =  Color
     $  "rgb("
-    <> unRgbValue red
+    <> unNumberPercentageNone red
     <> singleton ' '
-    <> unRgbValue green
+    <> unNumberPercentageNone green
     <> singleton ' '
-    <> unRgbValue blue
+    <> unNumberPercentageNone blue
     <> singleton ')'
 
 
-rgba :: (RgbValue a, RgbValue b, RgbValue c, AlphaValue d) => a -> b -> c -> d -> Color
+rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
 rgba red green blue alpha
     =  Color
     $  "rgb("
-    <> unRgbValue red
+    <> unNumberPercentageNone red
     <> singleton ' '
-    <> unRgbValue green
+    <> unNumberPercentageNone green
     <> singleton ' '
-    <> unRgbValue blue
+    <> unNumberPercentageNone blue
     <> " / "
-    <> unAlphaValue alpha
+    <> unNumberPercentageNone alpha
+    <> singleton ')'
+
+
+hwb :: (NumberAngleNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
+hwb hue whiteness blackness
+    =  Color
+    $  "hwb("
+    <> unNumberAngleNone hue
+    <> singleton ' '
+    <> unPercentageNone whiteness
+    <> singleton ' '
+    <> unPercentageNone blackness
+    <> singleton ')'
+
+
+hwba :: (NumberAngleNone a, PercentageNone b, PercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+hwba hue whiteness blackness alpha
+    =  Color
+    $  "hwb("
+    <> unNumberAngleNone hue
+    <> singleton ' '
+    <> unPercentageNone whiteness
+    <> singleton ' '
+    <> unPercentageNone blackness
+    <> " / "
+    <> unNumberPercentageNone alpha
+    <> singleton ')'
+
+
+lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
+lab lightness a b
+    =  Color
+    $  "lab("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone a
+    <> singleton ' '
+    <> unNumberPercentageNone b
+    <> singleton ')'
+
+
+laba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+laba lightness a b alpha
+    =  Color
+    $  "lab("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone a
+    <> singleton ' '
+    <> unNumberPercentageNone b
+    <> " / "
+    <> unNumberPercentageNone alpha
+    <> singleton ')'
+
+
+lch :: (NumberPercentageNone a, NumberPercentageNone b, NumberAngleNone c) => a -> b -> c -> Color
+lch lightness chroma hue
+    =  Color
+    $  "lch("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone chroma
+    <> singleton ' '
+    <> unNumberAngleNone hue
+    <> singleton ')'
+
+
+lcha :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+lcha lightness chroma hue alpha
+    =  Color
+    $  "lcha("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone chroma
+    <> singleton ' '
+    <> unNumberPercentageNone hue
+    <> " / "
+    <> unNumberPercentageNone alpha
+    <> singleton ')'
+
+
+oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
+oklab lightness a b
+    =  Color
+    $  "oklab("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone a
+    <> singleton ' '
+    <> unNumberPercentageNone b
+    <> singleton ')'
+
+
+oklaba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+oklaba lightness a b alpha
+    =  Color
+    $  "oklab("
+    <> unNumberPercentageNone lightness
+    <> singleton ' '
+    <> unNumberPercentageNone a
+    <> singleton ' '
+    <> unNumberPercentageNone b
+    <> " / "
+    <> unNumberPercentageNone alpha
+    <> singleton ')'
+
+
+color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => Colorspace -> a -> b -> c -> Color
+color colorspace c1 c2 c3
+    =  Color
+    $  "color("
+    <> unColorspace colorspace
+    <> singleton ' '
+    <> unNumberPercentageNone c1
+    <> singleton ' '
+    <> unNumberPercentageNone c2
+    <> singleton ' '
+    <> unNumberPercentageNone c3
+    <> singleton ')'
+
+
+colora :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d)
+       => Colorspace -> a -> b -> c -> d -> Color
+colora colorspace c1 c2 c3 alpha
+    =  Color
+    $  "color("
+    <> unColorspace colorspace
+    <> singleton ' '
+    <> unNumberPercentageNone c1
+    <> singleton ' '
+    <> unNumberPercentageNone c2
+    <> singleton ' '
+    <> unNumberPercentageNone c3
+    <> " / "
+    <> unNumberPercentageNone alpha
     <> singleton ')'
 
 
@@ -503,6 +614,63 @@ currentcolor = Color "currentcolor"
 hex :: Word32 -> Color
 hex = Color . showHex
 {-# INLINE hex #-}
+
+
+-- COLORSPACE VALUES
+
+
+-- | Generates the CSS @a98-rgb@ colorspace value.
+a98Rgb :: Colorspace
+a98Rgb = Colorspace "a98-rgb"
+{-# INLINE a98Rgb #-}
+
+
+-- | Generates the CSS @display-p3@ colorspace value.
+displayP3 :: Colorspace
+displayP3 = Colorspace "display-p3"
+{-# INLINE displayP3 #-}
+
+
+-- | Generates the CSS @prophoto-rgb@ colorspace value.
+prophotoRgb :: Colorspace
+prophotoRgb = Colorspace "prophoto-rgb"
+{-# INLINE prophotoRgb #-}
+
+
+-- | Generates the CSS @rec2020@ colorspace value.
+rec2020 :: Colorspace
+rec2020 = Colorspace "rec2020"
+{-# INLINE rec2020 #-}
+
+
+-- | Generates the CSS @srgb@ colorspace value.
+srgb :: Colorspace
+srgb = Colorspace "srgb"
+{-# INLINE srgb #-}
+
+
+-- | Generates the CSS @srgb-linear@ colorspace value.
+srgbLinear :: Colorspace
+srgbLinear = Colorspace "srgb-linear"
+{-# INLINE srgbLinear #-}
+
+
+-- | Generates the CSS @xyz@ colorspace value.
+xyz :: Colorspace
+xyz = Colorspace "xyz"
+{-# INLINE xyz #-}
+
+
+-- | Generates the CSS @xyz-d50@ colorspace value.
+xyzD50 :: Colorspace
+xyzD50 = Colorspace "xyz-d50"
+{-# INLINE xyzD50 #-}
+
+
+-- | Generates the CSS @xyz-d65@ colorspace value.
+xyzD65 :: Colorspace
+xyzD65 = Colorspace "xyz-d65"
+{-# INLINE xyzD65 #-}
 
 
 -- NAMED COLOR VALUES
