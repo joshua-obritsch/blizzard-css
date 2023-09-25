@@ -9,21 +9,21 @@ module Css
     ( -- * Constructors
       -- ** build
       build
-    , module Css.Colors
     , module Css.Functions
     , module Css.Keywords
-    , module Css.Numeric
     , module Css.Properties
     , module Css.Values
+    , module Css.ValueTypes.Colors
+    , module Css.ValueTypes.Numeric
     ) where
 
 
-import Css.Colors     hiding (tan)
 import Css.Functions
 import Css.Keywords
-import Css.Numeric    hiding (rem)
-import Css.Properties hiding (all, filter)
-import Css.Values     hiding (color)
+import Css.Properties         hiding (all, filter)
+import Css.Values             hiding (color)
+import Css.ValueTypes.Colors  hiding (tan)
+import Css.ValueTypes.Numeric hiding (rem)
 
 import Css.Internal           (extractAndHash)
 import Data.Text.Lazy.Builder (Builder)

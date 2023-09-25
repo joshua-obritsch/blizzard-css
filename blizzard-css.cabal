@@ -25,12 +25,12 @@ library
     default-language:   Haskell2010
     exposed-modules:    Css
                       , Css.Attributes
-                      , Css.Colors
                       , Css.Functions
                       , Css.Keywords
-                      , Css.Numeric
                       , Css.Intl
                       , Css.Properties
                       , Css.Values
+                      , Css.ValueTypes.Colors
+                      , Css.ValueTypes.Numeric
     other-modules:      Css.Internal
     hs-source-dirs:     src

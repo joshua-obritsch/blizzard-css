@@ -1,14 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.Numeric
+-- | Module    : Css.ValueTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.Numeric" module provides a set of functions for generating CSS numeric types.
-module Css.Numeric
+-- The "Css.ValueTypes.Numeric" module provides a set of types and functions for generating numeric value types in CSS.
+module Css.ValueTypes.Numeric
     ( -- * Types
       -- ** Angle
       Angle
@@ -21,7 +21,7 @@ module Css.Numeric
       -- ** Time
     , Time
 
-      -- * Value Types
+      -- * Functions
 
       -- ** \<angle\>
       -- *** deg
