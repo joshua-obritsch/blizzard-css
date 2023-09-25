@@ -12,6 +12,19 @@ module Css.Colors
     ( -- * Types
       -- ** Color
       Color
+      -- ** Colorspace
+    , Colorspace
+
+      -- * Classes
+      -- ** NumberAngleNone
+    , NumberAngleNone
+      -- ** NumberPercentageNone
+    , NumberPercentageNone
+      -- ** PercentageNone
+    , PercentageNone
+
+      -- * Functions
+    , hsl
 
       -- * Values
 
@@ -356,10 +369,6 @@ module Css.Colors
     , markText
       -- *** VisitedText
     , visitedText
-    , hsl
-    , hsla
-    , rgb
-    , rgba
     ) where
 
 
@@ -376,6 +385,7 @@ import Html                   (Buildable(..))
 -- TYPES
 
 
+-- | Represents a CSS \<color\> value type.
 newtype Color = Color { unColor :: Builder }
 
 
@@ -383,6 +393,7 @@ instance Buildable Color where build = unColor
 instance Show      Color where show  = lazyShow
 
 
+-- | Represents a CSS \<colorspace\> value type.
 newtype Colorspace = Colorspace { unColorspace :: Builder }
 
 
@@ -390,6 +401,10 @@ instance Buildable Colorspace where build = unColorspace
 instance Show      Colorspace where show  = lazyShow
 
 
+-- CLASSES
+
+
+-- | Represents a CSS \<number\>|\<angle\>|none value type.
 class NumberAngleNone a where unNumberAngleNone :: a -> Builder
 
 
@@ -397,6 +412,15 @@ instance NumberAngleNone Percentage where unNumberAngleNone = build
 instance NumberAngleNone None       where unNumberAngleNone = build
 
 
+-- | Represents a CSS \<number\>|\<percentage\>|none value type.
+class NumberPercentageNone a where unNumberPercentageNone :: a -> Builder
+
+
+instance NumberPercentageNone Percentage where unNumberPercentageNone = build
+instance NumberPercentageNone None       where unNumberPercentageNone = build
+
+
+-- | Represents a CSS \<percentage\>|none value type.
 class PercentageNone a where unPercentageNone :: a -> Builder
 
 
@@ -404,11 +428,7 @@ instance PercentageNone Percentage where unPercentageNone = build
 instance PercentageNone None       where unPercentageNone = build
 
 
-class NumberPercentageNone a where unNumberPercentageNone :: a -> Builder
-
-
-instance NumberPercentageNone Percentage where unNumberPercentageNone = build
-instance NumberPercentageNone None       where unNumberPercentageNone = build
+-- FUNCTIONS
 
 
 hsl :: (NumberAngleNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color

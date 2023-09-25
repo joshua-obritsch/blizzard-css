@@ -12,7 +12,7 @@ module Css.Keywords
       -- ** None
       None
 
-      -- * Values
+      -- * Keywords
     , none
     ) where
 
@@ -25,6 +25,7 @@ import Html                   (Buildable(..))
 -- TYPES
 
 
+-- | Represents the CSS @none@ keyword.
 newtype None = None { unNone :: Builder }
 
 
@@ -32,8 +33,9 @@ instance Buildable None where build = unNone
 instance Show      None where show  = lazyShow
 
 
--- VALUES
+-- KEYWORDS
 
 
+-- | Generates the CSS @none@ keyword.
 none :: None
 none = None "none"
