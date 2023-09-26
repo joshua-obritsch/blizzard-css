@@ -9,21 +9,44 @@
 --
 -- The "Css.ValueTypes.Numeric" module provides a set of types and functions for generating numeric value types in CSS.
 module Css.ValueTypes.Numeric
-    ( -- * Types
-      -- ** Angle
-      Angle
-      -- ** Length
-    , Length
-      -- ** Percentage
+    ( -- * Value Types
+      -- ** \<number\>
+      Number
+      -- ** \<percentage\>
     , Percentage
-      -- ** Resolution
+      -- ** \<ratio\>
+    , Ratio
+      -- ** \<dimension\>
+    , Dimension
+      -- *** \<angle\>
+    , Angle
+      -- *** \<angle-percentage\>
+    , AnglePercentage
+      -- *** \<frequency\>
+    , Frequency
+      -- *** \<frequency-percentage\>
+    , FrequencyPercentage
+      -- *** \<length\>
+    , Length
+      -- *** \<length-percentage\>
+    , LengthPercentage
+      -- *** \<resolution\>
     , Resolution
-      -- ** Time
+      -- *** \<time\>
     , Time
+      -- *** \<time-percentage\>
+    , TimePercentage
 
-      -- * Functions
+      -- * Units
 
-      -- ** \<angle\>
+      -- ** Percentages
+      -- *** pct
+    , pct
+
+      -- ** Ratios
+    , ratio
+
+      -- ** Angles
       -- *** deg
     , deg
       -- *** grad
@@ -33,7 +56,7 @@ module Css.ValueTypes.Numeric
       -- *** turn
     , turn
 
-      -- ** \<length\>
+      -- ** Lengths
       -- *** ch
     , ch
       -- *** cm
@@ -123,9 +146,6 @@ module Css.ValueTypes.Numeric
       -- *** vw
     , vw
 
-      -- ** \<percentage\>
-    , pct
-
       -- ** \<resolution\>
       -- *** dpcm
     , dpcm
@@ -151,7 +171,11 @@ import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
 
 
--- TYPES
+-- VALUE TYPES
+
+
+-- | Represents a CSS @\<number\>@ value type.
+type Number = Double
 
 
 -- | Represents a CSS \<angle\> value type.
@@ -162,12 +186,26 @@ instance Buildable Angle where build = unAngle
 instance Show      Angle where show  = lazyShow
 
 
+class AnglePercentage a where unAnglePercentage :: a -> Builder
+
+
+instance AnglePercentage Angle      where unAnglePercentage = build
+instance AnglePercentage Percentage where unAnglePercentage = build
+
+
 -- | Represents a CSS \<length\> value type.
 newtype Length = Length { unLength :: Builder }
 
 
 instance Buildable Length where build = unLength
 instance Show      Length where show  = lazyShow
+
+
+class LengthPercentage a where unLengthPercentage :: a -> Builder
+
+
+instance LengthPercentage Angle      where unLengthPercentage = build
+instance LengthPercentage Percentage where unLengthPercentage = build
 
 
 -- | Represents a CSS \<percentage\> value type.
@@ -192,6 +230,13 @@ newtype Time = Time { unTime :: Builder }
 
 instance Buildable Time where build = unTime
 instance Show      Time where show  = lazyShow
+
+
+class TimePercentage a where unTimePercentage :: a -> Builder
+
+
+instance TimePercentage Angle      where unTimePercentage = build
+instance TimePercentage Percentage where unTimePercentage = build
 
 
 -- ANGLE

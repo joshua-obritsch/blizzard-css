@@ -9,7 +9,7 @@ module Css
     ( -- * Constructors
       -- ** build
       build
-    , module Css.Functions
+    --, module Css.Functions
     , module Css.Keywords
     , module Css.Properties
     , module Css.Values
@@ -18,7 +18,7 @@ module Css
     ) where
 
 
-import Css.Functions
+--import Css.Functions
 import Css.Keywords
 import Css.Properties         hiding (all, filter)
 import Css.Values             hiding (color)

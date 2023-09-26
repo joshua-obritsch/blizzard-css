@@ -1,3 +1,4 @@
+{-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -404,10 +405,14 @@ instance Show      Colorspace where show  = lazyShow
 -- CLASSES
 
 
+type Hue = NumberAngleNone
+
+
 -- | Represents a CSS \<number\>|\<angle\>|none value type.
 class NumberAngleNone a where unNumberAngleNone :: a -> Builder
 
 
+instance NumberAngleNone Double     where unNumberAngleNone = build
 instance NumberAngleNone Percentage where unNumberAngleNone = build
 instance NumberAngleNone None       where unNumberAngleNone = build
 
@@ -431,7 +436,7 @@ instance PercentageNone None       where unPercentageNone = build
 -- FUNCTIONS
 
 
-hsl :: (NumberAngleNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
+hsl :: (Hue a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
 hsl hue saturation lightness
     =  Color
     $  "hsl("
