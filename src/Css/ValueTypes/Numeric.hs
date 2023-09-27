@@ -14,18 +14,16 @@ module Css.ValueTypes.Numeric
       Number
       -- ** \<percentage\>
     , Percentage
-      -- ** \<ratio\>
-    , Ratio
       -- ** \<dimension\>
-    , Dimension
+    --, Dimension
       -- *** \<angle\>
     , Angle
       -- *** \<angle-percentage\>
     , AnglePercentage
       -- *** \<frequency\>
-    , Frequency
+    --, Frequency
       -- *** \<frequency-percentage\>
-    , FrequencyPercentage
+    --, FrequencyPercentage
       -- *** \<length\>
     , Length
       -- *** \<length-percentage\>
@@ -42,9 +40,6 @@ module Css.ValueTypes.Numeric
       -- ** Percentages
       -- *** pct
     , pct
-
-      -- ** Ratios
-    , ratio
 
       -- ** Angles
       -- *** deg
@@ -164,11 +159,13 @@ module Css.ValueTypes.Numeric
     ) where
 
 
-import Prelude hiding (rem)
+import Prelude hiding (Integer, rem)
 
 import Css.Internal           (fromDouble, lazyShow)
 import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
+
+import qualified Prelude
 
 
 -- VALUE TYPES
@@ -176,6 +173,14 @@ import Html                   (Buildable(..))
 
 -- | Represents a CSS @\<number\>@ value type.
 type Number = Double
+
+
+-- | Represents a CSS @\<percentage\>@ value type.
+newtype Percentage = Percentage { unPercentage :: Builder }
+
+
+instance Buildable Percentage where build = unPercentage
+instance Show      Percentage where show  = lazyShow
 
 
 -- | Represents a CSS \<angle\> value type.
@@ -208,14 +213,6 @@ instance LengthPercentage Angle      where unLengthPercentage = build
 instance LengthPercentage Percentage where unLengthPercentage = build
 
 
--- | Represents a CSS \<percentage\> value type.
-newtype Percentage = Percentage { unPercentage :: Builder }
-
-
-instance Buildable Percentage where build = unPercentage
-instance Show      Percentage where show  = lazyShow
-
-
 -- | Represents a CSS \<resolution\> value type.
 newtype Resolution = Resolution { unResolution :: Builder }
 
@@ -237,6 +234,14 @@ class TimePercentage a where unTimePercentage :: a -> Builder
 
 instance TimePercentage Angle      where unTimePercentage = build
 instance TimePercentage Percentage where unTimePercentage = build
+
+
+-- PERCENTAGES
+
+
+-- | Generates a CSS @\%@ \<percentage\> value.
+pct :: Double -> Percentage
+pct = Percentage . fromDouble "%"
 
 
 -- ANGLE
@@ -531,14 +536,6 @@ vmin = Length . fromDouble "vmin"
 vw :: Double -> Length
 vw = Length . fromDouble "vw"
 {-# INLINE vw #-}
-
-
--- PERCENTAGE
-
-
--- | Generates a CSS @\%@ \<percentage\> value.
-pct :: Double -> Percentage
-pct = Percentage . fromDouble "%"
 
 
 -- RESOLUTION
