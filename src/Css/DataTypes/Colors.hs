@@ -2,14 +2,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.ValueTypes.Colors
+-- | Module    : Css.DataTypes.Colors
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.ValueTypes.Colors" module provides a set of types and functions for generating color value types in CSS.
-module Css.ValueTypes.Colors
+-- The "Css.DataTypes.Colors" module provides a set of types and functions for generating color data types in CSS.
+module Css.DataTypes.Colors
     ( -- * Types
       -- ** Color
       Color
@@ -375,9 +375,9 @@ module Css.ValueTypes.Colors
 
 import Prelude hiding (tan)
 
+import Css.DataTypes.Numeric  (Angle, Percentage)
 import Css.Internal           (lazyShow, showHex)
 import Css.Keywords           (None)
-import Css.ValueTypes.Numeric (Angle, Percentage)
 import Data.Text.Lazy.Builder (Builder, singleton)
 import Data.Word              (Word32)
 import Html                   (Buildable(..))

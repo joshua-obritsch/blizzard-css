@@ -1,15 +1,15 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.ValueTypes.Numeric
+-- | Module    : Css.DataTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.ValueTypes.Numeric" module provides a set of types and functions for generating numeric value types in CSS.
-module Css.ValueTypes.Numeric
-    ( -- * Value Types
+-- The "Css.DataTypes.Numeric" module provides a set of types and functions for generating numeric data types in CSS.
+module Css.DataTypes.Numeric
+    ( -- * Data Types
       -- ** \<number\>
       Number
       -- ** \<percentage\>
@@ -168,7 +168,7 @@ import Html                   (Buildable(..))
 import qualified Prelude
 
 
--- VALUE TYPES
+-- DATA TYPES
 
 
 -- | Represents a CSS @\<number\>@ value type.

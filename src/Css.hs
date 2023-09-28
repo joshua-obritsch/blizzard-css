@@ -10,20 +10,20 @@ module Css
       -- ** build
       build
     --, module Css.Functions
+    , module Css.DataTypes.Colors
+    , module Css.DataTypes.Numeric
     , module Css.Keywords
     , module Css.Properties
     , module Css.Values
-    , module Css.ValueTypes.Colors
-    , module Css.ValueTypes.Numeric
     ) where
 
 
 --import Css.Functions
+import Css.DataTypes.Colors   hiding (tan)
+import Css.DataTypes.Numeric  hiding (rem)
 import Css.Keywords
 import Css.Properties         hiding (all, filter)
 import Css.Values             hiding (color)
-import Css.ValueTypes.Colors  hiding (tan)
-import Css.ValueTypes.Numeric hiding (rem)
 
 import Css.Internal           (extractAndHash)
 import Data.Text.Lazy.Builder (Builder)

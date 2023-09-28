@@ -30,7 +30,7 @@ library
                       , Css.Intl
                       , Css.Properties
                       , Css.Values
-                      , Css.ValueTypes.Colors
-                      , Css.ValueTypes.Numeric
+                      , Css.DataTypes.Colors
+                      , Css.DataTypes.Numeric
     other-modules:      Css.Internal
     hs-source-dirs:     src
