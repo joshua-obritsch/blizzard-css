@@ -9,10 +9,13 @@
 -- The "Css.Keywords" module provides a set of functions for generating CSS keywords.
 module Css.Keywords
     ( -- * Types
+      -- ** Auto
+      Auto
       -- ** None
-      None
+    , None
 
       -- * Keywords
+    , auto
     , none
     ) where
 
@@ -26,6 +29,14 @@ import Html                   (Buildable(..))
 
 
 -- | Represents the CSS @none@ keyword.
+newtype Auto = Auto { unAuto :: Builder }
+
+
+instance Buildable Auto where build = unAuto
+instance Show      Auto where show  = lazyShow
+
+
+-- | Represents the CSS @none@ keyword.
 newtype None = None { unNone :: Builder }
 
 
@@ -34,6 +45,11 @@ instance Show      None where show  = lazyShow
 
 
 -- KEYWORDS
+
+
+-- | Generates the CSS @auto@ keyword.
+auto :: Auto
+auto = Auto "auto"
 
 
 -- | Generates the CSS @none@ keyword.

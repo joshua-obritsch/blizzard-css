@@ -661,17 +661,29 @@ module Css.Properties
 
 import Prelude hiding (all, filter)
 
+import Css.DataTypes.Colors   (Color)
+import Css.Keywords           (Auto)
 import Data.Foldable          (fold)
 import Data.List              (intersperse)
 import Data.Text.Lazy.Builder (Builder, singleton)
+import Html                   (Buildable(..))
 
 
 -- PROPERTIES
 
 
+class Buildable a => AccentColor a where
+    unAccentColor :: a -> Builder
+    unAccentColor = build
+
+instance AccentColor Auto
+instance AccentColor Color
+
+
+
 -- | Generates a CSS @accent-color@ property with the given value.
-accentColor :: Builder -> Builder
-accentColor = prop "accent-color:"
+accentColor :: AccentColor a => a -> Builder
+accentColor = prop "accent-color:" . unAccentColor
 {-# INLINE accentColor #-}
 
 

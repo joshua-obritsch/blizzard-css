@@ -1,5 +1,7 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 -- | Module    : Css.DataTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -156,11 +158,13 @@ module Css.DataTypes.Numeric
     , ms
       -- *** s
     , s
+    , tmp
     ) where
 
 
 import Prelude hiding (Integer, rem)
 
+import Css.Keywords (None)
 import Css.Internal           (fromDouble, lazyShow)
 import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
@@ -171,11 +175,11 @@ import qualified Prelude
 -- DATA TYPES
 
 
--- | Represents a CSS @\<number\>@ value type.
+-- | Represents a CSS @\<number\>@ data type.
 type Number = Double
 
 
--- | Represents a CSS @\<percentage\>@ value type.
+-- | Represents a CSS @\<percentage\>@ data type.
 newtype Percentage = Percentage { unPercentage :: Builder }
 
 
@@ -183,7 +187,7 @@ instance Buildable Percentage where build = unPercentage
 instance Show      Percentage where show  = lazyShow
 
 
--- | Represents a CSS \<angle\> value type.
+-- | Represents a CSS \<angle\> data type.
 newtype Angle = Angle { unAngle :: Builder }
 
 
@@ -191,14 +195,26 @@ instance Buildable Angle where build = unAngle
 instance Show      Angle where show  = lazyShow
 
 
-class AnglePercentage a where unAnglePercentage :: a -> Builder
+class Buildable a => AnglePercentage a where
+    unAnglePercentage :: a -> Builder
+    unAnglePercentage = build
 
 
-instance AnglePercentage Angle      where unAnglePercentage = build
-instance AnglePercentage Percentage where unAnglePercentage = build
+instance AnglePercentage Angle
+instance AnglePercentage Percentage
+
+class Buildable a => AnglePercentageNone a where
+    unAnglePercentageNone :: a -> Builder
+    unAnglePercentageNone = build
+
+instance {-# OVERLAPPING #-}                 AnglePercentageNone None
+instance (Buildable a, AnglePercentage a) => AnglePercentageNone a
+
+tmp :: AnglePercentageNone a => a -> Builder
+tmp = build
 
 
--- | Represents a CSS \<length\> value type.
+-- | Represents a CSS \<length\> data type.
 newtype Length = Length { unLength :: Builder }
 
 
@@ -213,7 +229,7 @@ instance LengthPercentage Angle      where unLengthPercentage = build
 instance LengthPercentage Percentage where unLengthPercentage = build
 
 
--- | Represents a CSS \<resolution\> value type.
+-- | Represents a CSS \<resolution\> data type.
 newtype Resolution = Resolution { unResolution :: Builder }
 
 
@@ -221,7 +237,7 @@ instance Buildable Resolution where build = unResolution
 instance Show      Resolution where show  = lazyShow
 
 
--- | Represents a CSS \<time\> value type.
+-- | Represents a CSS \<time\> data type.
 newtype Time = Time { unTime :: Builder }
 
 

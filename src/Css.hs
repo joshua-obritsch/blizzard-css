@@ -9,7 +9,7 @@ module Css
     ( -- * Constructors
       -- ** build
       build
-    --, module Css.Functions
+    , module Css.Functions
     , module Css.DataTypes.Colors
     , module Css.DataTypes.Numeric
     , module Css.Keywords
@@ -18,8 +18,8 @@ module Css
     ) where
 
 
---import Css.Functions
-import Css.DataTypes.Colors   hiding (tan)
+import Css.Functions
+import Css.DataTypes.Colors   hiding (accentColor, tan)
 import Css.DataTypes.Numeric  hiding (rem)
 import Css.Keywords
 import Css.Properties         hiding (all, filter)
