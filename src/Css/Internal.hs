@@ -210,3 +210,6 @@ compare _                             _                             = False
 
 hash :: Builder -> Builder
 hash text = singleton '_' <> (decimal . abs . foldl (\acc char -> 17 * acc `xor` fromEnum char) 7879 . toLazyText) text
+
+
+instance Buildable Builder where build = id
