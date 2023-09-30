@@ -10,49 +10,9 @@
 --
 -- The "Css.DataTypes.Numeric" module provides a set of types and functions for generating numeric data types in CSS.
 module Css.DataTypes.Numeric
-    ( -- * Data Types
+    ( -- * Angles
       -- ** \<angle\>
       Angle
-      -- ** \<angle-percentage\>
-    , AnglePercentage
-      -- ** \<dimension\>
-    , Dimension
-      -- ** \<frequency\>
-    , Frequency
-      -- ** \<frequency-percentage\>
-    , FrequencyPercentage
-      -- ** \<length\>
-    , Length
-      -- ** \<length-percentage\>
-    , LengthPercentage
-      -- ** \<number\>
-    , Number
-      -- ** \<percentage\>
-    , Percentage
-      -- ** \<resolution\>
-    , Resolution
-      -- ** \<time\>
-    , Time
-      -- ** \<time-percentage\>
-    , TimePercentage
-
-      -- * Absolute Lengths
-      -- ** \'cm\'
-    , cm
-      -- ** \'in\'
-    , in_
-      -- ** \'mm\'
-    , mm
-      -- ** \'pc\'
-    , pc
-      -- ** \'pt\'
-    , pt
-      -- ** \'px\'
-    , px
-      -- ** \'Q\'
-    , q
-
-      -- * Angles
       -- ** \'deg\'
     , deg
       -- ** \'grad\'
@@ -62,105 +22,147 @@ module Css.DataTypes.Numeric
       -- ** \'turn\'
     , turn
 
+      -- * Dimensions
+      -- ** \<dimension\>
+    , Dimension
+
       -- * Durations
+      -- ** \<time\>
+    , Time
       -- ** \'ms\'
     , ms
       -- ** \'s\'
     , s
 
-      -- * Font-relative Lengths
-      -- ** \'cap\'
-    , cap
-      -- ** \'ch\'
-    , ch
-      -- ** \'em\'
-    , em
-      -- ** \'ex\'
-    , ex
-      -- ** \'ic\'
-    , ic
-      -- ** \'lh\'
-    , lh
-      -- ** \'rcap\'
-    , rcap
-      -- ** \'rch\'
-    , rch
-      -- ** \'rem\'
-    , rem
-      -- ** \'rex\'
-    , rex
-      -- ** \'ric\'
-    , ric
-      -- ** \'rlh\'
-    , rlh
-
       -- * Frequencies
+      -- ** \<frequency\>
+    , Frequency
       -- ** \'Hz\'
     , hz
       -- ** \'kHz\'
     , khz
 
+      -- * Lengths
+      -- ** \<length\>
+    , Length
+      -- ** Absolute lengths
+      -- *** \'cm\'
+    , cm
+      -- *** \'in\'
+    , in_
+      -- *** \'mm\'
+    , mm
+      -- *** \'pc\'
+    , pc
+      -- *** \'pt\'
+    , pt
+      -- *** \'px\'
+    , px
+      -- *** \'Q\'
+    , q
+      -- ** Relative Lengths
+      -- *** Font-relative Lengths
+      -- **** \'cap\'
+    , cap
+      -- **** \'ch\'
+    , ch
+      -- **** \'em\'
+    , em
+      -- **** \'ex\'
+    , ex
+      -- **** \'ic\'
+    , ic
+      -- **** \'lh\'
+    , lh
+      -- **** \'rcap\'
+    , rcap
+      -- **** \'rch\'
+    , rch
+      -- **** \'rem\'
+    , rem
+      -- **** \'rex\'
+    , rex
+      -- **** \'ric\'
+    , ric
+      -- **** \'rlh\'
+    , rlh
+      -- *** Viewport-percentage Lengths
+      -- **** \'dvb\'
+    , dvb
+      -- **** \'dvh\'
+    , dvh
+      -- **** \'dvi\'
+    , dvi
+      -- **** \'dvmax\'
+    , dvmax
+      -- **** \'dvmin\'
+    , dvmin
+      -- **** \'dvw\'
+    , dvw
+      -- **** \'lvb\'
+    , lvb
+      -- **** \'lvh\'
+    , lvh
+      -- **** \'lvi\'
+    , lvi
+      -- **** \'lvmax\'
+    , lvmax
+      -- **** \'lvmin\'
+    , lvmin
+      -- **** \'lvw\'
+    , lvw
+      -- **** \'svb\'
+    , svb
+      -- **** \'svh\'
+    , svh
+      -- **** \'svi\'
+    , svi
+      -- **** \'svmax\'
+    , svmax
+      -- **** \'svmin\'
+    , svmin
+      -- **** \'svw\'
+    , svw
+      -- **** \'vb\'
+    , vb
+      -- **** \'vh\'
+    , vh
+      -- **** \'vi\'
+    , vi
+      -- **** \'vmax\'
+    , vmax
+      -- **** \'vmin\'
+    , vmin
+      -- **** \'vw\'
+    , vw
+
+      -- * Numbers
+      -- ** \<number\>
+    , Number
+
       -- * Percentages
+      -- ** \<percentage\>
+    , Percentage
+      -- ** \<angle-percentage\>
+    , AnglePercentage
+      -- ** \<frequency-percentage\>
+    , FrequencyPercentage
+      -- ** \<length-percentage\>
+    , LengthPercentage
+      -- ** \<time-percentage\>
+    , TimePercentage
       -- ** \'\%\'
     , pct
 
       -- * Resolutions
+      -- ** \<resolution\>
+    , Resolution
       -- ** \'dpcm\'
     , dpcm
       -- ** \'dpi\'
     , dpi
       -- ** \'dppx\'
     , dppx
-
-      -- * Viewport-percentage Lengths
-      -- ** \'dvb\'
-    , dvb
-      -- ** \'dvh\'
-    , dvh
-      -- ** \'dvi\'
-    , dvi
-      -- ** \'dvmax\'
-    , dvmax
-      -- ** \'dvmin\'
-    , dvmin
-      -- ** \'dvw\'
-    , dvw
-      -- ** \'lvb\'
-    , lvb
-      -- ** \'lvh\'
-    , lvh
-      -- ** \'lvi\'
-    , lvi
-      -- ** \'lvmax\'
-    , lvmax
-      -- ** \'lvmin\'
-    , lvmin
-      -- ** \'lvw\'
-    , lvw
-      -- ** \'svb\'
-    , svb
-      -- ** \'svh\'
-    , svh
-      -- ** \'svi\'
-    , svi
-      -- ** \'svmax\'
-    , svmax
-      -- ** \'svmin\'
-    , svmin
-      -- ** \'svw\'
-    , svw
-      -- ** \'vb\'
-    , vb
-      -- ** \'vh\'
-    , vh
-      -- ** \'vi\'
-    , vi
-      -- ** \'vmax\'
-    , vmax
-      -- ** \'vmin\'
-    , vmin
-      -- ** \'vw\'
-    , vw
     ) where
 
 
@@ -171,10 +173,8 @@ import Data.Text.Lazy.Builder           (Builder)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
 import Html                             (Buildable(..))
 
-import qualified Prelude
 
-
--- DATA TYPES
+-- * ANGLES
 
 
 -- | Represents the CSS @\<angle\>@ data type.
@@ -182,12 +182,31 @@ newtype Angle = Angle Builder
     deriving (Buildable, Show)
 
 
--- | Represents the CSS @\<angle-percentage\>@ data type.
-class Buildable a => AnglePercentage a
+-- | Generates a CSS @deg@ @\<angle\>@ value.
+deg :: Number -> Angle
+deg = Angle . fromNumber "deg"
+{-# INLINE deg #-}
 
 
-instance AnglePercentage Angle
-instance AnglePercentage Percentage
+-- | Generates a CSS @grad@ @\<angle\>@ value.
+grad :: Number -> Angle
+grad = Angle . fromNumber "grad"
+{-# INLINE grad #-}
+
+
+-- | Generates a CSS @rad@ @\<angle\>@ value.
+rad :: Number -> Angle
+rad = Angle . fromNumber "rad"
+{-# INLINE rad #-}
+
+
+-- | Generates a CSS @turn@ @\<angle\>@ value.
+turn :: Number -> Angle
+turn = Angle . fromNumber "turn"
+{-# INLINE turn #-}
+
+
+-- * DIMENSIONS
 
 
 -- | Represents the CSS @\<dimension\>@ data type.
@@ -201,44 +220,7 @@ instance Dimension Resolution
 instance Dimension Time
 
 
--- | Represents the CSS @\<frequency\>@ data type.
-newtype Frequency = Frequency Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<frequency-percentage\>@ data type.
-class Buildable a => FrequencyPercentage a
-
-
-instance FrequencyPercentage Frequency
-instance FrequencyPercentage Percentage
-
-
--- | Represents the CSS @\<length\>@ data type.
-newtype Length = Length Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<length-percentage\>@ data type.
-class Buildable a => LengthPercentage a
-
-
-instance LengthPercentage Angle
-instance LengthPercentage Percentage
-
-
--- | Represents the CSS @\<number\>@ data type.
-type Number = Double
-
-
--- | Represents the CSS @\<percentage\>@ data type.
-newtype Percentage = Percentage Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<resolution\>@ data type.
-newtype Resolution = Resolution Builder
-    deriving (Buildable, Show)
+-- * DURATIONS
 
 
 -- | Represents the CSS @\<time\>@ data type.
@@ -246,15 +228,47 @@ newtype Time = Time Builder
     deriving (Buildable, Show)
 
 
--- | Represents the CSS @\<time-percentage\>@ data type.
-class Buildable a => TimePercentage a
+-- | Generates a CSS @ms@ @\<time\>@ value.
+ms :: Number -> Time
+ms = Time . fromNumber "ms"
+{-# INLINE ms #-}
 
 
-instance TimePercentage Angle
-instance TimePercentage Percentage
+-- | Generates a CSS @s@ @\<time\>@ value.
+s :: Number -> Time
+s = Time . fromNumber "s"
+{-# INLINE s #-}
 
 
--- * ABSOLUTE LENGTHS
+-- * FREQUENCIES
+
+
+-- | Represents the CSS @\<frequency\>@ data type.
+newtype Frequency = Frequency Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates a CSS @Hz@ @\<frequency\>@ value.
+hz :: Number -> Frequency
+hz = Frequency . fromNumber "Hz"
+{-# INLINE hz #-}
+
+
+-- | Generates a CSS @kHz@ @\<frequency\>@ value.
+khz :: Number -> Frequency
+khz = Frequency . fromNumber "kHz"
+{-# INLINE khz #-}
+
+
+-- * LENGTHS
+
+
+-- | Represents the CSS @\<length\>@ data type.
+newtype Length = Length Builder
+    deriving (Buildable, Show)
+
+
+-- ** ABSOLUTE LENGTHS
 
 
 -- | Generates a CSS @cm@ @\<length\>@ value.
@@ -299,49 +313,10 @@ q = Length . fromNumber "Q"
 {-# INLINE q #-}
 
 
--- * ANGLE UNITS
+-- ** RELATIVE LENGTHS
 
 
--- | Generates a CSS @deg@ @\<angle\>@ value.
-deg :: Number -> Angle
-deg = Angle . fromNumber "deg"
-{-# INLINE deg #-}
-
-
--- | Generates a CSS @grad@ @\<angle\>@ value.
-grad :: Number -> Angle
-grad = Angle . fromNumber "grad"
-{-# INLINE grad #-}
-
-
--- | Generates a CSS @rad@ @\<angle\>@ value.
-rad :: Number -> Angle
-rad = Angle . fromNumber "rad"
-{-# INLINE rad #-}
-
-
--- | Generates a CSS @turn@ @\<angle\>@ value.
-turn :: Number -> Angle
-turn = Angle . fromNumber "turn"
-{-# INLINE turn #-}
-
-
--- * DURATION UNITS
-
-
--- | Generates a CSS @ms@ @\<time\>@ value.
-ms :: Number -> Time
-ms = Time . fromNumber "ms"
-{-# INLINE ms #-}
-
-
--- | Generates a CSS @s@ @\<time\>@ value.
-s :: Number -> Time
-s = Time . fromNumber "s"
-{-# INLINE s #-}
-
-
--- * FONT-RELATIVE LENGTHS
+-- *** FONT-RELATIVE LENGTHS
 
 
 -- | Generates a CSS @cap@ @\<length\>@ value.
@@ -416,51 +391,7 @@ rlh = Length . fromNumber "rlh"
 {-# INLINE rlh #-}
 
 
--- * FREQUENCY UNITS
-
-
--- | Generates a CSS @Hz@ @\<frequency\>@ value.
-hz :: Number -> Frequency
-hz = Frequency . fromNumber "Hz"
-{-# INLINE hz #-}
-
-
--- | Generates a CSS @kHz@ @\<frequency\>@ value.
-khz :: Number -> Frequency
-khz = Frequency . fromNumber "kHz"
-{-# INLINE khz #-}
-
-
--- * PERCENTAGES
-
-
--- | Generates a CSS @\<percentage\>@ value.
-pct :: Number -> Percentage
-pct = Percentage . fromNumber "%"
-
-
--- * RESOLUTION UNITS
-
-
--- | Generates a CSS @dpcm@ @\<resolution\>@ value.
-dpcm :: Number -> Resolution
-dpcm = Resolution . fromNumber "dpcm"
-{-# INLINE dpcm #-}
-
-
--- | Generates a CSS @dpi@ @\<resolution\>@ value.
-dpi :: Number -> Resolution
-dpi = Resolution . fromNumber "dpi"
-{-# INLINE dpi #-}
-
-
--- | Generates a CSS @dppx@ @\<resolution\>@ value.
-dppx :: Number -> Resolution
-dppx = Resolution . fromNumber "dppx"
-{-# INLINE dppx #-}
-
-
--- * VIEWPORT-PERCENTAGE LENGTHS
+-- *** VIEWPORT-PERCENTAGE LENGTHS
 
 
 -- | Generates a CSS @dvb@ @\<length\>@ value.
@@ -605,6 +536,84 @@ vmin = Length . fromNumber "vmin"
 vw :: Number -> Length
 vw = Length . fromNumber "vw"
 {-# INLINE vw #-}
+
+
+-- * NUMBERS
+
+
+-- | Represents the CSS @\<number\>@ data type.
+type Number = Double
+
+
+-- * PERCENTAGES
+
+
+-- | Represents the CSS @\<percentage\>@ data type.
+newtype Percentage = Percentage Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<angle-percentage\>@ data type.
+class Buildable a => AnglePercentage a
+
+
+instance AnglePercentage Angle
+instance AnglePercentage Percentage
+
+
+-- | Represents the CSS @\<frequency-percentage\>@ data type.
+class Buildable a => FrequencyPercentage a
+
+
+instance FrequencyPercentage Frequency
+instance FrequencyPercentage Percentage
+
+
+-- | Represents the CSS @\<length-percentage\>@ data type.
+class Buildable a => LengthPercentage a
+
+
+instance LengthPercentage Angle
+instance LengthPercentage Percentage
+
+
+-- | Represents the CSS @\<time-percentage\>@ data type.
+class Buildable a => TimePercentage a
+
+
+instance TimePercentage Angle
+instance TimePercentage Percentage
+
+
+-- | Generates a CSS @\<percentage\>@ value.
+pct :: Number -> Percentage
+pct = Percentage . fromNumber "%"
+
+
+-- * RESOLUTIONS
+
+
+-- | Represents the CSS @\<resolution\>@ data type.
+newtype Resolution = Resolution Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates a CSS @dpcm@ @\<resolution\>@ value.
+dpcm :: Number -> Resolution
+dpcm = Resolution . fromNumber "dpcm"
+{-# INLINE dpcm #-}
+
+
+-- | Generates a CSS @dpi@ @\<resolution\>@ value.
+dpi :: Number -> Resolution
+dpi = Resolution . fromNumber "dpi"
+{-# INLINE dpi #-}
+
+
+-- | Generates a CSS @dppx@ @\<resolution\>@ value.
+dppx :: Number -> Resolution
+dppx = Resolution . fromNumber "dppx"
+{-# INLINE dppx #-}
 
 
 -- HELPER FUNCTIONS
