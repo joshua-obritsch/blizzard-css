@@ -11,164 +11,156 @@
 -- The "Css.DataTypes.Numeric" module provides a set of types and functions for generating numeric data types in CSS.
 module Css.DataTypes.Numeric
     ( -- * Data Types
-      -- ** Angle
+      -- ** \<angle\>
       Angle
-      -- ** AnglePercentage
+      -- ** \<angle-percentage\>
     , AnglePercentage
-      -- ** Dimension
+      -- ** \<dimension\>
     , Dimension
-      -- ** Frequency
+      -- ** \<frequency\>
     , Frequency
-      -- ** FrequencyPercentage
+      -- ** \<frequency-percentage\>
     , FrequencyPercentage
-      -- ** Length
+      -- ** \<length\>
     , Length
-      -- ** LengthPercentage
+      -- ** \<length-percentage\>
     , LengthPercentage
-      -- ** Number
+      -- ** \<number\>
     , Number
-      -- ** Percentage
+      -- ** \<percentage\>
     , Percentage
-      -- ** Resolution
+      -- ** \<resolution\>
     , Resolution
-      -- ** Time
+      -- ** \<time\>
     , Time
-      -- ** TimePercentage
+      -- ** \<time-percentage\>
     , TimePercentage
 
-      -- * Percentages
-      -- ** pct
-    , pct
-
-      -- * Distance Units
-
-      -- ** Relative Lengths
-
-      -- *** Font-relative Lengths
-      -- **** cap
-    , cap
-      -- **** ch
-    , ch
-      -- **** em
-    , em
-      -- **** ex
-    , ex
-      -- **** ic
-    , ic
-      -- **** lh
-    , lh
-      -- **** rcap
-    , rcap
-      -- **** rch
-    , rch
-      -- **** rem
-    , rem
-      -- **** rex
-    , rex
-      -- **** ric
-    , ric
-      -- **** rlh
-    , rlh
-
-      -- *** Viewport-percentage Lengths
-      -- **** dvb
-    , dvb
-      -- **** dvh
-    , dvh
-      -- **** dvi
-    , dvi
-      -- **** dvmax
-    , dvmax
-      -- **** dvmin
-    , dvmin
-      -- **** dvw
-    , dvw
-      -- **** lvb
-    , lvb
-      -- **** lvh
-    , lvh
-      -- **** lvi
-    , lvi
-      -- **** lvmax
-    , lvmax
-      -- **** lvmin
-    , lvmin
-      -- **** lvw
-    , lvw
-      -- **** svb
-    , svb
-      -- **** svh
-    , svh
-      -- **** svi
-    , svi
-      -- **** svmax
-    , svmax
-      -- **** svmin
-    , svmin
-      -- **** svw
-    , svw
-      -- **** vb
-    , vb
-      -- **** vh
-    , vh
-      -- **** vi
-    , vi
-      -- **** vmax
-    , vmax
-      -- **** vmin
-    , vmin
-      -- **** vw
-    , vw
-
-      -- ** Absolute Lengths
-      -- *** cm
+      -- * Absolute Lengths
+      -- ** \'cm\'
     , cm
-      -- *** in
+      -- ** \'in\'
     , in_
-      -- *** mm
+      -- ** \'mm\'
     , mm
-      -- *** pc
+      -- ** \'pc\'
     , pc
-      -- *** pt
+      -- ** \'pt\'
     , pt
-      -- *** px
+      -- ** \'px\'
     , px
-      -- *** q
+      -- ** \'Q\'
     , q
 
-      -- * Other Units
-
-      -- ** Angle Units
-      -- *** deg
+      -- * Angles
+      -- ** \'deg\'
     , deg
-      -- *** grad
+      -- ** \'grad\'
     , grad
-      -- *** rad
+      -- ** \'rad\'
     , rad
-      -- *** turn
+      -- ** \'turn\'
     , turn
 
-      -- ** Duration Units
-      -- *** ms
+      -- * Durations
+      -- ** \'ms\'
     , ms
-      -- *** s
+      -- ** \'s\'
     , s
 
-      -- ** Frequency Units
-      -- *** hz
+      -- * Font-relative Lengths
+      -- ** \'cap\'
+    , cap
+      -- ** \'ch\'
+    , ch
+      -- ** \'em\'
+    , em
+      -- ** \'ex\'
+    , ex
+      -- ** \'ic\'
+    , ic
+      -- ** \'lh\'
+    , lh
+      -- ** \'rcap\'
+    , rcap
+      -- ** \'rch\'
+    , rch
+      -- ** \'rem\'
+    , rem
+      -- ** \'rex\'
+    , rex
+      -- ** \'ric\'
+    , ric
+      -- ** \'rlh\'
+    , rlh
+
+      -- * Frequencies
+      -- ** \'Hz\'
     , hz
-      -- *** khz
+      -- ** \'kHz\'
     , khz
 
-      -- ** Resolution Units
-      -- *** dpcm
+      -- * Percentages
+      -- ** \'\%\'
+    , pct
+
+      -- * Resolutions
+      -- ** \'dpcm\'
     , dpcm
-      -- *** dpi
+      -- ** \'dpi\'
     , dpi
-      -- *** dppx
+      -- ** \'dppx\'
     , dppx
-      -- *** x
-    , x
+
+      -- * Viewport-percentage Lengths
+      -- ** \'dvb\'
+    , dvb
+      -- ** \'dvh\'
+    , dvh
+      -- ** \'dvi\'
+    , dvi
+      -- ** \'dvmax\'
+    , dvmax
+      -- ** \'dvmin\'
+    , dvmin
+      -- ** \'dvw\'
+    , dvw
+      -- ** \'lvb\'
+    , lvb
+      -- ** \'lvh\'
+    , lvh
+      -- ** \'lvi\'
+    , lvi
+      -- ** \'lvmax\'
+    , lvmax
+      -- ** \'lvmin\'
+    , lvmin
+      -- ** \'lvw\'
+    , lvw
+      -- ** \'svb\'
+    , svb
+      -- ** \'svh\'
+    , svh
+      -- ** \'svi\'
+    , svi
+      -- ** \'svmax\'
+    , svmax
+      -- ** \'svmin\'
+    , svmin
+      -- ** \'svw\'
+    , svw
+      -- ** \'vb\'
+    , vb
+      -- ** \'vh\'
+    , vh
+      -- ** \'vi\'
+    , vi
+      -- ** \'vmax\'
+    , vmax
+      -- ** \'vmin\'
+    , vmin
+      -- ** \'vw\'
+    , vw
     ) where
 
 
@@ -262,21 +254,94 @@ instance TimePercentage Angle
 instance TimePercentage Percentage
 
 
--- * PERCENTAGES
+-- * ABSOLUTE LENGTHS
 
 
--- | Generates a CSS @\<percentage\>@ value.
-pct :: Number -> Percentage
-pct = Percentage . fromNumber "%"
+-- | Generates a CSS @cm@ @\<length\>@ value.
+cm :: Number -> Length
+cm = Length . fromNumber "cm"
+{-# INLINE cm #-}
 
 
--- * DISTANCE UNITS
+-- | Generates a CSS @in@ @\<length\>@ value.
+in_ :: Number -> Length
+in_ = Length . fromNumber "in"
+{-# INLINE in_ #-}
 
 
--- ** RELATIVE LENGTHS
+-- | Generates a CSS @mm@ @\<length\>@ value.
+mm :: Number -> Length
+mm = Length . fromNumber "mm"
+{-# INLINE mm #-}
 
 
--- *** FONT-RELATIVE LENGTHS
+-- | Generates a CSS @pc@ @\<length\>@ value.
+pc :: Number -> Length
+pc = Length . fromNumber "pc"
+{-# INLINE pc #-}
+
+
+-- | Generates a CSS @pt@ @\<length\>@ value.
+pt :: Number -> Length
+pt = Length . fromNumber "pt"
+{-# INLINE pt #-}
+
+
+-- | Generates a CSS @px@ @\<length\>@ value.
+px :: Number -> Length
+px = Length . fromNumber "px"
+{-# INLINE px #-}
+
+
+-- | Generates a CSS @Q@ @\<length\>@ value.
+q :: Number -> Length
+q = Length . fromNumber "Q"
+{-# INLINE q #-}
+
+
+-- * ANGLE UNITS
+
+
+-- | Generates a CSS @deg@ @\<angle\>@ value.
+deg :: Number -> Angle
+deg = Angle . fromNumber "deg"
+{-# INLINE deg #-}
+
+
+-- | Generates a CSS @grad@ @\<angle\>@ value.
+grad :: Number -> Angle
+grad = Angle . fromNumber "grad"
+{-# INLINE grad #-}
+
+
+-- | Generates a CSS @rad@ @\<angle\>@ value.
+rad :: Number -> Angle
+rad = Angle . fromNumber "rad"
+{-# INLINE rad #-}
+
+
+-- | Generates a CSS @turn@ @\<angle\>@ value.
+turn :: Number -> Angle
+turn = Angle . fromNumber "turn"
+{-# INLINE turn #-}
+
+
+-- * DURATION UNITS
+
+
+-- | Generates a CSS @ms@ @\<time\>@ value.
+ms :: Number -> Time
+ms = Time . fromNumber "ms"
+{-# INLINE ms #-}
+
+
+-- | Generates a CSS @s@ @\<time\>@ value.
+s :: Number -> Time
+s = Time . fromNumber "s"
+{-# INLINE s #-}
+
+
+-- * FONT-RELATIVE LENGTHS
 
 
 -- | Generates a CSS @cap@ @\<length\>@ value.
@@ -351,7 +416,51 @@ rlh = Length . fromNumber "rlh"
 {-# INLINE rlh #-}
 
 
--- *** VIEWPORT-PERCENTAGE LENGTHS
+-- * FREQUENCY UNITS
+
+
+-- | Generates a CSS @Hz@ @\<frequency\>@ value.
+hz :: Number -> Frequency
+hz = Frequency . fromNumber "Hz"
+{-# INLINE hz #-}
+
+
+-- | Generates a CSS @kHz@ @\<frequency\>@ value.
+khz :: Number -> Frequency
+khz = Frequency . fromNumber "kHz"
+{-# INLINE khz #-}
+
+
+-- * PERCENTAGES
+
+
+-- | Generates a CSS @\<percentage\>@ value.
+pct :: Number -> Percentage
+pct = Percentage . fromNumber "%"
+
+
+-- * RESOLUTION UNITS
+
+
+-- | Generates a CSS @dpcm@ @\<resolution\>@ value.
+dpcm :: Number -> Resolution
+dpcm = Resolution . fromNumber "dpcm"
+{-# INLINE dpcm #-}
+
+
+-- | Generates a CSS @dpi@ @\<resolution\>@ value.
+dpi :: Number -> Resolution
+dpi = Resolution . fromNumber "dpi"
+{-# INLINE dpi #-}
+
+
+-- | Generates a CSS @dppx@ @\<resolution\>@ value.
+dppx :: Number -> Resolution
+dppx = Resolution . fromNumber "dppx"
+{-# INLINE dppx #-}
+
+
+-- * VIEWPORT-PERCENTAGE LENGTHS
 
 
 -- | Generates a CSS @dvb@ @\<length\>@ value.
@@ -496,138 +605,6 @@ vmin = Length . fromNumber "vmin"
 vw :: Number -> Length
 vw = Length . fromNumber "vw"
 {-# INLINE vw #-}
-
-
--- ** ABSOLUTE LENGTHS
-
-
--- | Generates a CSS @cm@ @\<length\>@ value.
-cm :: Number -> Length
-cm = Length . fromNumber "cm"
-{-# INLINE cm #-}
-
-
--- | Generates a CSS @in@ @\<length\>@ value.
-in_ :: Number -> Length
-in_ = Length . fromNumber "in"
-{-# INLINE in_ #-}
-
-
--- | Generates a CSS @mm@ @\<length\>@ value.
-mm :: Number -> Length
-mm = Length . fromNumber "mm"
-{-# INLINE mm #-}
-
-
--- | Generates a CSS @pc@ @\<length\>@ value.
-pc :: Number -> Length
-pc = Length . fromNumber "pc"
-{-# INLINE pc #-}
-
-
--- | Generates a CSS @pt@ @\<length\>@ value.
-pt :: Number -> Length
-pt = Length . fromNumber "pt"
-{-# INLINE pt #-}
-
-
--- | Generates a CSS @px@ @\<length\>@ value.
-px :: Number -> Length
-px = Length . fromNumber "px"
-{-# INLINE px #-}
-
-
--- | Generates a CSS @Q@ @\<length\>@ value.
-q :: Number -> Length
-q = Length . fromNumber "Q"
-{-# INLINE q #-}
-
-
--- * OTHER UNITS
-
-
--- ** ANGLE UNITS
-
-
--- | Generates a CSS @deg@ @\<angle\>@ value.
-deg :: Number -> Angle
-deg = Angle . fromNumber "deg"
-{-# INLINE deg #-}
-
-
--- | Generates a CSS @grad@ @\<angle\>@ value.
-grad :: Number -> Angle
-grad = Angle . fromNumber "grad"
-{-# INLINE grad #-}
-
-
--- | Generates a CSS @rad@ @\<angle\>@ value.
-rad :: Number -> Angle
-rad = Angle . fromNumber "rad"
-{-# INLINE rad #-}
-
-
--- | Generates a CSS @turn@ @\<angle\>@ value.
-turn :: Number -> Angle
-turn = Angle . fromNumber "turn"
-{-# INLINE turn #-}
-
-
--- ** DURATION UNITS
-
-
--- | Generates a CSS @ms@ @\<time\>@ value.
-ms :: Number -> Time
-ms = Time . fromNumber "ms"
-{-# INLINE ms #-}
-
-
--- | Generates a CSS @s@ @\<time\>@ value.
-s :: Number -> Time
-s = Time . fromNumber "s"
-{-# INLINE s #-}
-
-
--- ** FREQUENCY UNITS
-
-
--- | Generates a CSS @Hz@ @\<frequency\>@ value.
-hz :: Number -> Frequency
-hz = Frequency . fromNumber "Hz"
-{-# INLINE hz #-}
-
-
--- | Generates a CSS @kHz@ @\<frequency\>@ value.
-khz :: Number -> Frequency
-khz = Frequency . fromNumber "kHz"
-{-# INLINE khz #-}
-
-
--- ** RESOLUTION UNITS
-
-
--- | Generates a CSS @dpcm@ @\<resolution\>@ value.
-dpcm :: Number -> Resolution
-dpcm = Resolution . fromNumber "dpcm"
-{-# INLINE dpcm #-}
-
-
--- | Generates a CSS @dpi@ @\<resolution\>@ value.
-dpi :: Number -> Resolution
-dpi = Resolution . fromNumber "dpi"
-{-# INLINE dpi #-}
-
-
--- | Generates a CSS @dppx@ @\<resolution\>@ value.
-dppx :: Number -> Resolution
-dppx = Resolution . fromNumber "dppx"
-{-# INLINE dppx #-}
-
-
--- | Functions as an alias for 'Css.Types.dppx'.
-x :: Number -> Resolution
-x = dppx
-{-# INLINE x #-}
 
 
 -- HELPER FUNCTIONS
