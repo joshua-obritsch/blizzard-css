@@ -1,6 +1,10 @@
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 -- | Module    : Css.DataTypes.Colors
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -10,7 +14,7 @@
 --
 -- The "Css.DataTypes.Colors" module provides a set of types and functions for generating color data types in CSS.
 module Css.DataTypes.Colors
-    ( -- * Types
+    ( -- * Data Types
       -- ** Color
       Color
       -- ** Colorspace
@@ -25,357 +29,388 @@ module Css.DataTypes.Colors
     , PercentageNone
 
       -- * Functions
+      -- ** hsl
     , hsl
+      -- ** hsla
+    , hsla
+      -- ** hwb
+    , hwb
+      -- ** hwba
+    , hwba
+      -- ** lab
+    , lab
+      -- ** laba
+    , laba
+      -- ** lch
+    , lch
+      -- ** lcha
+    , lcha
+      -- ** oklab
+    , oklab
+      -- ** oklaba
+    , oklaba
+      -- ** oklch
+    , oklch
+      -- ** oklcha
+    , oklcha
+      -- ** rgb
+    , rgb
+      -- ** rgba
+    , rgba
 
-      -- * Values
-
-      -- ** currentcolor
-    , currentcolor
-
-      -- ** \<hex-color\>
+      -- * Hexadecimal
+      -- ** hex
     , hex
 
-      -- ** \<named-color\>
-      -- *** aliceblue
-    , aliceblue
-      -- *** antiquewhite
-    , antiquewhite
-      -- *** aqua
-    , aqua
-      -- *** aquamarine
-    , aquamarine
-      -- *** azure
-    , azure
-      -- *** beige
-    , beige
-      -- *** bisque
-    , bisque
-      -- *** black
-    , black
-      -- *** blanchedalmond
-    , blanchedalmond
-      -- *** blue
-    , blue
-      -- *** blueviolet
-    , blueviolet
-      -- *** brown
-    , brown
-      -- *** burlywood
-    , burlywood
-      -- *** cadetblue
-    , cadetblue
-      -- *** chartreuse
-    , chartreuse
-      -- *** chocolate
-    , chocolate
-      -- *** coral
-    , coral
-      -- *** cornflowerblue
-    , cornflowerblue
-      -- *** cornsilk
-    , cornsilk
-      -- *** crimson
-    , crimson
-      -- *** cyan
-    , cyan
-      -- *** darkblue
-    , darkblue
-      -- *** darkcyan
-    , darkcyan
-      -- *** darkgoldenrod
-    , darkgoldenrod
-      -- *** darkgray
-    , darkgray
-      -- *** darkgreen
-    , darkgreen
-      -- *** darkgrey
-    , darkgrey
-      -- *** darkkhaki
-    , darkkhaki
-      -- *** darkmagenta
-    , darkmagenta
-      -- *** darkolivegreen
-    , darkolivegreen
-      -- *** darkorange
-    , darkorange
-      -- *** darkorchid
-    , darkorchid
-      -- *** darkred
-    , darkred
-      -- *** darksalmon
-    , darksalmon
-      -- *** darkseagreen
-    , darkseagreen
-      -- *** darkslateblue
-    , darkslateblue
-      -- *** darkslategray
-    , darkslategray
-      -- *** darkslategrey
-    , darkslategrey
-      -- *** darkturquoise
-    , darkturquoise
-      -- *** darkviolet
-    , darkviolet
-      -- *** deeppink
-    , deeppink
-      -- *** deepskyblue
-    , deepskyblue
-      -- *** dimgray
-    , dimgray
-      -- *** dimgrey
-    , dimgrey
-      -- *** dodgerblue
-    , dodgerblue
-      -- *** firebrick
-    , firebrick
-      -- *** floralwhite
-    , floralwhite
-      -- *** forestgreen
-    , forestgreen
-      -- *** fuchsia
-    , fuchsia
-      -- *** gainsboro
-    , gainsboro
-      -- *** ghostwhite
-    , ghostwhite
-      -- *** gold
-    , gold
-      -- *** goldenrod
-    , goldenrod
-      -- *** gray
-    , gray
-      -- *** green
-    , green
-      -- *** greenyellow
-    , greenyellow
-      -- *** grey
-    , grey
-      -- *** honeydew
-    , honeydew
-      -- *** hotpink
-    , hotpink
-      -- *** indianred
-    , indianred
-      -- *** indigo
-    , indigo
-      -- *** ivory
-    , ivory
-      -- *** khaki
-    , khaki
-      -- *** lavender
-    , lavender
-      -- *** lavenderblush
-    , lavenderblush
-      -- *** lawngreen
-    , lawngreen
-      -- *** lemonchiffon
-    , lemonchiffon
-      -- *** lightblue
-    , lightblue
-      -- *** lightcoral
-    , lightcoral
-      -- *** lightcyan
-    , lightcyan
-      -- *** lightgoldenrodyellow
-    , lightgoldenrodyellow
-      -- *** lightgray
-    , lightgray
-      -- *** lightgreen
-    , lightgreen
-      -- *** lightgrey
-    , lightgrey
-      -- *** lightpink
-    , lightpink
-      -- *** lightsalmon
-    , lightsalmon
-      -- *** lightseagreen
-    , lightseagreen
-      -- *** lightskyblue
-    , lightskyblue
-      -- *** lightslategray
-    , lightslategray
-      -- *** lightslategrey
-    , lightslategrey
-      -- *** lightsteelblue
-    , lightsteelblue
-      -- *** lightyellow
-    , lightyellow
-      -- *** lime
-    , lime
-      -- *** limegreen
-    , limegreen
-      -- *** linen
-    , linen
-      -- *** magenta
-    , magenta
-      -- *** maroon
-    , maroon
-      -- *** mediumaquamarine
-    , mediumaquamarine
-      -- *** mediumblue
-    , mediumblue
-      -- *** mediumorchid
-    , mediumorchid
-      -- *** mediumpurple
-    , mediumpurple
-      -- *** mediumseagreen
-    , mediumseagreen
-      -- *** mediumslateblue
-    , mediumslateblue
-      -- *** mediumspringgreen
-    , mediumspringgreen
-      -- *** mediumturquoise
-    , mediumturquoise
-      -- *** mediumvioletred
-    , mediumvioletred
-      -- *** midnightblue
-    , midnightblue
-      -- *** mintcream
-    , mintcream
-      -- *** mistyrose
-    , mistyrose
-      -- *** moccasin
-    , moccasin
-      -- *** navajowhite
-    , navajowhite
-      -- *** navy
-    , navy
-      -- *** oldlace
-    , oldlace
-      -- *** olive
-    , olive
-      -- *** olivedrab
-    , olivedrab
-      -- *** orange
-    , orange
-      -- *** orangered
-    , orangered
-      -- *** orchid
-    , orchid
-      -- *** palegoldenrod
-    , palegoldenrod
-      -- *** palegreen
-    , palegreen
-      -- *** paleturquoise
-    , paleturquoise
-      -- *** palevioletred
-    , palevioletred
-      -- *** papayawhip
-    , papayawhip
-      -- *** peachpuff
-    , peachpuff
-      -- *** peru
-    , peru
-      -- *** pink
-    , pink
-      -- *** plum
-    , plum
-      -- *** powderblue
-    , powderblue
-      -- *** purple
-    , purple
-      -- *** rebeccapurple
-    , rebeccapurple
-      -- *** red
-    , red
-      -- *** rosybrown
-    , rosybrown
-      -- *** royalblue
-    , royalblue
-      -- *** saddlebrown
-    , saddlebrown
-      -- *** salmon
-    , salmon
-      -- *** sandybrown
-    , sandybrown
-      -- *** seagreen
-    , seagreen
-      -- *** seashell
-    , seashell
-      -- *** sienna
-    , sienna
-      -- *** silver
-    , silver
-      -- *** skyblue
-    , skyblue
-      -- *** slateblue
-    , slateblue
-      -- *** slategray
-    , slategray
-      -- *** slategrey
-    , slategrey
-      -- *** snow
-    , snow
-      -- *** springgreen
-    , springgreen
-      -- *** steelblue
-    , steelblue
-      -- *** tan
-    , tan
-      -- *** teal
-    , teal
-      -- *** thistle
-    , thistle
-      -- *** tomato
-    , tomato
-      -- *** transparent
+      -- * Keywords
+      -- ** currentcolor
+    , currentcolor
+      -- ** transparent
     , transparent
-      -- *** turquoise
+
+      -- * Named Colors
+      -- ** aliceblue
+    , aliceblue
+      -- ** antiquewhite
+    , antiquewhite
+      -- ** aqua
+    , aqua
+      -- ** aquamarine
+    , aquamarine
+      -- ** azure
+    , azure
+      -- ** beige
+    , beige
+      -- ** bisque
+    , bisque
+      -- ** black
+    , black
+      -- ** blanchedalmond
+    , blanchedalmond
+      -- ** blue
+    , blue
+      -- ** blueviolet
+    , blueviolet
+      -- ** brown
+    , brown
+      -- ** burlywood
+    , burlywood
+      -- ** cadetblue
+    , cadetblue
+      -- ** chartreuse
+    , chartreuse
+      -- ** chocolate
+    , chocolate
+      -- ** coral
+    , coral
+      -- ** cornflowerblue
+    , cornflowerblue
+      -- ** cornsilk
+    , cornsilk
+      -- ** crimson
+    , crimson
+      -- ** cyan
+    , cyan
+      -- ** darkblue
+    , darkblue
+      -- ** darkcyan
+    , darkcyan
+      -- ** darkgoldenrod
+    , darkgoldenrod
+      -- ** darkgray
+    , darkgray
+      -- ** darkgreen
+    , darkgreen
+      -- ** darkgrey
+    , darkgrey
+      -- ** darkkhaki
+    , darkkhaki
+      -- ** darkmagenta
+    , darkmagenta
+      -- ** darkolivegreen
+    , darkolivegreen
+      -- ** darkorange
+    , darkorange
+      -- ** darkorchid
+    , darkorchid
+      -- ** darkred
+    , darkred
+      -- ** darksalmon
+    , darksalmon
+      -- ** darkseagreen
+    , darkseagreen
+      -- ** darkslateblue
+    , darkslateblue
+      -- ** darkslategray
+    , darkslategray
+      -- ** darkslategrey
+    , darkslategrey
+      -- ** darkturquoise
+    , darkturquoise
+      -- ** darkviolet
+    , darkviolet
+      -- ** deeppink
+    , deeppink
+      -- ** deepskyblue
+    , deepskyblue
+      -- ** dimgray
+    , dimgray
+      -- ** dimgrey
+    , dimgrey
+      -- ** dodgerblue
+    , dodgerblue
+      -- ** firebrick
+    , firebrick
+      -- ** floralwhite
+    , floralwhite
+      -- ** forestgreen
+    , forestgreen
+      -- ** fuchsia
+    , fuchsia
+      -- ** gainsboro
+    , gainsboro
+      -- ** ghostwhite
+    , ghostwhite
+      -- ** gold
+    , gold
+      -- ** goldenrod
+    , goldenrod
+      -- ** gray
+    , gray
+      -- ** green
+    , green
+      -- ** greenyellow
+    , greenyellow
+      -- ** grey
+    , grey
+      -- ** honeydew
+    , honeydew
+      -- ** hotpink
+    , hotpink
+      -- ** indianred
+    , indianred
+      -- ** indigo
+    , indigo
+      -- ** ivory
+    , ivory
+      -- ** khaki
+    , khaki
+      -- ** lavender
+    , lavender
+      -- ** lavenderblush
+    , lavenderblush
+      -- ** lawngreen
+    , lawngreen
+      -- ** lemonchiffon
+    , lemonchiffon
+      -- ** lightblue
+    , lightblue
+      -- ** lightcoral
+    , lightcoral
+      -- ** lightcyan
+    , lightcyan
+      -- ** lightgoldenrodyellow
+    , lightgoldenrodyellow
+      -- ** lightgray
+    , lightgray
+      -- ** lightgreen
+    , lightgreen
+      -- ** lightgrey
+    , lightgrey
+      -- ** lightpink
+    , lightpink
+      -- ** lightsalmon
+    , lightsalmon
+      -- ** lightseagreen
+    , lightseagreen
+      -- ** lightskyblue
+    , lightskyblue
+      -- ** lightslategray
+    , lightslategray
+      -- ** lightslategrey
+    , lightslategrey
+      -- ** lightsteelblue
+    , lightsteelblue
+      -- ** lightyellow
+    , lightyellow
+      -- ** lime
+    , lime
+      -- ** limegreen
+    , limegreen
+      -- ** linen
+    , linen
+      -- ** magenta
+    , magenta
+      -- ** maroon
+    , maroon
+      -- ** mediumaquamarine
+    , mediumaquamarine
+      -- ** mediumblue
+    , mediumblue
+      -- ** mediumorchid
+    , mediumorchid
+      -- ** mediumpurple
+    , mediumpurple
+      -- ** mediumseagreen
+    , mediumseagreen
+      -- ** mediumslateblue
+    , mediumslateblue
+      -- ** mediumspringgreen
+    , mediumspringgreen
+      -- ** mediumturquoise
+    , mediumturquoise
+      -- ** mediumvioletred
+    , mediumvioletred
+      -- ** midnightblue
+    , midnightblue
+      -- ** mintcream
+    , mintcream
+      -- ** mistyrose
+    , mistyrose
+      -- ** moccasin
+    , moccasin
+      -- ** navajowhite
+    , navajowhite
+      -- ** navy
+    , navy
+      -- ** oldlace
+    , oldlace
+      -- ** olive
+    , olive
+      -- ** olivedrab
+    , olivedrab
+      -- ** orange
+    , orange
+      -- ** orangered
+    , orangered
+      -- ** orchid
+    , orchid
+      -- ** palegoldenrod
+    , palegoldenrod
+      -- ** palegreen
+    , palegreen
+      -- ** paleturquoise
+    , paleturquoise
+      -- ** palevioletred
+    , palevioletred
+      -- ** papayawhip
+    , papayawhip
+      -- ** peachpuff
+    , peachpuff
+      -- ** peru
+    , peru
+      -- ** pink
+    , pink
+      -- ** plum
+    , plum
+      -- ** powderblue
+    , powderblue
+      -- ** purple
+    , purple
+      -- ** rebeccapurple
+    , rebeccapurple
+      -- ** red
+    , red
+      -- ** rosybrown
+    , rosybrown
+      -- ** royalblue
+    , royalblue
+      -- ** saddlebrown
+    , saddlebrown
+      -- ** salmon
+    , salmon
+      -- ** sandybrown
+    , sandybrown
+      -- ** seagreen
+    , seagreen
+      -- ** seashell
+    , seashell
+      -- ** sienna
+    , sienna
+      -- ** silver
+    , silver
+      -- ** skyblue
+    , skyblue
+      -- ** slateblue
+    , slateblue
+      -- ** slategray
+    , slategray
+      -- ** slategrey
+    , slategrey
+      -- ** snow
+    , snow
+      -- ** springgreen
+    , springgreen
+      -- ** steelblue
+    , steelblue
+      -- ** tan
+    , tan
+      -- ** teal
+    , teal
+      -- ** thistle
+    , thistle
+      -- ** tomato
+    , tomato
+      -- ** turquoise
     , turquoise
-      -- *** violet
+      -- ** violet
     , violet
-      -- *** wheat
+      -- ** wheat
     , wheat
-      -- *** white
+      -- ** white
     , white
-      -- *** whitesmoke
+      -- ** whitesmoke
     , whitesmoke
-      -- *** yellow
+      -- ** yellow
     , yellow
-      -- *** yellowgreen
+      -- ** yellowgreen
     , yellowgreen
 
-      -- ** \<system-color\>
-      -- *** AccentColor
+      -- * System Colors
+      -- ** AccentColor
     , accentColor
-      -- *** AccentColorText
+      -- ** AccentColorText
     , accentColorText
-      -- *** ActiveText
+      -- ** ActiveText
     , activeText
-      -- *** ButtonBorder
+      -- ** ButtonBorder
     , buttonBorder
-      -- *** ButtonFace
+      -- ** ButtonFace
     , buttonFace
-      -- *** ButtonText
+      -- ** ButtonText
     , buttonText
-      -- *** Canvas
+      -- ** Canvas
     , canvas
-      -- *** CanvasText
+      -- ** CanvasText
     , canvasText
-      -- *** Field
+      -- ** Field
     , field
-      -- *** FieldText
+      -- ** FieldText
     , fieldText
-      -- *** GrayText
+      -- ** GrayText
     , grayText
-      -- *** Highlight
+      -- ** Highlight
     , highlight
-      -- *** HighlightText
+      -- ** HighlightText
     , highlightText
-      -- *** LinkText
+      -- ** LinkText
     , linkText
-      -- *** Mark
+      -- ** Mark
     , mark
-      -- *** MarkText
+      -- ** MarkText
     , markText
-      -- *** VisitedText
+      -- ** SelectedItem
+    , selectedItem
+      -- ** SelectedItemText
+    , selectedItemText
+      -- ** VisitedText
     , visitedText
     ) where
 
 
 import Prelude hiding (tan)
 
-import Css.DataTypes.Numeric  (Angle, Percentage)
+import Css.DataTypes.Numeric  (Angle, Number, Percentage)
 import Css.Internal           (lazyShow, showHex)
 import Css.Keywords           (None)
 import Data.Text.Lazy.Builder (Builder, singleton)
@@ -386,12 +421,102 @@ import Html                   (Buildable(..))
 -- TYPES
 
 
--- | Represents a CSS \<color\> value type.
-newtype Color = Color { unColor :: Builder }
+-- | Represents the CSS @\<color\>@ data type.
+class Buildable a => Color a
 
 
-instance Buildable Color where build = unColor
-instance Show      Color where show  = lazyShow
+instance {-# OVERLAPPING #-}                   Color Currentcolor
+instance {-# OVERLAPPING #-}                   Color SystemColor
+instance (Buildable a, AbsoluteColorBase a) => Color a
+
+
+-- | Represents the CSS @\<absolute-color-base\>@ data type.
+class Buildable a => AbsoluteColorBase a
+
+
+instance {-# OVERLAPPING #-}                       AbsoluteColorBase HexColor
+instance {-# OVERLAPPING #-}                       AbsoluteColorBase NamedColor
+instance {-# OVERLAPPING #-}                       AbsoluteColorBase Transparent
+instance (Buildable a, AbsoluteColorFunction a) => AbsoluteColorBase a
+
+
+-- | Represents the CSS @currentcolor@ keyword.
+newtype Currentcolor = Currentcolor Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<system-color\>@ data type.
+newtype SystemColor = SystemColor Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<hex-color\>@ data type.
+newtype HexColor = HexColor Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<absolute-color-function\>@ data type.
+class Buildable a => AbsoluteColorFunction a
+
+
+instance AbsoluteColorFunction RgbFunction
+instance AbsoluteColorFunction HslFunction
+instance AbsoluteColorFunction HwbFunction
+instance AbsoluteColorFunction LabFunction
+instance AbsoluteColorFunction LchFunction
+instance AbsoluteColorFunction OklabFunction
+instance AbsoluteColorFunction OklchFunction
+instance AbsoluteColorFunction ColorFunction
+
+
+-- | Represents the CSS @\<named-color\>@ data type.
+newtype NamedColor = NamedColor Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @transparent@ keyword.
+newtype Transparent = Transparent Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<rgb()\>@ data type.
+newtype RgbFunction = RgbFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<hsl()\>@ data type.
+newtype HslFunction = HslFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<hwb()\>@ data type.
+newtype HwbFunction = HwbFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<lab()\>@ data type.
+newtype LabFunction = LabFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<lch()\>@ data type.
+newtype LchFunction = LchFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<oklab()\>@ data type.
+newtype OklabFunction = OklabFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<oklch()\>@ data type.
+newtype OklchFunction = OklchFunction Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<color()\>@ data type.
+newtype ColorFunction = ColorFunction Builder
+    deriving (Buildable, Show)
 
 
 -- | Represents a CSS \<colorspace\> value type.
@@ -405,92 +530,99 @@ instance Show      Colorspace where show  = lazyShow
 -- CLASSES
 
 
-type Hue = NumberAngleNone
-
-
 -- | Represents a CSS \<number\>|\<angle\>|none value type.
-class NumberAngleNone a where unNumberAngleNone :: a -> Builder
+class Buildable a => Hue a
 
 
-instance NumberAngleNone Double     where unNumberAngleNone = build
-instance NumberAngleNone Percentage where unNumberAngleNone = build
-instance NumberAngleNone None       where unNumberAngleNone = build
+instance Hue Angle
+instance Hue Number
+
+
+class Buildable a => HueNone a
+
+
+instance {-# OVERLAPPING #-}     Hue None
+instance (Buildable a, Hue a) => Hue a
+
+
+type AlphaValue = NumberPercentageNone
 
 
 -- | Represents a CSS \<number\>|\<percentage\>|none value type.
-class NumberPercentageNone a where unNumberPercentageNone :: a -> Builder
+class Buildable a => NumberPercentageNone a
 
 
-instance NumberPercentageNone Percentage where unNumberPercentageNone = build
-instance NumberPercentageNone None       where unNumberPercentageNone = build
+instance NumberPercentageNone None
+instance NumberPercentageNone Number
+instance NumberPercentageNone Percentage
 
 
 -- | Represents a CSS \<percentage\>|none value type.
-class PercentageNone a where unPercentageNone :: a -> Builder
+class Buildable a => PercentageNone a
 
 
-instance PercentageNone Percentage where unPercentageNone = build
-instance PercentageNone None       where unPercentageNone = build
+instance PercentageNone None
+instance PercentageNone Percentage
 
 
 -- FUNCTIONS
 
 
-hsl :: (Hue a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
+hsl :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> HslFunction
 hsl hue saturation lightness
-    =  Color
+    =  HslFunction
     $  "hsl("
-    <> unNumberAngleNone hue
+    <> build hue
     <> singleton ' '
-    <> unPercentageNone saturation
+    <> build saturation
     <> singleton ' '
-    <> unPercentageNone lightness
+    <> build lightness
     <> singleton ')'
 
 
-hsla :: (NumberAngleNone a, PercentageNone b, PercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+hsla :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> HslFunction
 hsla hue saturation lightness alpha
-    =  Color
+    =  HslFunction
     $  "hsl("
-    <> unNumberAngleNone hue
+    <> build hue
     <> singleton ' '
-    <> unPercentageNone saturation
+    <> build saturation
     <> singleton ' '
-    <> unPercentageNone lightness
+    <> build lightness
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
-rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
+rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> RgbFunction
 rgb red green blue
-    =  Color
+    =  RgbFunction
     $  "rgb("
-    <> unNumberPercentageNone red
+    <> build red
     <> singleton ' '
-    <> unNumberPercentageNone green
+    <> build green
     <> singleton ' '
-    <> unNumberPercentageNone blue
+    <> build blue
     <> singleton ')'
 
 
-rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> RgbFunction
 rgba red green blue alpha
-    =  Color
+    =  RgbFunction
     $  "rgb("
-    <> unNumberPercentageNone red
+    <> build red
     <> singleton ' '
-    <> unNumberPercentageNone green
+    <> build green
     <> singleton ' '
-    <> unNumberPercentageNone blue
+    <> build blue
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
-hwb :: (NumberAngleNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
+hwb :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> HwbFunction
 hwb hue whiteness blackness
-    =  Color
+    =  HwbFunction
     $  "hwb("
     <> unNumberAngleNone hue
     <> singleton ' '
@@ -500,98 +632,125 @@ hwb hue whiteness blackness
     <> singleton ')'
 
 
-hwba :: (NumberAngleNone a, PercentageNone b, PercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+hwba :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> HwbFunction
 hwba hue whiteness blackness alpha
-    =  Color
+    =  HwbFunction
     $  "hwb("
-    <> unNumberAngleNone hue
+    <> build hue
     <> singleton ' '
-    <> unPercentageNone whiteness
+    <> build whiteness
     <> singleton ' '
-    <> unPercentageNone blackness
+    <> build blackness
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
-lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
+lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> LabFunction
 lab lightness a b
-    =  Color
+    =  LabFunction
     $  "lab("
-    <> unNumberPercentageNone lightness
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone a
+    <> build a
     <> singleton ' '
-    <> unNumberPercentageNone b
+    <> build b
     <> singleton ')'
 
 
-laba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+laba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> LabFunction
 laba lightness a b alpha
-    =  Color
+    =  LabFunction
     $  "lab("
-    <> unNumberPercentageNone lightness
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone a
+    <> build a
     <> singleton ' '
-    <> unNumberPercentageNone b
+    <> build b
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
-lch :: (NumberPercentageNone a, NumberPercentageNone b, NumberAngleNone c) => a -> b -> c -> Color
+lch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> LchFunction
 lch lightness chroma hue
-    =  Color
+    =  LchFunction
     $  "lch("
-    <> unNumberPercentageNone lightness
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone chroma
+    <> build chroma
     <> singleton ' '
-    <> unNumberAngleNone hue
+    <> build hue
     <> singleton ')'
 
 
-lcha :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+lcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> LchFunction
 lcha lightness chroma hue alpha
-    =  Color
-    $  "lcha("
-    <> unNumberPercentageNone lightness
+    =  LchFunction
+    $  "lch("
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone chroma
+    <> build chroma
     <> singleton ' '
-    <> unNumberPercentageNone hue
+    <> build hue
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
-oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
+oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> OklabFunction
 oklab lightness a b
-    =  Color
+    =  OklabFunction
     $  "oklab("
-    <> unNumberPercentageNone lightness
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone a
+    <> build a
     <> singleton ' '
-    <> unNumberPercentageNone b
+    <> build b
     <> singleton ')'
 
 
-oklaba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> Color
+oklaba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> OklabFunction
 oklaba lightness a b alpha
-    =  Color
+    =  OklabFunction
     $  "oklab("
-    <> unNumberPercentageNone lightness
+    <> build lightness
     <> singleton ' '
-    <> unNumberPercentageNone a
+    <> build a
     <> singleton ' '
-    <> unNumberPercentageNone b
+    <> build b
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
 
 
+oklch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> OklchFunction
+oklch lightness chroma hue
+    =  OklchFunction
+    $  "oklch("
+    <> build lightness
+    <> singleton ' '
+    <> build chroma
+    <> singleton ' '
+    <> build hue
+    <> singleton ')'
+
+
+oklcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> OklchFunction
+oklcha lightness chroma hue alpha
+    =  OklchFunction
+    $  "oklch("
+    <> build lightness
+    <> singleton ' '
+    <> build chroma
+    <> singleton ' '
+    <> build hue
+    <> " / "
+    <> build alpha
+    <> singleton ')'
+
+
+    {-
 color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => Colorspace -> a -> b -> c -> Color
 color colorspace c1 c2 c3
     =  Color
@@ -621,26 +780,34 @@ colora colorspace c1 c2 c3 alpha
     <> " / "
     <> unNumberPercentageNone alpha
     <> singleton ')'
+    -}
 
 
--- CURRENTCOLOR VALUES
+-- HEXADECIMAL
 
 
--- | Generates a CSS @currentcolor@ value.
-currentcolor :: Color
-currentcolor = Color "currentcolor"
-{-# INLINE currentcolor #-}
-
-
--- HEX COLOR VALUES
-
-
--- | Generates a CSS @\#@ \<hex-color\> value.
-hex :: Word32 -> Color
-hex = Color . showHex
+-- | Generates a CSS \<hex-color\> value.
+hex :: Word32 -> HexColor
+hex = HexColor . showHex
 {-# INLINE hex #-}
 
 
+-- KEYWORDS
+
+
+-- | Generates the CSS @currentcolor@ keyword.
+currentcolor :: Currentcolor
+currentcolor = Currentcolor "currentcolor"
+{-# INLINE currentcolor #-}
+
+
+-- | Generates the CSS @transparent@ keyword.
+transparent :: Transparent
+transparent = Transparent "transparent"
+{-# INLINE transparent #-}
+
+
+    {-
 -- COLORSPACE VALUES
 
 
@@ -696,1005 +863,1012 @@ xyzD50 = Colorspace "xyz-d50"
 xyzD65 :: Colorspace
 xyzD65 = Colorspace "xyz-d65"
 {-# INLINE xyzD65 #-}
+-}
 
 
--- NAMED COLOR VALUES
+-- * NAMED COLORS
 
 
 -- | Generates the CSS @aliceblue@ \<named-color\> value.
-aliceblue :: Color
-aliceblue = Color "aliceblue"
+aliceblue :: NamedColor
+aliceblue = NamedColor "aliceblue"
 {-# INLINE aliceblue #-}
 
 
 -- | Generates the CSS @antiquewhite@ \<named-color\> value.
-antiquewhite :: Color
-antiquewhite = Color "antiquewhite"
+antiquewhite :: NamedColor
+antiquewhite = NamedColor "antiquewhite"
 {-# INLINE antiquewhite #-}
 
 
 -- | Generates the CSS @aqua@ \<named-color\> value.
-aqua :: Color
-aqua = Color "aqua"
+aqua :: NamedColor
+aqua = NamedColor "aqua"
 {-# INLINE aqua #-}
 
 
 -- | Generates the CSS @aquamarine@ \<named-color\> value.
-aquamarine :: Color
-aquamarine = Color "aquamarine"
+aquamarine :: NamedColor
+aquamarine = NamedColor "aquamarine"
 {-# INLINE aquamarine #-}
 
 
 -- | Generates the CSS @azure@ \<named-color\> value.
-azure :: Color
-azure = Color "azure"
+azure :: NamedColor
+azure = NamedColor "azure"
 {-# INLINE azure #-}
 
 
 -- | Generates the CSS @beige@ \<named-color\> value.
-beige :: Color
-beige = Color "beige"
+beige :: NamedColor
+beige = NamedColor "beige"
 {-# INLINE beige #-}
 
 
 -- | Generates the CSS @bisque@ \<named-color\> value.
-bisque :: Color
-bisque = Color "bisque"
+bisque :: NamedColor
+bisque = NamedColor "bisque"
 {-# INLINE bisque #-}
 
 
 -- | Generates the CSS @black@ \<named-color\> value.
-black :: Color
-black = Color "black"
+black :: NamedColor
+black = NamedColor "black"
 {-# INLINE black #-}
 
 
 -- | Generates the CSS @blanchedalmond@ \<named-color\> value.
-blanchedalmond :: Color
-blanchedalmond = Color "blanchedalmond"
+blanchedalmond :: NamedColor
+blanchedalmond = NamedColor "blanchedalmond"
 {-# INLINE blanchedalmond #-}
 
 
 -- | Generates the CSS @blue@ \<named-color\> value.
-blue :: Color
-blue = Color "blue"
+blue :: NamedColor
+blue = NamedColor "blue"
 {-# INLINE blue #-}
 
 
--- | Generates the CSS @blueviolet@ \<named-color\> value.
-blueviolet :: Color
-blueviolet = Color "blueviolet"
+-- | Generates the CSS @blueviolet@ @\<named-color\>@ value.
+blueviolet :: NamedColor
+blueviolet = NamedColor "blueviolet"
 {-# INLINE blueviolet #-}
 
 
--- | Generates the CSS @brown@ \<named-color\> value.
-brown :: Color
-brown = Color "brown"
+-- | Generates the CSS @brown@ @\<named-color\>@ value.
+brown :: NamedColor
+brown = NamedColor "brown"
 {-# INLINE brown #-}
 
 
--- | Generates the CSS @burlywood@ \<named-color\> value.
-burlywood :: Color
-burlywood = Color "burlywood"
+-- | Generates the CSS @burlywood@ @\<named-color\>@ value.
+burlywood :: NamedColor
+burlywood = NamedColor "burlywood"
 {-# INLINE burlywood #-}
 
 
--- | Generates the CSS @cadetblue@ \<named-color\> value.
-cadetblue :: Color
-cadetblue = Color "cadetblue"
+-- | Generates the CSS @cadetblue@ @\<named-color\>@ value.
+cadetblue :: NamedColor
+cadetblue = NamedColor "cadetblue"
 {-# INLINE cadetblue #-}
 
 
--- | Generates the CSS @chartreuse@ \<named-color\> value.
-chartreuse :: Color
-chartreuse = Color "chartreuse"
+-- | Generates the CSS @chartreuse@ @\<named-color\>@ value.
+chartreuse :: NamedColor
+chartreuse = NamedColor "chartreuse"
 {-# INLINE chartreuse #-}
 
 
--- | Generates the CSS @chocolate@ \<named-color\> value.
-chocolate :: Color
-chocolate = Color "chocolate"
+-- | Generates the CSS @chocolate@ @\<named-color\>@ value.
+chocolate :: NamedColor
+chocolate = NamedColor "chocolate"
 {-# INLINE chocolate #-}
 
 
--- | Generates the CSS @coral@ \<named-color\> value.
-coral :: Color
-coral = Color "coral"
+-- | Generates the CSS @coral@ @\<named-color\>@ value.
+coral :: NamedColor
+coral = NamedColor "coral"
 {-# INLINE coral #-}
 
 
--- | Generates the CSS @cornflowerblue@ \<named-color\> value.
-cornflowerblue :: Color
-cornflowerblue = Color "cornflowerblue"
+-- | Generates the CSS @cornflowerblue@ @\<named-color\>@ value.
+cornflowerblue :: NamedColor
+cornflowerblue = NamedColor "cornflowerblue"
 {-# INLINE cornflowerblue #-}
 
 
--- | Generates the CSS @cornsilk@ \<named-color\> value.
-cornsilk :: Color
-cornsilk = Color "cornsilk"
+-- | Generates the CSS @cornsilk@ @\<named-color\>@ value.
+cornsilk :: NamedColor
+cornsilk = NamedColor "cornsilk"
 {-# INLINE cornsilk #-}
 
 
--- | Generates the CSS @crimson@ \<named-color\> value.
-crimson :: Color
-crimson = Color "crimson"
+-- | Generates the CSS @crimson@ @\<named-color\>@ value.
+crimson :: NamedColor
+crimson = NamedColor "crimson"
 {-# INLINE crimson #-}
 
 
--- | Generates the CSS @cyan@ \<named-color\> value.
-cyan :: Color
-cyan = Color "cyan"
+-- | Generates the CSS @cyan@ @\<named-color\>@ value.
+cyan :: NamedColor
+cyan = NamedColor "cyan"
 {-# INLINE cyan #-}
 
 
--- | Generates the CSS @darkblue@ \<named-color\> value.
-darkblue :: Color
-darkblue = Color "darkblue"
+-- | Generates the CSS @darkblue@ @\<named-color\>@ value.
+darkblue :: NamedColor
+darkblue = NamedColor "darkblue"
 {-# INLINE darkblue #-}
 
 
--- | Generates the CSS @darkcyan@ \<named-color\> value.
-darkcyan :: Color
-darkcyan = Color "darkcyan"
+-- | Generates the CSS @darkcyan@ @\<named-color\>@ value.
+darkcyan :: NamedColor
+darkcyan = NamedColor "darkcyan"
 {-# INLINE darkcyan #-}
 
 
--- | Generates the CSS @darkgoldenrod@ \<named-color\> value.
-darkgoldenrod :: Color
-darkgoldenrod = Color "darkgoldenrod"
+-- | Generates the CSS @darkgoldenrod@ @\<named-color\>@ value.
+darkgoldenrod :: NamedColor
+darkgoldenrod = NamedColor "darkgoldenrod"
 {-# INLINE darkgoldenrod #-}
 
 
--- | Generates the CSS @darkgray@ \<named-color\> value.
-darkgray :: Color
-darkgray = Color "darkgray"
+-- | Generates the CSS @darkgray@ @\<named-color\>@ value.
+darkgray :: NamedColor
+darkgray = NamedColor "darkgray"
 {-# INLINE darkgray #-}
 
 
--- | Generates the CSS @darkgreen@ \<named-color\> value.
-darkgreen :: Color
-darkgreen = Color "darkgreen"
+-- | Generates the CSS @darkgreen@ @\<named-color\>@ value.
+darkgreen :: NamedColor
+darkgreen = NamedColor "darkgreen"
 {-# INLINE darkgreen #-}
 
 
--- | Generates the CSS @darkgrey@ \<named-color\> value.
-darkgrey :: Color
-darkgrey = Color "darkgrey"
+-- | Generates the CSS @darkgrey@ @\<named-color\>@ value.
+darkgrey :: NamedColor
+darkgrey = NamedColor "darkgrey"
 {-# INLINE darkgrey #-}
 
 
--- | Generates the CSS @darkkhaki@ \<named-color\> value.
-darkkhaki :: Color
-darkkhaki = Color "darkkhaki"
+-- | Generates the CSS @darkkhaki@ @\<named-color\>@ value.
+darkkhaki :: NamedColor
+darkkhaki = NamedColor "darkkhaki"
 {-# INLINE darkkhaki #-}
 
 
--- | Generates the CSS @darkmagenta@ \<named-color\> value.
-darkmagenta :: Color
-darkmagenta = Color "darkmagenta"
+-- | Generates the CSS @darkmagenta@ @\<named-color\>@ value.
+darkmagenta :: NamedColor
+darkmagenta = NamedColor "darkmagenta"
 {-# INLINE darkmagenta #-}
 
 
--- | Generates the CSS @darkolivegreen@ \<named-color\> value.
-darkolivegreen :: Color
-darkolivegreen = Color "darkolivegreen"
+-- | Generates the CSS @darkolivegreen@ @\<named-color\>@ value.
+darkolivegreen :: NamedColor
+darkolivegreen = NamedColor "darkolivegreen"
 {-# INLINE darkolivegreen #-}
 
 
--- | Generates the CSS @darkorange@ \<named-color\> value.
-darkorange :: Color
-darkorange = Color "darkorange"
+-- | Generates the CSS @darkorange@ @\<named-color\>@ value.
+darkorange :: NamedColor
+darkorange = NamedColor "darkorange"
 {-# INLINE darkorange #-}
 
 
--- | Generates the CSS @darkorchid@ \<named-color\> value.
-darkorchid :: Color
-darkorchid = Color "darkorchid"
+-- | Generates the CSS @darkorchid@ @\<named-color\>@ value.
+darkorchid :: NamedColor
+darkorchid = NamedColor "darkorchid"
 {-# INLINE darkorchid #-}
 
 
--- | Generates the CSS @darkred@ \<named-color\> value.
-darkred :: Color
-darkred = Color "darkred"
+-- | Generates the CSS @darkred@ @\<named-color\>@ value.
+darkred :: NamedColor
+darkred = NamedColor "darkred"
 {-# INLINE darkred #-}
 
 
--- | Generates the CSS @darksalmon@ \<named-color\> value.
-darksalmon :: Color
-darksalmon = Color "darksalmon"
+-- | Generates the CSS @darksalmon@ @\<named-color\>@ value.
+darksalmon :: NamedColor
+darksalmon = NamedColor "darksalmon"
 {-# INLINE darksalmon #-}
 
 
--- | Generates the CSS @darkseagreen@ \<named-color\> value.
-darkseagreen :: Color
-darkseagreen = Color "darkseagreen"
+-- | Generates the CSS @darkseagreen@ @\<named-color\>@ value.
+darkseagreen :: NamedColor
+darkseagreen = NamedColor "darkseagreen"
 {-# INLINE darkseagreen #-}
 
 
--- | Generates the CSS @darkslateblue@ \<named-color\> value.
-darkslateblue :: Color
-darkslateblue = Color "darkslateblue"
+-- | Generates the CSS @darkslateblue@ @\<named-color\>@ value.
+darkslateblue :: NamedColor
+darkslateblue = NamedColor "darkslateblue"
 {-# INLINE darkslateblue #-}
 
 
--- | Generates the CSS @darkslategray@ \<named-color\> value.
-darkslategray :: Color
-darkslategray = Color "darkslategray"
+-- | Generates the CSS @darkslategray@ @\<named-color\>@ value.
+darkslategray :: NamedColor
+darkslategray = NamedColor "darkslategray"
 {-# INLINE darkslategray #-}
 
 
--- | Generates the CSS @darkslategrey@ \<named-color\> value.
-darkslategrey :: Color
-darkslategrey = Color "darkslategrey"
+-- | Generates the CSS @darkslategrey@ @\<named-color\>@ value.
+darkslategrey :: NamedColor
+darkslategrey = NamedColor "darkslategrey"
 {-# INLINE darkslategrey #-}
 
 
--- | Generates the CSS @darkturquoise@ \<named-color\> value.
-darkturquoise :: Color
-darkturquoise = Color "darkturquoise"
+-- | Generates the CSS @darkturquoise@ @\<named-color\>@ value.
+darkturquoise :: NamedColor
+darkturquoise = NamedColor "darkturquoise"
 {-# INLINE darkturquoise #-}
 
 
--- | Generates the CSS @darkviolet@ \<named-color\> value.
-darkviolet :: Color
-darkviolet = Color "darkviolet"
+-- | Generates the CSS @darkviolet@ @\<named-color\>@ value.
+darkviolet :: NamedColor
+darkviolet = NamedColor "darkviolet"
 {-# INLINE darkviolet #-}
 
 
--- | Generates the CSS @deeppink@ \<named-color\> value.
-deeppink :: Color
-deeppink = Color "deeppink"
+-- | Generates the CSS @deeppink@ @\<named-color\>@ value.
+deeppink :: NamedColor
+deeppink = NamedColor "deeppink"
 {-# INLINE deeppink #-}
 
 
--- | Generates the CSS @deepskyblue@ \<named-color\> value.
-deepskyblue :: Color
-deepskyblue = Color "deepskyblue"
+-- | Generates the CSS @deepskyblue@ @\<named-color\>@ value.
+deepskyblue :: NamedColor
+deepskyblue = NamedColor "deepskyblue"
 {-# INLINE deepskyblue #-}
 
 
--- | Generates the CSS @dimgray@ \<named-color\> value.
-dimgray :: Color
-dimgray = Color "dimgray"
+-- | Generates the CSS @dimgray@ @\<named-color\>@ value.
+dimgray :: NamedColor
+dimgray = NamedColor "dimgray"
 {-# INLINE dimgray #-}
 
 
--- | Generates the CSS @dimgrey@ \<named-color\> value.
-dimgrey :: Color
-dimgrey = Color "dimgrey"
+-- | Generates the CSS @dimgrey@ @\<named-color\>@ value.
+dimgrey :: NamedColor
+dimgrey = NamedColor "dimgrey"
 {-# INLINE dimgrey #-}
 
 
--- | Generates the CSS @dodgerblue@ \<named-color\> value.
-dodgerblue :: Color
-dodgerblue = Color "dodgerblue"
+-- | Generates the CSS @dodgerblue@ @\<named-color\>@ value.
+dodgerblue :: NamedColor
+dodgerblue = NamedColor "dodgerblue"
 {-# INLINE dodgerblue #-}
 
 
--- | Generates the CSS @firebrick@ \<named-color\> value.
-firebrick :: Color
-firebrick = Color "firebrick"
+-- | Generates the CSS @firebrick@ @\<named-color\>@ value.
+firebrick :: NamedColor
+firebrick = NamedColor "firebrick"
 {-# INLINE firebrick #-}
 
 
--- | Generates the CSS @floralwhite@ \<named-color\> value.
-floralwhite :: Color
-floralwhite = Color "floralwhite"
+-- | Generates the CSS @floralwhite@ @\<named-color\>@ value.
+floralwhite :: NamedColor
+floralwhite = NamedColor "floralwhite"
 {-# INLINE floralwhite #-}
 
 
--- | Generates the CSS @forestgreen@ \<named-color\> value.
-forestgreen :: Color
-forestgreen = Color "forestgreen"
+-- | Generates the CSS @forestgreen@ @\<named-color\>@ value.
+forestgreen :: NamedColor
+forestgreen = NamedColor "forestgreen"
 {-# INLINE forestgreen #-}
 
 
--- | Generates the CSS @fuchsia@ \<named-color\> value.
-fuchsia :: Color
-fuchsia = Color "fuchsia"
+-- | Generates the CSS @fuchsia@ @\<named-color\>@ value.
+fuchsia :: NamedColor
+fuchsia = NamedColor "fuchsia"
 {-# INLINE fuchsia #-}
 
 
--- | Generates the CSS @gainsboro@ \<named-color\> value.
-gainsboro :: Color
-gainsboro = Color "gainsboro"
+-- | Generates the CSS @gainsboro@ @\<named-color\>@ value.
+gainsboro :: NamedColor
+gainsboro = NamedColor "gainsboro"
 {-# INLINE gainsboro #-}
 
 
--- | Generates the CSS @ghostwhite@ \<named-color\> value.
-ghostwhite :: Color
-ghostwhite = Color "ghostwhite"
+-- | Generates the CSS @ghostwhite@ @\<named-color\>@ value.
+ghostwhite :: NamedColor
+ghostwhite = NamedColor "ghostwhite"
 {-# INLINE ghostwhite #-}
 
 
--- | Generates the CSS @gold@ \<named-color\> value.
-gold :: Color
-gold = Color "gold"
+-- | Generates the CSS @gold@ @\<named-color\>@ value.
+gold :: NamedColor
+gold = NamedColor "gold"
 {-# INLINE gold #-}
 
 
--- | Generates the CSS @goldenrod@ \<named-color\> value.
-goldenrod :: Color
-goldenrod = Color "goldenrod"
+-- | Generates the CSS @goldenrod@ @\<named-color\>@ value.
+goldenrod :: NamedColor
+goldenrod = NamedColor "goldenrod"
 {-# INLINE goldenrod #-}
 
 
--- | Generates the CSS @gray@ \<named-color\> value.
-gray :: Color
-gray = Color "gray"
+-- | Generates the CSS @gray@ @\<named-color\>@ value.
+gray :: NamedColor
+gray = NamedColor "gray"
 {-# INLINE gray #-}
 
 
--- | Generates the CSS @green@ \<named-color\> value.
-green :: Color
-green = Color "green"
+-- | Generates the CSS @green@ @\<named-color\>@ value.
+green :: NamedColor
+green = NamedColor "green"
 {-# INLINE green #-}
 
 
--- | Generates the CSS @greenyellow@ \<named-color\> value.
-greenyellow :: Color
-greenyellow = Color "greenyellow"
+-- | Generates the CSS @greenyellow@ @\<named-color\>@ value.
+greenyellow :: NamedColor
+greenyellow = NamedColor "greenyellow"
 {-# INLINE greenyellow #-}
 
 
--- | Generates the CSS @grey@ \<named-color\> value.
-grey :: Color
-grey = Color "grey"
+-- | Generates the CSS @grey@ @\<named-color\>@ value.
+grey :: NamedColor
+grey = NamedColor "grey"
 {-# INLINE grey #-}
 
 
--- | Generates the CSS @honeydew@ \<named-color\> value.
-honeydew :: Color
-honeydew = Color "honeydew"
+-- | Generates the CSS @honeydew@ @\<named-color\>@ value.
+honeydew :: NamedColor
+honeydew = NamedColor "honeydew"
 {-# INLINE honeydew #-}
 
 
--- | Generates the CSS @hotpink@ \<named-color\> value.
-hotpink :: Color
-hotpink = Color "hotpink"
+-- | Generates the CSS @hotpink@ @\<named-color\>@ value.
+hotpink :: NamedColor
+hotpink = NamedColor "hotpink"
 {-# INLINE hotpink #-}
 
 
--- | Generates the CSS @indianred@ \<named-color\> value.
-indianred :: Color
-indianred = Color "indianred"
+-- | Generates the CSS @indianred@ @\<named-color\>@ value.
+indianred :: NamedColor
+indianred = NamedColor "indianred"
 {-# INLINE indianred #-}
 
 
--- | Generates the CSS @indigo@ \<named-color\> value.
-indigo :: Color
-indigo = Color "indigo"
+-- | Generates the CSS @indigo@ @\<named-color\>@ value.
+indigo :: NamedColor
+indigo = NamedColor "indigo"
 {-# INLINE indigo #-}
 
 
--- | Generates the CSS @ivory@ \<named-color\> value.
-ivory :: Color
-ivory = Color "ivory"
+-- | Generates the CSS @ivory@ @\<named-color\>@ value.
+ivory :: NamedColor
+ivory = NamedColor "ivory"
 {-# INLINE ivory #-}
 
 
--- | Generates the CSS @khaki@ \<named-color\> value.
-khaki :: Color
-khaki = Color "khaki"
+-- | Generates the CSS @khaki@ @\<named-color\>@ value.
+khaki :: NamedColor
+khaki = NamedColor "khaki"
 {-# INLINE khaki #-}
 
 
--- | Generates the CSS @lavender@ \<named-color\> value.
-lavender :: Color
-lavender = Color "lavender"
+-- | Generates the CSS @lavender@ @\<named-color\>@ value.
+lavender :: NamedColor
+lavender = NamedColor "lavender"
 {-# INLINE lavender #-}
 
 
--- | Generates the CSS @lavenderblush@ \<named-color\> value.
-lavenderblush :: Color
-lavenderblush = Color "lavenderblush"
+-- | Generates the CSS @lavenderblush@ @\<named-color\>@ value.
+lavenderblush :: NamedColor
+lavenderblush = NamedColor "lavenderblush"
 {-# INLINE lavenderblush #-}
 
 
--- | Generates the CSS @lawngreen@ \<named-color\> value.
-lawngreen :: Color
-lawngreen = Color "lawngreen"
+-- | Generates the CSS @lawngreen@ @\<named-color\>@ value.
+lawngreen :: NamedColor
+lawngreen = NamedColor "lawngreen"
 {-# INLINE lawngreen #-}
 
 
--- | Generates the CSS @lemonchiffon@ \<named-color\> value.
-lemonchiffon :: Color
-lemonchiffon = Color "lemonchiffon"
+-- | Generates the CSS @lemonchiffon@ @\<named-color\>@ value.
+lemonchiffon :: NamedColor
+lemonchiffon = NamedColor "lemonchiffon"
 {-# INLINE lemonchiffon #-}
 
 
--- | Generates the CSS @lightblue@ \<named-color\> value.
-lightblue :: Color
-lightblue = Color "lightblue"
+-- | Generates the CSS @lightblue@ @\<named-color\>@ value.
+lightblue :: NamedColor
+lightblue = NamedColor "lightblue"
 {-# INLINE lightblue #-}
 
 
--- | Generates the CSS @lightcoral@ \<named-color\> value.
-lightcoral :: Color
-lightcoral = Color "lightcoral"
+-- | Generates the CSS @lightcoral@ @\<named-color\>@ value.
+lightcoral :: NamedColor
+lightcoral = NamedColor "lightcoral"
 {-# INLINE lightcoral #-}
 
 
--- | Generates the CSS @lightcyan@ \<named-color\> value.
-lightcyan :: Color
-lightcyan = Color "lightcyan"
+-- | Generates the CSS @lightcyan@ @\<named-color\>@ value.
+lightcyan :: NamedColor
+lightcyan = NamedColor "lightcyan"
 {-# INLINE lightcyan #-}
 
 
--- | Generates the CSS @lightgoldenrodyellow@ \<named-color\> value.
-lightgoldenrodyellow :: Color
-lightgoldenrodyellow = Color "lightgoldenrodyellow"
+-- | Generates the CSS @lightgoldenrodyellow@ @\<named-color\>@ value.
+lightgoldenrodyellow :: NamedColor
+lightgoldenrodyellow = NamedColor "lightgoldenrodyellow"
 {-# INLINE lightgoldenrodyellow #-}
 
 
--- | Generates the CSS @lightgray@ \<named-color\> value.
-lightgray :: Color
-lightgray = Color "lightgray"
+-- | Generates the CSS @lightgray@ @\<named-color\>@ value.
+lightgray :: NamedColor
+lightgray = NamedColor "lightgray"
 {-# INLINE lightgray #-}
 
 
--- | Generates the CSS @lightgreen@ \<named-color\> value.
-lightgreen :: Color
-lightgreen = Color "lightgreen"
+-- | Generates the CSS @lightgreen@ @\<named-color\>@ value.
+lightgreen :: NamedColor
+lightgreen = NamedColor "lightgreen"
 {-# INLINE lightgreen #-}
 
 
--- | Generates the CSS @lightgrey@ \<named-color\> value.
-lightgrey :: Color
-lightgrey = Color "lightgrey"
+-- | Generates the CSS @lightgrey@ @\<named-color\>@ value.
+lightgrey :: NamedColor
+lightgrey = NamedColor "lightgrey"
 {-# INLINE lightgrey #-}
 
 
--- | Generates the CSS @lightpink@ \<named-color\> value.
-lightpink :: Color
-lightpink = Color "lightpink"
+-- | Generates the CSS @lightpink@ @\<named-color\>@ value.
+lightpink :: NamedColor
+lightpink = NamedColor "lightpink"
 {-# INLINE lightpink #-}
 
 
--- | Generates the CSS @lightsalmon@ \<named-color\> value.
-lightsalmon :: Color
-lightsalmon = Color "lightsalmon"
+-- | Generates the CSS @lightsalmon@ @\<named-color\>@ value.
+lightsalmon :: NamedColor
+lightsalmon = NamedColor "lightsalmon"
 {-# INLINE lightsalmon #-}
 
 
--- | Generates the CSS @lightseagreen@ \<named-color\> value.
-lightseagreen :: Color
-lightseagreen = Color "lightseagreen"
+-- | Generates the CSS @lightseagreen@ @\<named-color\>@ value.
+lightseagreen :: NamedColor
+lightseagreen = NamedColor "lightseagreen"
 {-# INLINE lightseagreen #-}
 
 
--- | Generates the CSS @lightskyblue@ \<named-color\> value.
-lightskyblue :: Color
-lightskyblue = Color "lightskyblue"
+-- | Generates the CSS @lightskyblue@ @\<named-color\>@ value.
+lightskyblue :: NamedColor
+lightskyblue = NamedColor "lightskyblue"
 {-# INLINE lightskyblue #-}
 
 
--- | Generates the CSS @lightslategray@ \<named-color\> value.
-lightslategray :: Color
-lightslategray = Color "lightslategray"
+-- | Generates the CSS @lightslategray@ @\<named-color\>@ value.
+lightslategray :: NamedColor
+lightslategray = NamedColor "lightslategray"
 {-# INLINE lightslategray #-}
 
 
--- | Generates the CSS @lightslategrey@ \<named-color\> value.
-lightslategrey :: Color
-lightslategrey = Color "lightslategrey"
+-- | Generates the CSS @lightslategrey@ @\<named-color\>@ value.
+lightslategrey :: NamedColor
+lightslategrey = NamedColor "lightslategrey"
 {-# INLINE lightslategrey #-}
 
 
--- | Generates the CSS @lightsteelblue@ \<named-color\> value.
-lightsteelblue :: Color
-lightsteelblue = Color "lightsteelblue"
+-- | Generates the CSS @lightsteelblue@ @\<named-color\>@ value.
+lightsteelblue :: NamedColor
+lightsteelblue = NamedColor "lightsteelblue"
 {-# INLINE lightsteelblue #-}
 
 
--- | Generates the CSS @lightyellow@ \<named-color\> value.
-lightyellow :: Color
-lightyellow = Color "lightyellow"
+-- | Generates the CSS @lightyellow@ @\<named-color\>@ value.
+lightyellow :: NamedColor
+lightyellow = NamedColor "lightyellow"
 {-# INLINE lightyellow #-}
 
 
--- | Generates the CSS @lime@ \<named-color\> value.
-lime :: Color
-lime = Color "lime"
+-- | Generates the CSS @lime@ @\<named-color\>@ value.
+lime :: NamedColor
+lime = NamedColor "lime"
 {-# INLINE lime #-}
 
 
--- | Generates the CSS @limegreen@ \<named-color\> value.
-limegreen :: Color
-limegreen = Color "limegreen"
+-- | Generates the CSS @limegreen@ @\<named-color\>@ value.
+limegreen :: NamedColor
+limegreen = NamedColor "limegreen"
 {-# INLINE limegreen #-}
 
 
--- | Generates the CSS @linen@ \<named-color\> value.
-linen :: Color
-linen = Color "linen"
+-- | Generates the CSS @linen@ @\<named-color\>@ value.
+linen :: NamedColor
+linen = NamedColor "linen"
 {-# INLINE linen #-}
 
 
--- | Generates the CSS @magenta@ \<named-color\> value.
-magenta :: Color
-magenta = Color "magenta"
+-- | Generates the CSS @magenta@ @\<named-color\>@ value.
+magenta :: NamedColor
+magenta = NamedColor "magenta"
 {-# INLINE magenta #-}
 
 
--- | Generates the CSS @maroon@ \<named-color\> value.
-maroon :: Color
-maroon = Color "maroon"
+-- | Generates the CSS @maroon@ @\<named-color\>@ value.
+maroon :: NamedColor
+maroon = NamedColor "maroon"
 {-# INLINE maroon #-}
 
 
--- | Generates the CSS @mediumaquamarine@ \<named-color\> value.
-mediumaquamarine :: Color
-mediumaquamarine = Color "mediumaquamarine"
+-- | Generates the CSS @mediumaquamarine@ @\<named-color\>@ value.
+mediumaquamarine :: NamedColor
+mediumaquamarine = NamedColor "mediumaquamarine"
 {-# INLINE mediumaquamarine #-}
 
 
--- | Generates the CSS @mediumblue@ \<named-color\> value.
-mediumblue :: Color
-mediumblue = Color "mediumblue"
+-- | Generates the CSS @mediumblue@ @\<named-color\>@ value.
+mediumblue :: NamedColor
+mediumblue = NamedColor "mediumblue"
 {-# INLINE mediumblue #-}
 
 
--- | Generates the CSS @mediumorchid@ \<named-color\> value.
-mediumorchid :: Color
-mediumorchid = Color "mediumorchid"
+-- | Generates the CSS @mediumorchid@ @\<named-color\>@ value.
+mediumorchid :: NamedColor
+mediumorchid = NamedColor "mediumorchid"
 {-# INLINE mediumorchid #-}
 
 
--- | Generates the CSS @mediumpurple@ \<named-color\> value.
-mediumpurple :: Color
-mediumpurple = Color "mediumpurple"
+-- | Generates the CSS @mediumpurple@ @\<named-color\>@ value.
+mediumpurple :: NamedColor
+mediumpurple = NamedColor "mediumpurple"
 {-# INLINE mediumpurple #-}
 
 
--- | Generates the CSS @mediumseagreen@ \<named-color\> value.
-mediumseagreen :: Color
-mediumseagreen = Color "mediumseagreen"
+-- | Generates the CSS @mediumseagreen@ @\<named-color\>@ value.
+mediumseagreen :: NamedColor
+mediumseagreen = NamedColor "mediumseagreen"
 {-# INLINE mediumseagreen #-}
 
 
--- | Generates the CSS @mediumslateblue@ \<named-color\> value.
-mediumslateblue :: Color
-mediumslateblue = Color "mediumslateblue"
+-- | Generates the CSS @mediumslateblue@ @\<named-color\>@ value.
+mediumslateblue :: NamedColor
+mediumslateblue = NamedColor "mediumslateblue"
 {-# INLINE mediumslateblue #-}
 
 
--- | Generates the CSS @mediumspringgreen@ \<named-color\> value.
-mediumspringgreen :: Color
-mediumspringgreen = Color "mediumspringgreen"
+-- | Generates the CSS @mediumspringgreen@ @\<named-color\>@ value.
+mediumspringgreen :: NamedColor
+mediumspringgreen = NamedColor "mediumspringgreen"
 {-# INLINE mediumspringgreen #-}
 
 
--- | Generates the CSS @mediumturquoise@ \<named-color\> value.
-mediumturquoise :: Color
-mediumturquoise = Color "mediumturquoise"
+-- | Generates the CSS @mediumturquoise@ @\<named-color\>@ value.
+mediumturquoise :: NamedColor
+mediumturquoise = NamedColor "mediumturquoise"
 {-# INLINE mediumturquoise #-}
 
 
--- | Generates the CSS @mediumvioletred@ \<named-color\> value.
-mediumvioletred :: Color
-mediumvioletred = Color "mediumvioletred"
+-- | Generates the CSS @mediumvioletred@ @\<named-color\>@ value.
+mediumvioletred :: NamedColor
+mediumvioletred = NamedColor "mediumvioletred"
 {-# INLINE mediumvioletred #-}
 
 
--- | Generates the CSS @midnightblue@ \<named-color\> value.
-midnightblue :: Color
-midnightblue = Color "midnightblue"
+-- | Generates the CSS @midnightblue@ @\<named-color\>@ value.
+midnightblue :: NamedColor
+midnightblue = NamedColor "midnightblue"
 {-# INLINE midnightblue #-}
 
 
--- | Generates the CSS @mintcream@ \<named-color\> value.
-mintcream :: Color
-mintcream = Color "mintcream"
+-- | Generates the CSS @mintcream@ @\<named-color\>@ value.
+mintcream :: NamedColor
+mintcream = NamedColor "mintcream"
 {-# INLINE mintcream #-}
 
 
--- | Generates the CSS @mistyrose@ \<named-color\> value.
-mistyrose :: Color
-mistyrose = Color "mistyrose"
+-- | Generates the CSS @mistyrose@ @\<named-color\>@ value.
+mistyrose :: NamedColor
+mistyrose = NamedColor "mistyrose"
 {-# INLINE mistyrose #-}
 
 
--- | Generates the CSS @moccasin@ \<named-color\> value.
-moccasin :: Color
-moccasin = Color "moccasin"
+-- | Generates the CSS @moccasin@ @\<named-color\>@ value.
+moccasin :: NamedColor
+moccasin = NamedColor "moccasin"
 {-# INLINE moccasin #-}
 
 
--- | Generates the CSS @navajowhite@ \<named-color\> value.
-navajowhite :: Color
-navajowhite = Color "navajowhite"
+-- | Generates the CSS @navajowhite@ @\<named-color\>@ value.
+navajowhite :: NamedColor
+navajowhite = NamedColor "navajowhite"
 {-# INLINE navajowhite #-}
 
 
--- | Generates the CSS @navy@ \<named-color\> value.
-navy :: Color
-navy = Color "navy"
+-- | Generates the CSS @navy@ @\<named-color\>@ value.
+navy :: NamedColor
+navy = NamedColor "navy"
 {-# INLINE navy #-}
 
 
--- | Generates the CSS @oldlace@ \<named-color\> value.
-oldlace :: Color
-oldlace = Color "oldlace"
+-- | Generates the CSS @oldlace@ @\<named-color\>@ value.
+oldlace :: NamedColor
+oldlace = NamedColor "oldlace"
 {-# INLINE oldlace #-}
 
 
--- | Generates the CSS @olive@ \<named-color\> value.
-olive :: Color
-olive = Color "olive"
+-- | Generates the CSS @olive@ @\<named-color\>@ value.
+olive :: NamedColor
+olive = NamedColor "olive"
 {-# INLINE olive #-}
 
 
--- | Generates the CSS @olivedrab@ \<named-color\> value.
-olivedrab :: Color
-olivedrab = Color "olivedrab"
+-- | Generates the CSS @olivedrab@ @\<named-color\>@ value.
+olivedrab :: NamedColor
+olivedrab = NamedColor "olivedrab"
 {-# INLINE olivedrab #-}
 
 
--- | Generates the CSS @orange@ \<named-color\> value.
-orange :: Color
-orange = Color "orange"
+-- | Generates the CSS @orange@ @\<named-color\>@ value.
+orange :: NamedColor
+orange = NamedColor "orange"
 {-# INLINE orange #-}
 
 
--- | Generates the CSS @orangered@ \<named-color\> value.
-orangered :: Color
-orangered = Color "orangered"
+-- | Generates the CSS @orangered@ @\<named-color\>@ value.
+orangered :: NamedColor
+orangered = NamedColor "orangered"
 {-# INLINE orangered #-}
 
 
--- | Generates the CSS @orchid@ \<named-color\> value.
-orchid :: Color
-orchid = Color "orchid"
+-- | Generates the CSS @orchid@ @\<named-color\>@ value.
+orchid :: NamedColor
+orchid = NamedColor "orchid"
 {-# INLINE orchid #-}
 
 
--- | Generates the CSS @palegoldenrod@ \<named-color\> value.
-palegoldenrod :: Color
-palegoldenrod = Color "palegoldenrod"
+-- | Generates the CSS @palegoldenrod@ @\<named-color\>@ value.
+palegoldenrod :: NamedColor
+palegoldenrod = NamedColor "palegoldenrod"
 {-# INLINE palegoldenrod #-}
 
 
--- | Generates the CSS @palegreen@ \<named-color\> value.
-palegreen :: Color
-palegreen = Color "palegreen"
+-- | Generates the CSS @palegreen@ @\<named-color\>@ value.
+palegreen :: NamedColor
+palegreen = NamedColor "palegreen"
 {-# INLINE palegreen #-}
 
 
--- | Generates the CSS @paleturquoise@ \<named-color\> value.
-paleturquoise :: Color
-paleturquoise = Color "paleturquoise"
+-- | Generates the CSS @paleturquoise@ @\<named-color\>@ value.
+paleturquoise :: NamedColor
+paleturquoise = NamedColor "paleturquoise"
 {-# INLINE paleturquoise #-}
 
 
--- | Generates the CSS @palevioletred@ \<named-color\> value.
-palevioletred :: Color
-palevioletred = Color "palevioletred"
+-- | Generates the CSS @palevioletred@ @\<named-color\>@ value.
+palevioletred :: NamedColor
+palevioletred = NamedColor "palevioletred"
 {-# INLINE palevioletred #-}
 
 
--- | Generates the CSS @papayawhip@ \<named-color\> value.
-papayawhip :: Color
-papayawhip = Color "papayawhip"
+-- | Generates the CSS @papayawhip@ @\<named-color\>@ value.
+papayawhip :: NamedColor
+papayawhip = NamedColor "papayawhip"
 {-# INLINE papayawhip #-}
 
 
--- | Generates the CSS @peachpuff@ \<named-color\> value.
-peachpuff :: Color
-peachpuff = Color "peachpuff"
+-- | Generates the CSS @peachpuff@ @\<named-color\>@ value.
+peachpuff :: NamedColor
+peachpuff = NamedColor "peachpuff"
 {-# INLINE peachpuff #-}
 
 
--- | Generates the CSS @peru@ \<named-color\> value.
-peru :: Color
-peru = Color "peru"
+-- | Generates the CSS @peru@ @\<named-color\>@ value.
+peru :: NamedColor
+peru = NamedColor "peru"
 {-# INLINE peru #-}
 
 
--- | Generates the CSS @pink@ \<named-color\> value.
-pink :: Color
-pink = Color "pink"
+-- | Generates the CSS @pink@ @\<named-color\>@ value.
+pink :: NamedColor
+pink = NamedColor "pink"
 {-# INLINE pink #-}
 
 
--- | Generates the CSS @plum@ \<named-color\> value.
-plum :: Color
-plum = Color "plum"
+-- | Generates the CSS @plum@ @\<named-color\>@ value.
+plum :: NamedColor
+plum = NamedColor "plum"
 {-# INLINE plum #-}
 
 
--- | Generates the CSS @powderblue@ \<named-color\> value.
-powderblue :: Color
-powderblue = Color "powderblue"
+-- | Generates the CSS @powderblue@ @\<named-color\>@ value.
+powderblue :: NamedColor
+powderblue = NamedColor "powderblue"
 {-# INLINE powderblue #-}
 
 
--- | Generates the CSS @purple@ \<named-color\> value.
-purple :: Color
-purple = Color "purple"
+-- | Generates the CSS @purple@ @\<named-color\>@ value.
+purple :: NamedColor
+purple = NamedColor "purple"
 {-# INLINE purple #-}
 
 
--- | Generates the CSS @rebeccapurple@ \<named-color\> value.
-rebeccapurple :: Color
-rebeccapurple = Color "rebeccapurple"
+-- | Generates the CSS @rebeccapurple@ @\<named-color\>@ value.
+rebeccapurple :: NamedColor
+rebeccapurple = NamedColor "rebeccapurple"
 {-# INLINE rebeccapurple #-}
 
 
--- | Generates the CSS @red@ \<named-color\> value.
-red :: Color
-red = Color "red"
+-- | Generates the CSS @red@ @\<named-color\>@ value.
+red :: NamedColor
+red = NamedColor "red"
 {-# INLINE red #-}
 
 
--- | Generates the CSS @rosybrown@ \<named-color\> value.
-rosybrown :: Color
-rosybrown = Color "rosybrown"
+-- | Generates the CSS @rosybrown@ @\<named-color\>@ value.
+rosybrown :: NamedColor
+rosybrown = NamedColor "rosybrown"
 {-# INLINE rosybrown #-}
 
 
--- | Generates the CSS @royalblue@ \<named-color\> value.
-royalblue :: Color
-royalblue = Color "royalblue"
+-- | Generates the CSS @royalblue@ @\<named-color\>@ value.
+royalblue :: NamedColor
+royalblue = NamedColor "royalblue"
 {-# INLINE royalblue #-}
 
 
--- | Generates the CSS @saddlebrown@ \<named-color\> value.
-saddlebrown :: Color
-saddlebrown = Color "saddlebrown"
+-- | Generates the CSS @saddlebrown@ @\<named-color\>@ value.
+saddlebrown :: NamedColor
+saddlebrown = NamedColor "saddlebrown"
 {-# INLINE saddlebrown #-}
 
 
--- | Generates the CSS @salmon@ \<named-color\> value.
-salmon :: Color
-salmon = Color "salmon"
+-- | Generates the CSS @salmon@ @\<named-color\>@ value.
+salmon :: NamedColor
+salmon = NamedColor "salmon"
 {-# INLINE salmon #-}
 
 
--- | Generates the CSS @sandybrown@ \<named-color\> value.
-sandybrown :: Color
-sandybrown = Color "sandybrown"
+-- | Generates the CSS @sandybrown@ @\<named-color\>@ value.
+sandybrown :: NamedColor
+sandybrown = NamedColor "sandybrown"
 {-# INLINE sandybrown #-}
 
 
--- | Generates the CSS @seagreen@ \<named-color\> value.
-seagreen :: Color
-seagreen = Color "seagreen"
+-- | Generates the CSS @seagreen@ @\<named-color\>@ value.
+seagreen :: NamedColor
+seagreen = NamedColor "seagreen"
 {-# INLINE seagreen #-}
 
 
--- | Generates the CSS @seashell@ \<named-color\> value.
-seashell :: Color
-seashell = Color "seashell"
+-- | Generates the CSS @seashell@ @\<named-color\>@ value.
+seashell :: NamedColor
+seashell = NamedColor "seashell"
 {-# INLINE seashell #-}
 
 
--- | Generates the CSS @sienna@ \<named-color\> value.
-sienna :: Color
-sienna = Color "sienna"
+-- | Generates the CSS @sienna@ @\<named-color\>@ value.
+sienna :: NamedColor
+sienna = NamedColor "sienna"
 {-# INLINE sienna #-}
 
 
--- | Generates the CSS @silver@ \<named-color\> value.
-silver :: Color
-silver = Color "silver"
+-- | Generates the CSS @silver@ @\<named-color\>@ value.
+silver :: NamedColor
+silver = NamedColor "silver"
 {-# INLINE silver #-}
 
 
--- | Generates the CSS @skyblue@ \<named-color\> value.
-skyblue :: Color
-skyblue = Color "skyblue"
+-- | Generates the CSS @skyblue@ @\<named-color\>@ value.
+skyblue :: NamedColor
+skyblue = NamedColor "skyblue"
 {-# INLINE skyblue #-}
 
 
--- | Generates the CSS @slateblue@ \<named-color\> value.
-slateblue :: Color
-slateblue = Color "slateblue"
+-- | Generates the CSS @slateblue@ @\<named-color\>@ value.
+slateblue :: NamedColor
+slateblue = NamedColor "slateblue"
 {-# INLINE slateblue #-}
 
 
--- | Generates the CSS @slategray@ \<named-color\> value.
-slategray :: Color
-slategray = Color "slategray"
+-- | Generates the CSS @slategray@ @\<named-color\>@ value.
+slategray :: NamedColor
+slategray = NamedColor "slategray"
 {-# INLINE slategray #-}
 
 
--- | Generates the CSS @slategrey@ \<named-color\> value.
-slategrey :: Color
-slategrey = Color "slategrey"
+-- | Generates the CSS @slategrey@ @\<named-color\>@ value.
+slategrey :: NamedColor
+slategrey = NamedColor "slategrey"
 {-# INLINE slategrey #-}
 
 
--- | Generates the CSS @snow@ \<named-color\> value.
-snow :: Color
-snow = Color "snow"
+-- | Generates the CSS @snow@ @\<named-color\>@ value.
+snow :: NamedColor
+snow = NamedColor "snow"
 {-# INLINE snow #-}
 
 
--- | Generates the CSS @springgreen@ \<named-color\> value.
-springgreen :: Color
-springgreen = Color "springgreen"
+-- | Generates the CSS @springgreen@ @\<named-color\>@ value.
+springgreen :: NamedColor
+springgreen = NamedColor "springgreen"
 {-# INLINE springgreen #-}
 
 
--- | Generates the CSS @steelblue@ \<named-color\> value.
-steelblue :: Color
-steelblue = Color "steelblue"
+-- | Generates the CSS @steelblue@ @\<named-color\>@ value.
+steelblue :: NamedColor
+steelblue = NamedColor "steelblue"
 {-# INLINE steelblue #-}
 
 
--- | Generates the CSS @tan@ \<named-color\> value.
-tan :: Color
-tan = Color "tan"
+-- | Generates the CSS @tan@ @\<named-color\>@ value.
+tan :: NamedColor
+tan = NamedColor "tan"
 {-# INLINE tan #-}
 
 
--- | Generates the CSS @teal@ \<named-color\> value.
-teal :: Color
-teal = Color "teal"
+-- | Generates the CSS @teal@ @\<named-color\>@ value.
+teal :: NamedColor
+teal = NamedColor "teal"
 {-# INLINE teal #-}
 
 
--- | Generates the CSS @thistle@ \<named-color\> value.
-thistle :: Color
-thistle = Color "thistle"
+-- | Generates the CSS @thistle@ @\<named-color\>@ value.
+thistle :: NamedColor
+thistle = NamedColor "thistle"
 {-# INLINE thistle #-}
 
 
--- | Generates the CSS @tomato@ \<named-color\> value.
-tomato :: Color
-tomato = Color "tomato"
+-- | Generates the CSS @tomato@ @\<named-color\>@ value.
+tomato :: NamedColor
+tomato = NamedColor "tomato"
 {-# INLINE tomato #-}
 
 
--- | Generates the CSS @transparent@ \<named-color\> value.
-transparent :: Color
-transparent = Color "transparent"
-{-# INLINE transparent #-}
-
-
--- | Generates the CSS @turquoise@ \<named-color\> value.
-turquoise :: Color
-turquoise = Color "turquoise"
+-- | Generates the CSS @turquoise@ @\<named-color\>@ value.
+turquoise :: NamedColor
+turquoise = NamedColor "turquoise"
 {-# INLINE turquoise #-}
 
 
--- | Generates the CSS @violet@ \<named-color\> value.
-violet :: Color
-violet = Color "violet"
+-- | Generates the CSS @violet@ @\<named-color\>@ value.
+violet :: NamedColor
+violet = NamedColor "violet"
 {-# INLINE violet #-}
 
 
--- | Generates the CSS @wheat@ \<named-color\> value.
-wheat :: Color
-wheat = Color "wheat"
+-- | Generates the CSS @wheat@ @\<named-color\>@ value.
+wheat :: NamedColor
+wheat = NamedColor "wheat"
 {-# INLINE wheat #-}
 
 
--- | Generates the CSS @white@ \<named-color\> value.
-white :: Color
-white = Color "white"
+-- | Generates the CSS @white@ @\<named-color\>@ value.
+white :: NamedColor
+white = NamedColor "white"
 {-# INLINE white #-}
 
 
--- | Generates the CSS @whitesmoke@ \<named-color\> value.
-whitesmoke :: Color
-whitesmoke = Color "whitesmoke"
+-- | Generates the CSS @whitesmoke@ @\<named-color\>@ value.
+whitesmoke :: NamedColor
+whitesmoke = NamedColor "whitesmoke"
 {-# INLINE whitesmoke #-}
 
 
--- | Generates the CSS @yellow@ \<named-color\> value.
-yellow :: Color
-yellow = Color "yellow"
+-- | Generates the CSS @yellow@ @\<named-color\>@ value.
+yellow :: NamedColor
+yellow = NamedColor "yellow"
 {-# INLINE yellow #-}
 
 
--- | Generates the CSS @yellowgreen@ \<named-color\> value.
-yellowgreen :: Color
-yellowgreen = Color "yellowgreen"
+-- | Generates the CSS @yellowgreen@ @\<named-color\>@ value.
+yellowgreen :: NamedColor
+yellowgreen = NamedColor "yellowgreen"
 {-# INLINE yellowgreen #-}
 
 
--- SYSTEM COLOR VALUES
+-- * SYSTEM COLORS
 
 
--- | Generates the CSS @AccentColor@ \<system-color\> value.
-accentColor :: Color
-accentColor = Color "AccentColor"
+-- | Generates the CSS @AccentColor@ @\<system-color\>@ value.
+accentColor :: SystemColor
+accentColor = SystemColor "AccentColor"
 {-# INLINE accentColor #-}
 
 
--- | Generates the CSS @AccentColorText@ \<system-color\> value.
-accentColorText :: Color
-accentColorText = Color "AccentColorText"
+-- | Generates the CSS @AccentColorText@ @\<system-color\>@ value.
+accentColorText :: SystemColor
+accentColorText = SystemColor "AccentColorText"
 {-# INLINE accentColorText #-}
 
 
--- | Generates the CSS @ActiveText@ \<system-color\> value.
-activeText :: Color
-activeText = Color "ActiveText"
+-- | Generates the CSS @ActiveText@ @\<system-color\>@ value.
+activeText :: SystemColor
+activeText = SystemColor "ActiveText"
 {-# INLINE activeText #-}
 
 
--- | Generates the CSS @ButtonBorder@ \<system-color\> value.
-buttonBorder :: Color
-buttonBorder = Color "ButtonBorder"
+-- | Generates the CSS @ButtonBorder@ @\<system-color\>@ value.
+buttonBorder :: SystemColor
+buttonBorder = SystemColor "ButtonBorder"
 {-# INLINE buttonBorder #-}
 
 
--- | Generates the CSS @ButtonFace@ \<system-color\> value.
-buttonFace :: Color
-buttonFace = Color "ButtonFace"
+-- | Generates the CSS @ButtonFace@ @\<system-color\>@ value.
+buttonFace :: SystemColor
+buttonFace = SystemColor "ButtonFace"
 {-# INLINE buttonFace #-}
 
 
--- | Generates the CSS @ButtonText@ \<system-color\> value.
-buttonText :: Color
-buttonText = Color "ButtonText"
+-- | Generates the CSS @ButtonText@ @\<system-color\>@ value.
+buttonText :: SystemColor
+buttonText = SystemColor "ButtonText"
 {-# INLINE buttonText #-}
 
 
--- | Generates the CSS @Canvas@ \<system-color\> value.
-canvas :: Color
-canvas = Color "Canvas"
+-- | Generates the CSS @Canvas@ @\<system-color\>@ value.
+canvas :: SystemColor
+canvas = SystemColor "Canvas"
 {-# INLINE canvas #-}
 
 
--- | Generates the CSS @CanvasText@ \<system-color\> value.
-canvasText :: Color
-canvasText = Color "CanvasText"
+-- | Generates the CSS @CanvasText@ @\<system-color\>@ value.
+canvasText :: SystemColor
+canvasText = SystemColor "CanvasText"
 {-# INLINE canvasText #-}
 
 
--- | Generates the CSS @Field@ \<system-color\> value.
-field :: Color
-field = Color "Field"
+-- | Generates the CSS @Field@ @\<system-color\>@ value.
+field :: SystemColor
+field = SystemColor "Field"
 {-# INLINE field #-}
 
 
--- | Generates the CSS @FieldText@ \<system-color\> value.
-fieldText :: Color
-fieldText = Color "FieldText"
+-- | Generates the CSS @FieldText@ @\<system-color\>@ value.
+fieldText :: SystemColor
+fieldText = SystemColor "FieldText"
 {-# INLINE fieldText #-}
 
 
--- | Generates the CSS @GrayText@ \<system-color\> value.
-grayText :: Color
-grayText = Color "GrayText"
+-- | Generates the CSS @GrayText@ @\<system-color\>@ value.
+grayText :: SystemColor
+grayText = SystemColor "GrayText"
 {-# INLINE grayText #-}
 
 
--- | Generates the CSS @Highlight@ \<system-color\> value.
-highlight :: Color
-highlight = Color "Highlight"
+-- | Generates the CSS @Highlight@ @\<system-color\>@ value.
+highlight :: SystemColor
+highlight = SystemColor "Highlight"
 {-# INLINE highlight #-}
 
 
--- | Generates the CSS @HighlightText@ \<system-color\> value.
-highlightText :: Color
-highlightText = Color "HighlightText"
+-- | Generates the CSS @HighlightText@ @\<system-color\>@ value.
+highlightText :: SystemColor
+highlightText = SystemColor "HighlightText"
 {-# INLINE highlightText #-}
 
 
--- | Generates the CSS @LinkText@ \<system-color\> value.
-linkText :: Color
-linkText = Color "LinkText"
+-- | Generates the CSS @LinkText@ @\<system-color\>@ value.
+linkText :: SystemColor
+linkText = SystemColor "LinkText"
 {-# INLINE linkText #-}
 
 
--- | Generates the CSS @Mark@ \<system-color\> value.
-mark :: Color
-mark = Color "Mark"
+-- | Generates the CSS @Mark@ @\<system-color\>@ value.
+mark :: SystemColor
+mark = SystemColor "Mark"
 {-# INLINE mark #-}
 
 
--- | Generates the CSS @MarkText@ \<system-color\> value.
-markText :: Color
-markText = Color "MarkText"
+-- | Generates the CSS @MarkText@ @\<system-color\>@ value.
+markText :: SystemColor
+markText = SystemColor "MarkText"
 {-# INLINE markText #-}
 
 
--- | Generates the CSS @VisitedText@ \<system-color\> value.
-visitedText :: Color
-visitedText = Color "VisitedText"
+-- | Generates the CSS @SelectedItem@ @\<system-color\>@ value.
+selectedItem :: SystemColor
+selectedItem = SystemColor "SelectedItem"
+{-# INLINE selectedItem #-}
+
+
+-- | Generates the CSS @SelectedItemText@ @\<system-color\>@ value.
+selectedItemText :: SystemColor
+selectedItemText = SystemColor "SelectedItemText"
+{-# INLINE selectedItemText #-}
+
+
+-- | Generates the CSS @VisitedText@ @\<system-color\>@ value.
+visitedText :: SystemColor
+visitedText = SystemColor "VisitedText"
 {-# INLINE visitedText #-}
