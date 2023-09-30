@@ -1,9 +1,9 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MonoLocalBinds #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 -- | Module    : Css.DataTypes.Colors
@@ -14,411 +14,452 @@
 --
 -- The "Css.DataTypes.Colors" module provides a set of types and functions for generating color data types in CSS.
 module Css.DataTypes.Colors
-    ( -- * Data Types
-      -- ** Color
+    ( -- * Colors
+      -- ** \<color\>
       Color
-      -- ** Colorspace
+      -- ** \<absolute-color-base\>
+    , AbsoluteColorBase
+      -- ** \<absolute-color-function\>
+    , AbsoluteColorFunction
+      -- ** \<alpha-value\>
+    , AlphaValue
+      -- ** \<colorspace\>
     , Colorspace
-
-      -- * Classes
-      -- ** NumberAngleNone
-    , NumberAngleNone
-      -- ** NumberPercentageNone
+      -- ** \<hue\>
+    , Hue
+      -- ** \<hue\>|none
+    , HueNone
+      -- ** \<number\>\<percentage\>|none
     , NumberPercentageNone
-      -- ** PercentageNone
+      -- ** \<percentage\>|none
     , PercentageNone
+      -- ** \'currentcolor\'
+    , Currentcolor
+    , currentcolor
+      -- ** \'transparent\'
+    , Transparent
+    , transparent
 
       -- * Functions
-      -- ** hsl
+      -- ** \<color()\>
+    , ColorFunction
+    , color
+    , colora
+      -- ** \<hsl()\>
+    , HslFunction
     , hsl
-      -- ** hsla
     , hsla
-      -- ** hwb
+      -- ** \<hwb()\>
+    , HwbFunction
     , hwb
-      -- ** hwba
     , hwba
-      -- ** lab
+      -- ** \<lab()\>
+    , LabFunction
     , lab
-      -- ** laba
     , laba
-      -- ** lch
+      -- ** \<lch()\>
+    , LchFunction
     , lch
-      -- ** lcha
     , lcha
-      -- ** oklab
+      -- ** \<oklab()\>
+    , OklabFunction
     , oklab
-      -- ** oklaba
     , oklaba
-      -- ** oklch
+      -- ** \<oklch()\>
+    , OklchFunction
     , oklch
-      -- ** oklcha
     , oklcha
-      -- ** rgb
+      -- ** \<rgb()\>
+    , RgbFunction
     , rgb
-      -- ** rgba
     , rgba
 
       -- * Hexadecimal
-      -- ** hex
+      -- ** \<hex-color\>
+    , HexColor
     , hex
 
-      -- * Keywords
-      -- ** currentcolor
-    , currentcolor
-      -- ** transparent
-    , transparent
-
       -- * Named Colors
-      -- ** aliceblue
+      -- ** \<named-color\>
+    , NamedColor
+      -- ** \'aliceblue\'
     , aliceblue
-      -- ** antiquewhite
+      -- ** \'antiquewhite\'
     , antiquewhite
-      -- ** aqua
+      -- ** \'aqua\'
     , aqua
-      -- ** aquamarine
+      -- ** \'aquamarine\'
     , aquamarine
-      -- ** azure
+      -- ** \'azure\'
     , azure
-      -- ** beige
+      -- ** \'beige\'
     , beige
-      -- ** bisque
+      -- ** \'bisque\'
     , bisque
-      -- ** black
+      -- ** \'black\'
     , black
-      -- ** blanchedalmond
+      -- ** \'blanchedalmond\'
     , blanchedalmond
-      -- ** blue
+      -- ** \'blue\'
     , blue
-      -- ** blueviolet
+      -- ** \'blueviolet\'
     , blueviolet
-      -- ** brown
+      -- ** \'brown\'
     , brown
-      -- ** burlywood
+      -- ** \'burlywood\'
     , burlywood
-      -- ** cadetblue
+      -- ** \'cadetblue\'
     , cadetblue
-      -- ** chartreuse
+      -- ** \'chartreuse\'
     , chartreuse
-      -- ** chocolate
+      -- ** \'chocolate\'
     , chocolate
-      -- ** coral
+      -- ** \'coral\'
     , coral
-      -- ** cornflowerblue
+      -- ** \'cornflowerblue\'
     , cornflowerblue
-      -- ** cornsilk
+      -- ** \'cornsilk\'
     , cornsilk
-      -- ** crimson
+      -- ** \'crimson\'
     , crimson
-      -- ** cyan
+      -- ** \'cyan\'
     , cyan
-      -- ** darkblue
+      -- ** \'darkblue\'
     , darkblue
-      -- ** darkcyan
+      -- ** \'darkcyan\'
     , darkcyan
-      -- ** darkgoldenrod
+      -- ** \'darkgoldenrod\'
     , darkgoldenrod
-      -- ** darkgray
+      -- ** \'darkgray\'
     , darkgray
-      -- ** darkgreen
+      -- ** \'darkgreen\'
     , darkgreen
-      -- ** darkgrey
+      -- ** \'darkgrey\'
     , darkgrey
-      -- ** darkkhaki
+      -- ** \'darkkhaki\'
     , darkkhaki
-      -- ** darkmagenta
+      -- ** \'darkmagenta\'
     , darkmagenta
-      -- ** darkolivegreen
+      -- ** \'darkolivegreen\'
     , darkolivegreen
-      -- ** darkorange
+      -- ** \'darkorange\'
     , darkorange
-      -- ** darkorchid
+      -- ** \'darkorchid\'
     , darkorchid
-      -- ** darkred
+      -- ** \'darkred\'
     , darkred
-      -- ** darksalmon
+      -- ** \'darksalmon\'
     , darksalmon
-      -- ** darkseagreen
+      -- ** \'darkseagreen\'
     , darkseagreen
-      -- ** darkslateblue
+      -- ** \'darkslateblue\'
     , darkslateblue
-      -- ** darkslategray
+      -- ** \'darkslategray\'
     , darkslategray
-      -- ** darkslategrey
+      -- ** \'darkslategrey\'
     , darkslategrey
-      -- ** darkturquoise
+      -- ** \'darkturquoise\'
     , darkturquoise
-      -- ** darkviolet
+      -- ** \'darkviolet\'
     , darkviolet
-      -- ** deeppink
+      -- ** \'deeppink\'
     , deeppink
-      -- ** deepskyblue
+      -- ** \'deepskyblue\'
     , deepskyblue
-      -- ** dimgray
+      -- ** \'dimgray\'
     , dimgray
-      -- ** dimgrey
+      -- ** \'dimgrey\'
     , dimgrey
-      -- ** dodgerblue
+      -- ** \'dodgerblue\'
     , dodgerblue
-      -- ** firebrick
+      -- ** \'firebrick\'
     , firebrick
-      -- ** floralwhite
+      -- ** \'floralwhite\'
     , floralwhite
-      -- ** forestgreen
+      -- ** \'forestgreen\'
     , forestgreen
-      -- ** fuchsia
+      -- ** \'fuchsia\'
     , fuchsia
-      -- ** gainsboro
+      -- ** \'gainsboro\'
     , gainsboro
-      -- ** ghostwhite
+      -- ** \'ghostwhite\'
     , ghostwhite
-      -- ** gold
+      -- ** \'gold\'
     , gold
-      -- ** goldenrod
+      -- ** \'goldenrod\'
     , goldenrod
-      -- ** gray
+      -- ** \'gray\'
     , gray
-      -- ** green
+      -- ** \'green\'
     , green
-      -- ** greenyellow
+      -- ** \'greenyellow\'
     , greenyellow
-      -- ** grey
+      -- ** \'grey\'
     , grey
-      -- ** honeydew
+      -- ** \'honeydew\'
     , honeydew
-      -- ** hotpink
+      -- ** \'hotpink\'
     , hotpink
-      -- ** indianred
+      -- ** \'indianred\'
     , indianred
-      -- ** indigo
+      -- ** \'indigo\'
     , indigo
-      -- ** ivory
+      -- ** \'ivory\'
     , ivory
-      -- ** khaki
+      -- ** \'khaki\'
     , khaki
-      -- ** lavender
+      -- ** \'lavender\'
     , lavender
-      -- ** lavenderblush
+      -- ** \'lavenderblush\'
     , lavenderblush
-      -- ** lawngreen
+      -- ** \'lawngreen\'
     , lawngreen
-      -- ** lemonchiffon
+      -- ** \'lemonchiffon\'
     , lemonchiffon
-      -- ** lightblue
+      -- ** \'lightblue\'
     , lightblue
-      -- ** lightcoral
+      -- ** \'lightcoral\'
     , lightcoral
-      -- ** lightcyan
+      -- ** \'lightcyan\'
     , lightcyan
-      -- ** lightgoldenrodyellow
+      -- ** \'lightgoldenrodyellow\'
     , lightgoldenrodyellow
-      -- ** lightgray
+      -- ** \'lightgray\'
     , lightgray
-      -- ** lightgreen
+      -- ** \'lightgreen\'
     , lightgreen
-      -- ** lightgrey
+      -- ** \'lightgrey\'
     , lightgrey
-      -- ** lightpink
+      -- ** \'lightpink\'
     , lightpink
-      -- ** lightsalmon
+      -- ** \'lightsalmon\'
     , lightsalmon
-      -- ** lightseagreen
+      -- ** \'lightseagreen\'
     , lightseagreen
-      -- ** lightskyblue
+      -- ** \'lightskyblue\'
     , lightskyblue
-      -- ** lightslategray
+      -- ** \'lightslategray\'
     , lightslategray
-      -- ** lightslategrey
+      -- ** \'lightslategrey\'
     , lightslategrey
-      -- ** lightsteelblue
+      -- ** \'lightsteelblue\'
     , lightsteelblue
-      -- ** lightyellow
+      -- ** \'lightyellow\'
     , lightyellow
-      -- ** lime
+      -- ** \'lime\'
     , lime
-      -- ** limegreen
+      -- ** \'limegreen\'
     , limegreen
-      -- ** linen
+      -- ** \'linen\'
     , linen
-      -- ** magenta
+      -- ** \'magenta\'
     , magenta
-      -- ** maroon
+      -- ** \'maroon\'
     , maroon
-      -- ** mediumaquamarine
+      -- ** \'mediumaquamarine\'
     , mediumaquamarine
-      -- ** mediumblue
+      -- ** \'mediumblue\'
     , mediumblue
-      -- ** mediumorchid
+      -- ** \'mediumorchid\'
     , mediumorchid
-      -- ** mediumpurple
+      -- ** \'mediumpurple\'
     , mediumpurple
-      -- ** mediumseagreen
+      -- ** \'mediumseagreen\'
     , mediumseagreen
-      -- ** mediumslateblue
+      -- ** \'mediumslateblue\'
     , mediumslateblue
-      -- ** mediumspringgreen
+      -- ** \'mediumspringgreen\'
     , mediumspringgreen
-      -- ** mediumturquoise
+      -- ** \'mediumturquoise\'
     , mediumturquoise
-      -- ** mediumvioletred
+      -- ** \'mediumvioletred\'
     , mediumvioletred
-      -- ** midnightblue
+      -- ** \'midnightblue\'
     , midnightblue
-      -- ** mintcream
+      -- ** \'mintcream\'
     , mintcream
-      -- ** mistyrose
+      -- ** \'mistyrose\'
     , mistyrose
-      -- ** moccasin
+      -- ** \'moccasin\'
     , moccasin
-      -- ** navajowhite
+      -- ** \'navajowhite\'
     , navajowhite
-      -- ** navy
+      -- ** \'navy\'
     , navy
-      -- ** oldlace
+      -- ** \'oldlace\'
     , oldlace
-      -- ** olive
+      -- ** \'olive\'
     , olive
-      -- ** olivedrab
+      -- ** \'olivedrab\'
     , olivedrab
-      -- ** orange
+      -- ** \'orange\'
     , orange
-      -- ** orangered
+      -- ** \'orangered\'
     , orangered
-      -- ** orchid
+      -- ** \'orchid\'
     , orchid
-      -- ** palegoldenrod
+      -- ** \'palegoldenrod\'
     , palegoldenrod
-      -- ** palegreen
+      -- ** \'palegreen\'
     , palegreen
-      -- ** paleturquoise
+      -- ** \'paleturquoise\'
     , paleturquoise
-      -- ** palevioletred
+      -- ** \'palevioletred\'
     , palevioletred
-      -- ** papayawhip
+      -- ** \'papayawhip\'
     , papayawhip
-      -- ** peachpuff
+      -- ** \'peachpuff\'
     , peachpuff
-      -- ** peru
+      -- ** \'peru\'
     , peru
-      -- ** pink
+      -- ** \'pink\'
     , pink
-      -- ** plum
+      -- ** \'plum\'
     , plum
-      -- ** powderblue
+      -- ** \'powderblue\'
     , powderblue
-      -- ** purple
+      -- ** \'purple\'
     , purple
-      -- ** rebeccapurple
+      -- ** \'rebeccapurple\'
     , rebeccapurple
-      -- ** red
+      -- ** \'red\'
     , red
-      -- ** rosybrown
+      -- ** \'rosybrown\'
     , rosybrown
-      -- ** royalblue
+      -- ** \'royalblue\'
     , royalblue
-      -- ** saddlebrown
+      -- ** \'saddlebrown\'
     , saddlebrown
-      -- ** salmon
+      -- ** \'salmon\'
     , salmon
-      -- ** sandybrown
+      -- ** \'sandybrown\'
     , sandybrown
-      -- ** seagreen
+      -- ** \'seagreen\'
     , seagreen
-      -- ** seashell
+      -- ** \'seashell\'
     , seashell
-      -- ** sienna
+      -- ** \'sienna\'
     , sienna
-      -- ** silver
+      -- ** \'silver\'
     , silver
-      -- ** skyblue
+      -- ** \'skyblue\'
     , skyblue
-      -- ** slateblue
+      -- ** \'slateblue\'
     , slateblue
-      -- ** slategray
+      -- ** \'slategray\'
     , slategray
-      -- ** slategrey
+      -- ** \'slategrey\'
     , slategrey
-      -- ** snow
+      -- ** \'snow\'
     , snow
-      -- ** springgreen
+      -- ** \'springgreen\'
     , springgreen
-      -- ** steelblue
+      -- ** \'steelblue\'
     , steelblue
-      -- ** tan
+      -- ** \'tan\'
     , tan
-      -- ** teal
+      -- ** \'teal\'
     , teal
-      -- ** thistle
+      -- ** \'thistle\'
     , thistle
-      -- ** tomato
+      -- ** \'tomato\'
     , tomato
-      -- ** turquoise
+      -- ** \'turquoise\'
     , turquoise
-      -- ** violet
+      -- ** \'violet\'
     , violet
-      -- ** wheat
+      -- ** \'wheat\'
     , wheat
-      -- ** white
+      -- ** \'white\'
     , white
-      -- ** whitesmoke
+      -- ** \'whitesmoke\'
     , whitesmoke
-      -- ** yellow
+      -- ** \'yellow\'
     , yellow
-      -- ** yellowgreen
+      -- ** \'yellowgreen\'
     , yellowgreen
 
+      -- * Predefined Rgb
+      -- ** \<predefined-rgb\>
+    , PredefinedRgb
+      -- ** \'a98-rgb\'
+    , a98Rgb
+      -- ** \'display-p3\'
+    , displayP3
+      -- ** \'prophoto-rgb\'
+    , prophotoRgb
+      -- ** \'rec2020\'
+    , rec2020
+      -- ** \'srgb\'
+    , srgb
+      -- ** \'srgb-linear\'
+    , srgbLinear
+
       -- * System Colors
-      -- ** AccentColor
+      -- ** \<system-color\>
+    , SystemColor
+      -- ** \'AccentColor\'
     , accentColor
-      -- ** AccentColorText
+      -- ** \'AccentColorText\'
     , accentColorText
-      -- ** ActiveText
+      -- ** \'ActiveText\'
     , activeText
-      -- ** ButtonBorder
+      -- ** \'ButtonBorder\'
     , buttonBorder
-      -- ** ButtonFace
+      -- ** \'ButtonFace\'
     , buttonFace
-      -- ** ButtonText
+      -- ** \'ButtonText\'
     , buttonText
-      -- ** Canvas
+      -- ** \'Canvas\'
     , canvas
-      -- ** CanvasText
+      -- ** \'CanvasText\'
     , canvasText
-      -- ** Field
+      -- ** \'Field\'
     , field
-      -- ** FieldText
+      -- ** \'FieldText\'
     , fieldText
-      -- ** GrayText
+      -- ** \'GrayText\'
     , grayText
-      -- ** Highlight
+      -- ** \'Highlight\'
     , highlight
-      -- ** HighlightText
+      -- ** \'HighlightText\'
     , highlightText
-      -- ** LinkText
+      -- ** \'LinkText\'
     , linkText
-      -- ** Mark
+      -- ** \'Mark\'
     , mark
-      -- ** MarkText
+      -- ** \'MarkText\'
     , markText
-      -- ** SelectedItem
+      -- ** \'SelectedItem\'
     , selectedItem
-      -- ** SelectedItemText
+      -- ** \'SelectedItemText\'
     , selectedItemText
-      -- ** VisitedText
+      -- ** \'VisitedText\'
     , visitedText
+
+      -- * Xyz Space
+      -- ** \<xyz-space\>
+    , XyzSpace
+      -- ** \'xyz\'
+    , xyz
+      -- ** \'xyz-d50\'
+    , xyzD50
+      -- ** \'xyz-d65\'
+    , xyzD65
     ) where
 
 
 import Prelude hiding (tan)
 
 import Css.DataTypes.Numeric  (Angle, Number, Percentage)
-import Css.Internal           (lazyShow, showHex)
+import Css.Internal           (showHex)
 import Css.Keywords           (None)
 import Data.Text.Lazy.Builder (Builder, singleton)
 import Data.Word              (Word32)
 import Html                   (Buildable(..))
 
 
--- TYPES
+-- * COLORS
 
 
 -- | Represents the CSS @\<color\>@ data type.
@@ -440,21 +481,6 @@ instance {-# OVERLAPPING #-}                       AbsoluteColorBase Transparent
 instance (Buildable a, AbsoluteColorFunction a) => AbsoluteColorBase a
 
 
--- | Represents the CSS @currentcolor@ keyword.
-newtype Currentcolor = Currentcolor Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<system-color\>@ data type.
-newtype SystemColor = SystemColor Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<hex-color\>@ data type.
-newtype HexColor = HexColor Builder
-    deriving (Buildable, Show)
-
-
 -- | Represents the CSS @\<absolute-color-function\>@ data type.
 class Buildable a => AbsoluteColorFunction a
 
@@ -469,68 +495,19 @@ instance AbsoluteColorFunction OklchFunction
 instance AbsoluteColorFunction ColorFunction
 
 
--- | Represents the CSS @\<named-color\>@ data type.
-newtype NamedColor = NamedColor Builder
-    deriving (Buildable, Show)
+-- | Represents the CSS @\<alpha-value\>@ data type.
+type AlphaValue = NumberPercentageNone
 
 
--- | Represents the CSS @transparent@ keyword.
-newtype Transparent = Transparent Builder
-    deriving (Buildable, Show)
+-- | Represents the colorspace in the CSS @\<colorspace-params\>@ data type.
+class Buildable a => Colorspace a
 
 
--- | Represents the CSS @\<rgb()\>@ data type.
-newtype RgbFunction = RgbFunction Builder
-    deriving (Buildable, Show)
+instance Colorspace PredefinedRgb
+instance Colorspace XyzSpace
 
 
--- | Represents the CSS @\<hsl()\>@ data type.
-newtype HslFunction = HslFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<hwb()\>@ data type.
-newtype HwbFunction = HwbFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<lab()\>@ data type.
-newtype LabFunction = LabFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<lch()\>@ data type.
-newtype LchFunction = LchFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<oklab()\>@ data type.
-newtype OklabFunction = OklabFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<oklch()\>@ data type.
-newtype OklchFunction = OklchFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @\<color()\>@ data type.
-newtype ColorFunction = ColorFunction Builder
-    deriving (Buildable, Show)
-
-
--- | Represents a CSS \<colorspace\> value type.
-newtype Colorspace = Colorspace { unColorspace :: Builder }
-
-
-instance Buildable Colorspace where build = unColorspace
-instance Show      Colorspace where show  = lazyShow
-
-
--- CLASSES
-
-
--- | Represents a CSS \<number\>|\<angle\>|none value type.
+-- | Represents the CSS @\<hue\>@ data type.
 class Buildable a => Hue a
 
 
@@ -538,17 +515,15 @@ instance Hue Angle
 instance Hue Number
 
 
+-- | Represents the CSS @\<hue\>|none@ data type.
 class Buildable a => HueNone a
 
 
-instance {-# OVERLAPPING #-}     Hue None
-instance (Buildable a, Hue a) => Hue a
+instance {-# OVERLAPPING #-}     HueNone None
+instance (Buildable a, Hue a) => HueNone a
 
 
-type AlphaValue = NumberPercentageNone
-
-
--- | Represents a CSS \<number\>|\<percentage\>|none value type.
+-- | Represents the CSS @\<number\>|\<percentage\>|none@ data type.
 class Buildable a => NumberPercentageNone a
 
 
@@ -557,7 +532,7 @@ instance NumberPercentageNone Number
 instance NumberPercentageNone Percentage
 
 
--- | Represents a CSS \<percentage\>|none value type.
+-- | Represents the CSS @\<percentage\>|none@ data type.
 class Buildable a => PercentageNone a
 
 
@@ -565,7 +540,70 @@ instance PercentageNone None
 instance PercentageNone Percentage
 
 
--- FUNCTIONS
+-- | Represents the CSS @currentcolor@ keyword.
+newtype Currentcolor = Currentcolor Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @currentcolor@ keyword.
+currentcolor :: Currentcolor
+currentcolor = Currentcolor "currentcolor"
+{-# INLINE currentcolor #-}
+
+
+-- | Represents the CSS @transparent@ keyword.
+newtype Transparent = Transparent Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @transparent@ keyword.
+transparent :: Transparent
+transparent = Transparent "transparent"
+{-# INLINE transparent #-}
+
+
+-- * FUNCTIONS
+
+
+-- | Represents the CSS @\<color()\>@ data type.
+newtype ColorFunction = ColorFunction Builder
+    deriving (Buildable, Show)
+
+
+color :: (Colorspace a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d) => a -> b -> c -> d -> ColorFunction
+color colorspace c1 c2 c3
+    =  ColorFunction
+    $  "color("
+    <> build colorspace
+    <> singleton ' '
+    <> build c1
+    <> singleton ' '
+    <> build c2
+    <> singleton ' '
+    <> build c3
+    <> singleton ')'
+
+
+colora :: (Colorspace a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d, AlphaValue e)
+       => a -> b -> c -> d -> e -> ColorFunction
+colora colorspace c1 c2 c3 alpha
+    =  ColorFunction
+    $  "color("
+    <> build colorspace
+    <> singleton ' '
+    <> build c1
+    <> singleton ' '
+    <> build c2
+    <> singleton ' '
+    <> build c3
+    <> " / "
+    <> build alpha
+    <> singleton ')'
+
+
+-- | Represents the CSS @\<hsl()\>@ data type.
+newtype HslFunction = HslFunction Builder
+    deriving (Buildable, Show)
 
 
 hsl :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> HslFunction
@@ -594,41 +632,20 @@ hsla hue saturation lightness alpha
     <> singleton ')'
 
 
-rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> RgbFunction
-rgb red green blue
-    =  RgbFunction
-    $  "rgb("
-    <> build red
-    <> singleton ' '
-    <> build green
-    <> singleton ' '
-    <> build blue
-    <> singleton ')'
-
-
-rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> RgbFunction
-rgba red green blue alpha
-    =  RgbFunction
-    $  "rgb("
-    <> build red
-    <> singleton ' '
-    <> build green
-    <> singleton ' '
-    <> build blue
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+-- | Represents the CSS @\<hwb()\>@ data type.
+newtype HwbFunction = HwbFunction Builder
+    deriving (Buildable, Show)
 
 
 hwb :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> HwbFunction
 hwb hue whiteness blackness
     =  HwbFunction
     $  "hwb("
-    <> unNumberAngleNone hue
+    <> build hue
     <> singleton ' '
-    <> unPercentageNone whiteness
+    <> build whiteness
     <> singleton ' '
-    <> unPercentageNone blackness
+    <> build blackness
     <> singleton ')'
 
 
@@ -644,6 +661,11 @@ hwba hue whiteness blackness alpha
     <> " / "
     <> build alpha
     <> singleton ')'
+
+
+-- | Represents the CSS @\<lab()\>@ data type.
+newtype LabFunction = LabFunction Builder
+    deriving (Buildable, Show)
 
 
 lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> LabFunction
@@ -672,6 +694,11 @@ laba lightness a b alpha
     <> singleton ')'
 
 
+-- | Represents the CSS @\<lch()\>@ data type.
+newtype LchFunction = LchFunction Builder
+    deriving (Buildable, Show)
+
+
 lch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> LchFunction
 lch lightness chroma hue
     =  LchFunction
@@ -696,6 +723,11 @@ lcha lightness chroma hue alpha
     <> " / "
     <> build alpha
     <> singleton ')'
+
+
+-- | Represents the CSS @\<oklab()\>@ data type.
+newtype OklabFunction = OklabFunction Builder
+    deriving (Buildable, Show)
 
 
 oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> OklabFunction
@@ -724,6 +756,11 @@ oklaba lightness a b alpha
     <> singleton ')'
 
 
+-- | Represents the CSS @\<oklch()\>@ data type.
+newtype OklchFunction = OklchFunction Builder
+    deriving (Buildable, Show)
+
+
 oklch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> OklchFunction
 oklch lightness chroma hue
     =  OklchFunction
@@ -750,40 +787,43 @@ oklcha lightness chroma hue alpha
     <> singleton ')'
 
 
-    {-
-color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => Colorspace -> a -> b -> c -> Color
-color colorspace c1 c2 c3
-    =  Color
-    $  "color("
-    <> unColorspace colorspace
+-- | Represents the CSS @\<rgb()\>@ data type.
+newtype RgbFunction = RgbFunction Builder
+    deriving (Buildable, Show)
+
+
+rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> RgbFunction
+rgb red green blue
+    =  RgbFunction
+    $  "rgb("
+    <> build red
     <> singleton ' '
-    <> unNumberPercentageNone c1
+    <> build green
     <> singleton ' '
-    <> unNumberPercentageNone c2
-    <> singleton ' '
-    <> unNumberPercentageNone c3
+    <> build blue
     <> singleton ')'
 
 
-colora :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, NumberPercentageNone d)
-       => Colorspace -> a -> b -> c -> d -> Color
-colora colorspace c1 c2 c3 alpha
-    =  Color
-    $  "color("
-    <> unColorspace colorspace
+rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> RgbFunction
+rgba red green blue alpha
+    =  RgbFunction
+    $  "rgb("
+    <> build red
     <> singleton ' '
-    <> unNumberPercentageNone c1
+    <> build green
     <> singleton ' '
-    <> unNumberPercentageNone c2
-    <> singleton ' '
-    <> unNumberPercentageNone c3
+    <> build blue
     <> " / "
-    <> unNumberPercentageNone alpha
+    <> build alpha
     <> singleton ')'
-    -}
 
 
 -- HEXADECIMAL
+
+
+-- | Represents the CSS @\<hex-color\>@ data type.
+newtype HexColor = HexColor Builder
+    deriving (Buildable, Show)
 
 
 -- | Generates a CSS \<hex-color\> value.
@@ -792,81 +832,12 @@ hex = HexColor . showHex
 {-# INLINE hex #-}
 
 
--- KEYWORDS
-
-
--- | Generates the CSS @currentcolor@ keyword.
-currentcolor :: Currentcolor
-currentcolor = Currentcolor "currentcolor"
-{-# INLINE currentcolor #-}
-
-
--- | Generates the CSS @transparent@ keyword.
-transparent :: Transparent
-transparent = Transparent "transparent"
-{-# INLINE transparent #-}
-
-
-    {-
--- COLORSPACE VALUES
-
-
--- | Generates the CSS @a98-rgb@ colorspace value.
-a98Rgb :: Colorspace
-a98Rgb = Colorspace "a98-rgb"
-{-# INLINE a98Rgb #-}
-
-
--- | Generates the CSS @display-p3@ colorspace value.
-displayP3 :: Colorspace
-displayP3 = Colorspace "display-p3"
-{-# INLINE displayP3 #-}
-
-
--- | Generates the CSS @prophoto-rgb@ colorspace value.
-prophotoRgb :: Colorspace
-prophotoRgb = Colorspace "prophoto-rgb"
-{-# INLINE prophotoRgb #-}
-
-
--- | Generates the CSS @rec2020@ colorspace value.
-rec2020 :: Colorspace
-rec2020 = Colorspace "rec2020"
-{-# INLINE rec2020 #-}
-
-
--- | Generates the CSS @srgb@ colorspace value.
-srgb :: Colorspace
-srgb = Colorspace "srgb"
-{-# INLINE srgb #-}
-
-
--- | Generates the CSS @srgb-linear@ colorspace value.
-srgbLinear :: Colorspace
-srgbLinear = Colorspace "srgb-linear"
-{-# INLINE srgbLinear #-}
-
-
--- | Generates the CSS @xyz@ colorspace value.
-xyz :: Colorspace
-xyz = Colorspace "xyz"
-{-# INLINE xyz #-}
-
-
--- | Generates the CSS @xyz-d50@ colorspace value.
-xyzD50 :: Colorspace
-xyzD50 = Colorspace "xyz-d50"
-{-# INLINE xyzD50 #-}
-
-
--- | Generates the CSS @xyz-d65@ colorspace value.
-xyzD65 :: Colorspace
-xyzD65 = Colorspace "xyz-d65"
-{-# INLINE xyzD65 #-}
--}
-
-
 -- * NAMED COLORS
+
+
+-- | Represents the CSS @\<named-color\>@ data type.
+newtype NamedColor = NamedColor Builder
+    deriving (Buildable, Show)
 
 
 -- | Generates the CSS @aliceblue@ \<named-color\> value.
@@ -1757,7 +1728,56 @@ yellowgreen = NamedColor "yellowgreen"
 {-# INLINE yellowgreen #-}
 
 
+-- * PREDEFINED RGB
+
+
+-- | Represents the CSS @\<predefined-rgb\>@ data type.
+newtype PredefinedRgb = PredefinedRgb Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @a98-rgb@ @\<predefined-rgb\>@ value.
+a98Rgb :: PredefinedRgb
+a98Rgb = PredefinedRgb "a98-rgb"
+{-# INLINE a98Rgb #-}
+
+
+-- | Generates the CSS @display-p3@ @\<predefined-rgb\>@ value.
+displayP3 :: PredefinedRgb
+displayP3 = PredefinedRgb "display-p3"
+{-# INLINE displayP3 #-}
+
+
+-- | Generates the CSS @prophoto-rgb@ @\<predefined-rgb\>@ value.
+prophotoRgb :: PredefinedRgb
+prophotoRgb = PredefinedRgb "prophoto-rgb"
+{-# INLINE prophotoRgb #-}
+
+
+-- | Generates the CSS @rec2020@ @\<predefined-rgb\>@ value.
+rec2020 :: PredefinedRgb
+rec2020 = PredefinedRgb "rec2020"
+{-# INLINE rec2020 #-}
+
+
+-- | Generates the CSS @srgb@ @\<predefined-rgb\>@ value.
+srgb :: PredefinedRgb
+srgb = PredefinedRgb "srgb"
+{-# INLINE srgb #-}
+
+
+-- | Generates the CSS @srgb-linear@ @\<predefined-rgb\>@ value.
+srgbLinear :: PredefinedRgb
+srgbLinear = PredefinedRgb "srgb-linear"
+{-# INLINE srgbLinear #-}
+
+
 -- * SYSTEM COLORS
+
+
+-- | Represents the CSS @\<system-color\>@ data type.
+newtype SystemColor = SystemColor Builder
+    deriving (Buildable, Show)
 
 
 -- | Generates the CSS @AccentColor@ @\<system-color\>@ value.
@@ -1872,3 +1892,29 @@ selectedItemText = SystemColor "SelectedItemText"
 visitedText :: SystemColor
 visitedText = SystemColor "VisitedText"
 {-# INLINE visitedText #-}
+
+
+-- * XYZ SPACE
+
+
+-- | Represents the CSS @\<xyz-space\>@ data type.
+newtype XyzSpace = XyzSpace Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @xyz@ @\<xyz-space\>@ value.
+xyz :: XyzSpace
+xyz = XyzSpace "xyz"
+{-# INLINE xyz #-}
+
+
+-- | Generates the CSS @xyz-d50@ @\<xyz-space\>@ value.
+xyzD50 :: XyzSpace
+xyzD50 = XyzSpace "xyz-d50"
+{-# INLINE xyzD50 #-}
+
+
+-- | Generates the CSS @xyz-d65@ @\<xyz-space\> value.
+xyzD65 :: XyzSpace
+xyzD65 = XyzSpace "xyz-d65"
+{-# INLINE xyzD65 #-}

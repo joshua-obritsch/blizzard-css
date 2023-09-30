@@ -672,18 +672,18 @@ import Html                   (Buildable(..))
 -- PROPERTIES
 
 
-class Buildable a => AccentColor a where
-    unAccentColor :: a -> Builder
-    unAccentColor = build
+--class Buildable a => AccentColor a where
+    --unAccentColor :: a -> Builder
+    --unAccentColor = build
 
-instance AccentColor Auto
-instance AccentColor Color
+--instance AccentColor Auto
+--instance AccentColor Color
 
 
 
 -- | Generates a CSS @accent-color@ property with the given value.
-accentColor :: AccentColor a => a -> Builder
-accentColor = prop "accent-color:" . unAccentColor
+accentColor :: Builder -> Builder
+accentColor = prop "accent-color:"
 {-# INLINE accentColor #-}
 
 

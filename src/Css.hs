@@ -19,7 +19,7 @@ module Css
 
 
 import Css.Functions
-import Css.DataTypes.Colors   hiding (accentColor, tan)
+import Css.DataTypes.Colors   hiding (color, accentColor, tan)
 import Css.DataTypes.Numeric  hiding (rem)
 import Css.Keywords
 import Css.Properties         hiding (all, filter)

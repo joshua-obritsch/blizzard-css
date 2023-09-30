@@ -143,6 +143,7 @@ module Css.DataTypes.Numeric
       -- * Percentages
       -- ** \<percentage\>
     , Percentage
+    , pct
       -- ** \<angle-percentage\>
     , AnglePercentage
       -- ** \<frequency-percentage\>
@@ -151,8 +152,6 @@ module Css.DataTypes.Numeric
     , LengthPercentage
       -- ** \<time-percentage\>
     , TimePercentage
-      -- ** \'\%\'
-    , pct
 
       -- * Resolutions
       -- ** \<resolution\>
@@ -553,6 +552,11 @@ newtype Percentage = Percentage Builder
     deriving (Buildable, Show)
 
 
+-- | Generates a CSS @\<percentage\>@ value.
+pct :: Number -> Percentage
+pct = Percentage . fromNumber "%"
+
+
 -- | Represents the CSS @\<angle-percentage\>@ data type.
 class Buildable a => AnglePercentage a
 
@@ -583,11 +587,6 @@ class Buildable a => TimePercentage a
 
 instance TimePercentage Angle
 instance TimePercentage Percentage
-
-
--- | Generates a CSS @\<percentage\>@ value.
-pct :: Number -> Percentage
-pct = Percentage . fromNumber "%"
 
 
 -- * RESOLUTIONS
