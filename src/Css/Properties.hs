@@ -1,5 +1,7 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 -- | Module    : Css.Properties
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -669,21 +671,21 @@ import Data.Text.Lazy.Builder (Builder, singleton)
 import Html                   (Buildable(..))
 
 
--- PROPERTIES
+-- * PROPERTIES
 
 
---class Buildable a => AccentColor a where
-    --unAccentColor :: a -> Builder
-    --unAccentColor = build
+-- | Represents the CSS @accent-color@ property.
+class Buildable a => AccentColor a
 
---instance AccentColor Auto
---instance AccentColor Color
+
+instance {-# OVERLAPPING #-}       AccentColor Auto
+instance (Buildable a, Color a) => AccentColor a
 
 
 
 -- | Generates a CSS @accent-color@ property with the given value.
-accentColor :: Builder -> Builder
-accentColor = prop "accent-color:"
+accentColor :: AccentColor a => a -> Builder
+accentColor = prop "accent-color:" . build
 {-# INLINE accentColor #-}
 
 
