@@ -15,7 +15,6 @@ module Css
     , module Css.DataTypes.Numeric
     , module Css.Keywords
     , module Css.Properties
-    , module Css.Values
     ) where
 
 
@@ -25,7 +24,6 @@ import Css.DataTypes.Fonts
 import Css.DataTypes.Numeric  hiding (rem)
 import Css.Keywords
 import Css.Properties         hiding (all, filter)
-import Css.Values             hiding (color)
 
 import Css.Internal           (extractAndHash)
 import Data.Text.Lazy.Builder (Builder)
