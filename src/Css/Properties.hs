@@ -695,10 +695,12 @@ accentColor = prop "accent-color:" . build
 class Buildable a => AlignContent a
 
 
-instance AlignContent BaselinePosition
-instance AlignContent ContentDistribution
-instance AlignContent ContentPosition
-instance AlignContent Normal
+instance {-# OVERLAPPING #-}                  AlignContent ContentDistribution
+instance {-# OVERLAPPING #-}                  AlignContent ContentPosition
+instance {-# OVERLAPPING #-}                  AlignContent Normal
+instance {-# OVERLAPPING #-}                  AlignContent OverflowPosition
+instance {-# OVERLAPPING #-}                  AlignContent Stretch
+instance (Buildable a, BaselinePosition a) => AlignContent a
 
 
 -- | Generates a CSS @align-content@ property with the given value.

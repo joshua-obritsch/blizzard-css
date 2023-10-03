@@ -13,18 +13,12 @@ module Css.Keywords
       -- ** Auto
       Auto
     , auto
-      -- ** Baseline
-    , Baseline
-    , baseline
       -- ** None
     , None
     , none
       -- ** Normal
     , Normal
     , normal
-      -- ** Stretch
-    , Stretch
-    , stretch
     ) where
 
 
@@ -46,17 +40,6 @@ auto :: Auto
 auto = Auto "auto"
 
 
--- | Represents the CSS @baseline@ keyword.
-newtype Baseline = Baseline Builder
-    deriving (Buildable, Show)
-
-
--- | Generates the CSS @baseline@ keyword.
-baseline :: Baseline
-baseline = Baseline "baseline"
-{-# INLINE baseline #-}
-
-
 -- | Represents the CSS @none@ keyword.
 newtype None = None Builder
     deriving (Buildable, Show)
@@ -75,13 +58,3 @@ newtype Normal = Normal Builder
 -- | Generates the CSS @normal@ keyword.
 normal :: Normal
 normal = Normal "normal"
-
-
--- | Represents the CSS @stretch@ keyword.
-newtype Stretch = Stretch Builder
-    deriving (Buildable, Show)
-
-
--- | Generates the CSS @stretch@ keyword.
-stretch :: Stretch
-stretch = Stretch "stretch"

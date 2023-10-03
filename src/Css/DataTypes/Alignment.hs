@@ -13,8 +13,10 @@ module Css.DataTypes.Alignment
     ( -- * Baseline Position
       -- ** \<baseline-position\>
       BaselinePosition
-      -- ** \[ first \| last \]
+    , Baseline
     , FirstLast
+      -- ** baseline
+    , baseline
       -- ** first
     , first
       -- ** last
@@ -23,31 +25,36 @@ module Css.DataTypes.Alignment
       -- * Content Distribution
       -- ** \<content-distribution\>
     , ContentDistribution
-      -- ** \'space-around\'
+    , Stretch
+      -- ** space-around
     , spaceAround
-      -- ** \'space-between\'
+      -- ** space-between
     , spaceBetween
-      -- ** \'space-evenly\'
+      -- ** space-evenly
     , spaceEvenly
+      -- ** stretch
+    , stretch
 
       -- * Content Position
       -- ** \<content-position\>
     , ContentPosition
-      -- ** \'center\'
+      -- ** center
     , center
-      -- ** \'end\'
+      -- ** end
     , end
-      -- ** \'flex-end\'
+      -- ** flex-end
     , flexEnd
-      -- ** \'flex-start\'
+      -- ** flex-start
     , flexStart
-      -- ** \'start\'
+      -- ** start
     , start
 
       -- * Overflow Position
-      -- ** \'safe\'
+      -- ** \<overflow-position\>
+    , OverflowPosition
+      -- ** safe
     , safe
-      -- ** \'unsafe\'
+      -- ** unsafe
     , unsafe
     ) where
 
@@ -55,7 +62,6 @@ module Css.DataTypes.Alignment
 import Prelude hiding (last)
 
 import Css.Internal
-import Css.Keywords           (Baseline, Stretch)
 import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
 
@@ -71,9 +77,20 @@ instance BaselinePosition Baseline
 instance BaselinePosition FirstLast
 
 
+-- | Represents the CSS @baseline@ keyword.
+newtype Baseline = Baseline Builder
+    deriving (Buildable, Show)
+
+
 -- | Represents the CSS @[ first | last ]@ production in @\<baseline-position\>@.
 newtype FirstLast = FirstLast Builder
     deriving (Buildable, Show)
+
+
+-- | Generates the CSS @baseline@ keyword.
+baseline :: Baseline
+baseline = Baseline "baseline"
+{-# INLINE baseline #-}
 
 
 -- | Generates the CSS @first@ value in the @[ first | last ]@ production.
@@ -96,6 +113,11 @@ newtype ContentDistribution = ContentDistribution Builder
     deriving (Buildable, Show)
 
 
+-- | Represents the CSS @stretch@ keyword.
+newtype Stretch = Stretch Builder
+    deriving (Buildable, Show)
+
+
 -- | Generates the CSS @space-around@ @\<content-distribution\>@ value.
 spaceAround :: ContentDistribution
 spaceAround = ContentDistribution "space-around"
@@ -114,10 +136,9 @@ spaceEvenly = ContentDistribution "space-evenly"
 {-# INLINE spaceEvenly #-}
 
 
--- | Generates the CSS @stretch@ @\<content-distribution\>@ value.
-stretch :: ContentDistribution
-stretch = ContentDistribution "stretch"
-{-# INLINE stretch #-}
+-- | Generates the CSS @stretch@ keyword.
+stretch :: Stretch
+stretch = Stretch "stretch"
 
 
 -- * Content Position
@@ -161,13 +182,18 @@ start = ContentPosition "start"
 -- * Overflow Position
 
 
+-- | Represents the CSS @\<overflow-position\>@ data type.
+newtype OverflowPosition = OverflowPosition Builder
+    deriving (Buildable, Show)
+
+
 -- | Generates the CSS @safe@ @\<overflow-position\>@ value.
-safe :: ContentPosition -> ContentPosition
-safe = ContentPosition . (<>) "safe " . build
+safe :: ContentPosition -> OverflowPosition
+safe = OverflowPosition . (<>) "safe " . build
 {-# INLINE safe #-}
 
 
 -- | Generates the CSS @unsafe@ @\<overflow-position\>@ value.
-unsafe :: ContentPosition -> ContentPosition
-unsafe = ContentPosition . (<>) "unsafe " . build
+unsafe :: ContentPosition -> OverflowPosition
+unsafe = OverflowPosition . (<>) "unsafe " . build
 {-# INLINE unsafe #-}
