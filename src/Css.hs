@@ -10,6 +10,7 @@ module Css
       -- ** build
       build
     , module Css.Functions
+    , module Css.DataTypes.Alignment
     , module Css.DataTypes.Colors
     , module Css.DataTypes.Fonts
     , module Css.DataTypes.Numeric
@@ -19,11 +20,12 @@ module Css
 
 
 import Css.Functions
-import Css.DataTypes.Colors   hiding (color, accentColor, tan)
+import Css.DataTypes.Alignment hiding (last)
+import Css.DataTypes.Colors    hiding (color, accentColor, tan)
 import Css.DataTypes.Fonts
-import Css.DataTypes.Numeric  hiding (rem)
+import Css.DataTypes.Numeric   hiding (rem)
 import Css.Keywords
-import Css.Properties         hiding (all, filter)
+import Css.Properties          hiding (all, filter)
 
 import Css.Internal           (extractAndHash)
 import Data.Text.Lazy.Builder (Builder)

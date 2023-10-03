@@ -663,12 +663,14 @@ module Css.Properties
 
 import Prelude hiding (all, filter)
 
-import Css.DataTypes.Colors   (Color)
-import Css.Keywords           (Auto)
-import Data.Foldable          (fold)
-import Data.List              (intersperse)
-import Data.Text.Lazy.Builder (Builder, singleton)
-import Html                   (Buildable(..))
+import Css.DataTypes.Alignment
+import Css.DataTypes.Colors    hiding (accentColor, color)
+
+import Css.Keywords
+import Data.Foldable           (fold)
+import Data.List               (intersperse)
+import Data.Text.Lazy.Builder  (Builder, singleton)
+import Html                    (Buildable(..))
 
 
 -- * PROPERTIES
@@ -689,9 +691,19 @@ accentColor = prop "accent-color:" . build
 {-# INLINE accentColor #-}
 
 
+-- | Represents the CSS @align-content@ property.
+class Buildable a => AlignContent a
+
+
+instance AlignContent BaselinePosition
+instance AlignContent ContentDistribution
+instance AlignContent ContentPosition
+instance AlignContent Normal
+
+
 -- | Generates a CSS @align-content@ property with the given value.
-alignContent :: Builder -> Builder
-alignContent = prop "align-content:"
+alignContent :: AlignContent a => a -> Builder
+alignContent = prop "align-content:" . build
 {-# INLINE alignContent #-}
 
 
