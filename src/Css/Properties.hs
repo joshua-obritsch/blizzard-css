@@ -695,12 +695,12 @@ accentColor = prop "accent-color:" . build
 class Buildable a => AlignContent a
 
 
-instance {-# OVERLAPPING #-}                  AlignContent ContentDistribution
-instance {-# OVERLAPPING #-}                  AlignContent ContentPosition
-instance {-# OVERLAPPING #-}                  AlignContent Normal
-instance {-# OVERLAPPING #-}                  AlignContent OverflowPosition
-instance {-# OVERLAPPING #-}                  AlignContent Stretch
-instance (Buildable a, BaselinePosition a) => AlignContent a
+instance AlignContent BaselinePosition
+instance AlignContent ContentDistribution
+instance AlignContent ContentPosition
+instance AlignContent Normal
+instance AlignContent OverflowPosition
+instance AlignContent Stretch
 
 
 -- | Generates a CSS @align-content@ property with the given value.
@@ -709,15 +709,48 @@ alignContent = prop "align-content:" . build
 {-# INLINE alignContent #-}
 
 
+-- | Represents the CSS @align-items@ property.
+class Buildable a => AlignItems a
+
+
+instance AlignItems BaselinePosition
+instance AlignItems ContentPosition
+instance AlignItems Normal
+instance AlignItems OverflowPosition
+instance AlignItems SafeSelfEnd
+instance AlignItems SafeSelfStart
+instance AlignItems SelfPosition
+instance AlignItems Stretch
+instance AlignItems UnsafeSelfEnd
+instance AlignItems UnsafeSelfStart
+
+
 -- | Generates a CSS @align-items@ property with the given value.
-alignItems :: Builder -> Builder
-alignItems = prop "align-items:"
+alignItems :: AlignItems a => a -> Builder
+alignItems = prop "align-items:" . build
 {-# INLINE alignItems #-}
 
 
+-- | Represents the CSS @align-self@ property.
+class Buildable a => AlignSelf a
+
+
+instance AlignSelf Auto
+instance AlignSelf BaselinePosition
+instance AlignSelf ContentPosition
+instance AlignSelf Normal
+instance AlignSelf OverflowPosition
+instance AlignSelf SafeSelfEnd
+instance AlignSelf SafeSelfStart
+instance AlignSelf SelfPosition
+instance AlignSelf Stretch
+instance AlignSelf UnsafeSelfEnd
+instance AlignSelf UnsafeSelfStart
+
+
 -- | Generates a CSS @align-self@ property with the given value.
-alignSelf :: Builder -> Builder
-alignSelf = prop "align-self:"
+alignSelf :: AlignSelf a => a -> Builder
+alignSelf = prop "align-self:" . build
 {-# INLINE alignSelf #-}
 
 
