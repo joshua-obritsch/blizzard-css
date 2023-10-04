@@ -13,12 +13,24 @@ module Css.Keywords
       -- ** Auto
       Auto
     , auto
+      -- ** Inherit
+    , Inherit
+    , inherit
+      -- ** Initial
+    , Initial
+    , initial
       -- ** None
     , None
     , none
       -- ** Normal
     , Normal
     , normal
+      -- ** Revert
+    , Revert
+    , revert
+      -- ** Unset
+    , Unset
+    , unset
     ) where
 
 
@@ -40,6 +52,26 @@ auto :: Auto
 auto = Auto "auto"
 
 
+-- | Represents the CSS @inherit@ keyword.
+newtype Inherit = Inherit Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @inhert@ keyword.
+inherit :: Inherit
+inherit = Inherit "inherit"
+
+
+-- | Represents the CSS @initial@ keyword.
+newtype Initial = Initial Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @initial@ keyword.
+initial :: Initial
+initial = Initial "initial"
+
+
 -- | Represents the CSS @none@ keyword.
 newtype None = None Builder
     deriving (Buildable, Show)
@@ -58,3 +90,23 @@ newtype Normal = Normal Builder
 -- | Generates the CSS @normal@ keyword.
 normal :: Normal
 normal = Normal "normal"
+
+
+-- | Represents the CSS @revert@ keyword.
+newtype Revert = Revert Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @revert@ keyword.
+revert :: Revert
+revert = Revert "revert"
+
+
+-- | Represents the CSS @unset@ keyword.
+newtype Unset = Unset Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @unset@ keyword.
+unset :: Unset
+unset = Unset "unset"

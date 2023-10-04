@@ -25,9 +25,12 @@ library
     default-language:   Haskell2010
     exposed-modules:    Css
                       , Css.Attributes
-                      , Css.DataTypes.Colors
+                      , Css.DataTypes.Alignment
+                      , Css.DataTypes.Animation
+                      , Css.DataTypes.Color
                       , Css.DataTypes.Fonts
                       , Css.DataTypes.Numeric
+                      , Css.DataTypes.Textual
                       , Css.Functions
                       , Css.Keywords
                       , Css.Intl

@@ -24,6 +24,8 @@ module Css.Properties
     , all
       -- ** animation
     , animation
+      -- ** animation-composition
+    , animationComposition
       -- ** animation-delay
     , animationDelay
       -- ** animation-direction
@@ -661,10 +663,13 @@ module Css.Properties
     ) where
 
 
-import Prelude hiding (all, filter)
+import Prelude hiding (String, all, filter)
 
 import Css.DataTypes.Alignment
-import Css.DataTypes.Colors    hiding (accentColor, color)
+import Css.DataTypes.Animation
+import Css.DataTypes.Color     hiding (accentColor, color)
+import Css.DataTypes.Numeric
+import Css.DataTypes.Textual
 
 import Css.Keywords
 import Data.Foldable           (fold)
@@ -683,11 +688,16 @@ class Buildable a => AccentColor a
 instance {-# OVERLAPPING #-}       AccentColor Auto
 instance (Buildable a, Color a) => AccentColor a
 
+instance {-# OVERLAPPING #-}       AccentColor Inherit
+instance {-# OVERLAPPING #-}       AccentColor Initial
+instance {-# OVERLAPPING #-}       AccentColor Revert
+instance {-# OVERLAPPING #-}       AccentColor Unset
+
 
 
 -- | Generates a CSS @accent-color@ property with the given value.
 accentColor :: AccentColor a => a -> Builder
-accentColor = prop "accent-color:" . build
+accentColor = prop "accent-color:"
 {-# INLINE accentColor #-}
 
 
@@ -702,10 +712,15 @@ instance AlignContent Normal
 instance AlignContent OverflowPosition
 instance AlignContent Stretch
 
+instance AlignContent Inherit
+instance AlignContent Initial
+instance AlignContent Revert
+instance AlignContent Unset
+
 
 -- | Generates a CSS @align-content@ property with the given value.
 alignContent :: AlignContent a => a -> Builder
-alignContent = prop "align-content:" . build
+alignContent = prop "align-content:"
 {-# INLINE alignContent #-}
 
 
@@ -724,10 +739,15 @@ instance AlignItems Stretch
 instance AlignItems UnsafeSelfEnd
 instance AlignItems UnsafeSelfStart
 
+instance AlignItems Inherit
+instance AlignItems Initial
+instance AlignItems Revert
+instance AlignItems Unset
+
 
 -- | Generates a CSS @align-items@ property with the given value.
 alignItems :: AlignItems a => a -> Builder
-alignItems = prop "align-items:" . build
+alignItems = prop "align-items:"
 {-# INLINE alignItems #-}
 
 
@@ -747,15 +767,30 @@ instance AlignSelf Stretch
 instance AlignSelf UnsafeSelfEnd
 instance AlignSelf UnsafeSelfStart
 
+instance AlignSelf Inherit
+instance AlignSelf Initial
+instance AlignSelf Revert
+instance AlignSelf Unset
+
 
 -- | Generates a CSS @align-self@ property with the given value.
 alignSelf :: AlignSelf a => a -> Builder
-alignSelf = prop "align-self:" . build
+alignSelf = prop "align-self:"
 {-# INLINE alignSelf #-}
 
 
+-- | Represents the CSS @all@ property.
+class Buildable a => All a
+
+
+instance All Inherit
+instance All Initial
+instance All Revert
+instance All Unset
+
+
 -- | Generates a CSS @all@ property with the given value.
-all :: Builder -> Builder
+all :: All a => a -> Builder
 all = prop "all:"
 {-# INLINE all #-}
 
@@ -766,44 +801,133 @@ animation = props "animation:"
 {-# INLINE animation #-}
 
 
+-- | Represents the CSS @animation-delay@ property.
+class Buildable a => AnimationDelay a
+
+
+instance AnimationDelay Time
+
+instance AnimationDelay Inherit
+instance AnimationDelay Initial
+instance AnimationDelay Revert
+instance AnimationDelay Unset
+
+
 -- | Generates a CSS @animation-delay@ property with the given value.
-animationDelay :: Builder -> Builder
+animationDelay :: AnimationDelay a => a -> Builder
 animationDelay = prop "animation-delay:"
 {-# INLINE animationDelay #-}
 
 
+-- | Represents the CSS @animation-direction@ property.
+class Buildable a => AnimationDirection a
+
+
+instance AnimationDirection Normal
+instance AnimationDirection SingleAnimationDirection
+
+instance AnimationDirection Inherit
+instance AnimationDirection Initial
+instance AnimationDirection Revert
+instance AnimationDirection Unset
+
+
 -- | Generates a CSS @animation-direction@ property with the given value.
-animationDirection :: Builder -> Builder
+animationDirection :: AnimationDirection a => a -> Builder
 animationDirection = prop "animation-direction:"
 {-# INLINE animationDirection #-}
 
 
+-- | Represents the CSS @animation-duration@ property.
+class Buildable a => AnimationDuration a
+
+
+instance AnimationDuration Time
+
+instance AnimationDuration Inherit
+instance AnimationDuration Initial
+instance AnimationDuration Revert
+instance AnimationDuration Unset
+
+
 -- | Generates a CSS @animation-duration@ property with the given value.
-animationDuration :: Builder -> Builder
+animationDuration :: AnimationDuration a => a -> Builder
 animationDuration = prop "animation-duration:"
 {-# INLINE animationDuration #-}
 
 
+-- | Represents the CSS @animation-fill-mode@ property.
+class Buildable a => AnimationFillMode a
+
+
+instance AnimationFillMode None
+instance AnimationFillMode SingleAnimationFillMode
+
+instance AnimationFillMode Inherit
+instance AnimationFillMode Initial
+instance AnimationFillMode Revert
+instance AnimationFillMode Unset
+
+
 -- | Generates a CSS @animation-fill-mode@ property with the given value.
-animationFillMode :: Builder -> Builder
+animationFillMode :: AnimationFillMode a => a -> Builder
 animationFillMode = prop "animation-fill-mode:"
 {-# INLINE animationFillMode #-}
 
 
+-- | Represents the CSS @animation-iteration-count@ property.
+class Buildable a => AnimationIterationCount a
+
+
+instance AnimationIterationCount Number
+instance AnimationIterationCount SingleAnimationIterationCount
+
+instance AnimationIterationCount Inherit
+instance AnimationIterationCount Initial
+instance AnimationIterationCount Revert
+instance AnimationIterationCount Unset
+
+
 -- | Generates a CSS @animation-iteration-count@ property with the given value.
-animationIterationCount :: Builder -> Builder
+animationIterationCount :: AnimationIterationCount a => a -> Builder
 animationIterationCount = prop "animation-iteration-count:"
 {-# INLINE animationIterationCount #-}
 
 
+-- | Represents the CSS @animation-name@ property.
+class Buildable a => AnimationName a
+
+
+instance AnimationName CustomIdent
+instance AnimationName None
+instance AnimationName String
+
+instance AnimationName Inherit
+instance AnimationName Initial
+instance AnimationName Revert
+instance AnimationName Unset
+
+
 -- | Generates a CSS @animation-name@ property with the given value.
-animationName :: Builder -> Builder
+animationName :: AnimationName a => a -> Builder
 animationName = prop "animation-name:"
 {-# INLINE animationName #-}
 
 
+-- | Represents the CSS @animation-play-state@ property.
+class Buildable a => AnimationPlayState a
+
+
+instance AnimationPlayState SingleAnimationPlayState
+
+instance AnimationPlayState Inherit
+instance AnimationPlayState Initial
+instance AnimationPlayState Revert
+instance AnimationPlayState Unset
+
+
 -- | Generates a CSS @animation-play-state@ property with the given value.
-animationPlayState :: Builder -> Builder
+animationPlayState :: AnimationPlayState a => a -> Builder
 animationPlayState = prop "animation-play-state:"
 {-# INLINE animationPlayState #-}
 
@@ -2671,8 +2795,8 @@ zIndex = prop "z-index:"
 -- HELPER FUNCTIONS
 
 
-prop :: Builder -> Builder -> Builder
-prop key value = key <> value <> singleton ';'
+prop :: Buildable a => Builder -> a -> Builder
+prop key value = key <> build value <> singleton ';'
 
 
 props :: Builder -> [Builder] -> Builder

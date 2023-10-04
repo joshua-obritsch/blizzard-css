@@ -6,14 +6,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UndecidableInstances #-}
 
--- | Module    : Css.DataTypes.Colors
+-- | Module    : Css.DataTypes.Color
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.DataTypes.Colors" module provides a set of types and functions for generating color data types in CSS.
-module Css.DataTypes.Colors
+-- The "Css.DataTypes.Color" module provides a set of types and functions for generating color data types in CSS.
+module Css.DataTypes.Color
     ( -- * Colors
       -- ** \<color\>
       Color
