@@ -154,6 +154,11 @@ module Css.DataTypes.Numeric
       -- ** \<time-percentage\>
     , TimePercentage
 
+      -- * Ratio
+      -- ** \<ratio\>
+    , Ratio
+    , ratio
+
       -- * Resolutions
       -- ** \<resolution\>
     , Resolution
@@ -169,7 +174,7 @@ module Css.DataTypes.Numeric
 import Prelude hiding (rem)
 
 import Css.Internal
-import Data.Text.Lazy.Builder           (Builder)
+import Data.Text.Lazy.Builder           (Builder, singleton)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
 import Html                             (Buildable(..))
 
@@ -588,6 +593,20 @@ class Buildable a => TimePercentage a
 
 instance TimePercentage Angle
 instance TimePercentage Percentage
+
+
+-- * Ratio
+
+
+-- | Represents the CSS @\<ratio\>@ data type.
+newtype Ratio = Ratio Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates a CSS @\<ratio\>@ value.
+ratio :: Number -> Number -> Ratio
+ratio nominator denominator = Ratio $ realFloat nominator <> singleton '/' <> realFloat denominator
+{-# INLINE ratio #-}
 
 
 -- * RESOLUTIONS

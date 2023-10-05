@@ -10,9 +10,19 @@
 --
 -- The "Css.DataTypes.Animation" module provides a set of types and functions for generating animation-related data types in CSS.
 module Css.DataTypes.Animation
-    ( -- * Single Animation Direction
+    ( -- * Single Animation Composition
+      -- ** \<single-animation-composition\>
+      SingleAnimationComposition
+      -- ** accumulate
+    , accumulate
+      -- ** add
+    , add
+      -- ** replace
+    , replace
+
+      -- * Single Animation Direction
       -- ** \<single-animation-direction\>
-      SingleAnimationDirection
+    , SingleAnimationDirection
       -- ** alternate
     , alternate
       -- ** alternate-reverse
@@ -51,6 +61,32 @@ import Prelude hiding (reverse)
 import Css.Internal
 import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
+
+
+-- * Single Animation Composition
+
+
+-- | Represents the CSS @\<single-animation-composition\>@ data type.
+newtype SingleAnimationComposition = SingleAnimationComposition Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @accumulate@ @\<single-animation-composition\>@ value.
+accumulate :: SingleAnimationComposition
+accumulate = SingleAnimationComposition "accumulate"
+{-# INLINE accumulate #-}
+
+
+-- | Generates the CSS @add@ @\<single-animation-composition\>@ value.
+add :: SingleAnimationComposition
+add = SingleAnimationComposition "add"
+{-# INLINE add #-}
+
+
+-- | Generates the CSS @replace@ @\<single-animation-composition\>@ value.
+replace :: SingleAnimationComposition
+replace = SingleAnimationComposition "replace"
+{-# INLINE replace #-}
 
 
 -- * Single Animation Direction

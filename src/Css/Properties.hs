@@ -795,10 +795,29 @@ all = prop "all:"
 {-# INLINE all #-}
 
 
+-- TODO
 -- | Generates a CSS @animation@ property with the given value.
 animation :: [Builder] -> Builder
 animation = props "animation:"
 {-# INLINE animation #-}
+
+
+-- | Represents the CSS @animation-composition@ property.
+class Buildable a => AnimationComposition a
+
+
+instance AnimationComposition SingleAnimationComposition
+
+instance AnimationComposition Inherit
+instance AnimationComposition Initial
+instance AnimationComposition Revert
+instance AnimationComposition Unset
+
+
+-- | Generates a CSS @animation-composition@ property with the given value.
+animationComposition :: AnimationComposition a => a -> Builder
+animationComposition = prop "animation-composition:"
+{-# INLINE animationComposition #-}
 
 
 -- | Represents the CSS @animation-delay@ property.
@@ -932,14 +951,28 @@ animationPlayState = prop "animation-play-state:"
 {-# INLINE animationPlayState #-}
 
 
+-- TODO
 -- | Generates a CSS @animation-timing-function@ property with the given value.
 animationTimingFunction :: Builder -> Builder
 animationTimingFunction = prop "animation-timing-function:"
 {-# INLINE animationTimingFunction #-}
 
 
+-- | Represents the CSS @aspect-ratio@ property.
+class Buildable a => AspectRatio a
+
+
+instance AspectRatio Number
+instance AspectRatio Ratio
+
+instance AspectRatio Inherit
+instance AspectRatio Initial
+instance AspectRatio Revert
+instance AspectRatio Unset
+
+
 -- | Generates a CSS @aspect-ratio@ property with the given value.
-aspectRatio :: Builder -> Builder
+aspectRatio :: AspectRatio a => a -> Builder
 aspectRatio = prop "aspect-ratio:"
 {-# INLINE aspectRatio #-}
 
