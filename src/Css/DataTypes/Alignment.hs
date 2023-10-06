@@ -10,9 +10,15 @@
 --
 -- The "Css.DataTypes.Alignment" module provides a set of types and functions for generating alignment-related data types in CSS.
 module Css.DataTypes.Alignment
-    ( -- * Baseline Position
-      -- ** \<baseline-position\>
-      BaselinePosition
+    ( -- * Data Types
+      -- ** \<align-*\>
+      Align
+      -- ** \<content-distribution\>
+    , ContentDistribution
+      -- ** \<self-position\>
+    , SelfPosition
+
+      -- * \<baseline-position\>
       -- ** baseline
     , baseline
       -- ** first baseline
@@ -20,10 +26,7 @@ module Css.DataTypes.Alignment
       -- ** last baseline
     , lastBaseline
 
-      -- * Content Distribution
-      -- ** \<content-distribution\>
-    , ContentDistribution
-    , Stretch
+      -- * \<content-distribution\>
       -- ** space-around
     , spaceAround
       -- ** space-between
@@ -33,9 +36,7 @@ module Css.DataTypes.Alignment
       -- ** stretch
     , stretch
 
-      -- * Content Position
-      -- ** \<content-position\>
-    , ContentPosition
+      -- * \<content-position\>
       -- ** center
     , center
       -- ** end
@@ -47,13 +48,7 @@ module Css.DataTypes.Alignment
       -- ** start
     , start
 
-      -- * Overflow Position
-      -- ** \<overflow-position\>
-    , OverflowPosition
-    , SafeSelfEnd
-    , SafeSelfStart
-    , UnsafeSelfEnd
-    , UnsafeSelfStart
+      -- * \<overflow-position\>
       -- ** safe center
     , safeCenter
       -- ** safe end
@@ -83,9 +78,7 @@ module Css.DataTypes.Alignment
       -- ** unsafe start
     , unsafeStart
 
-      -- * Self Position
-      -- ** \<self-position\>
-    , SelfPosition
+      -- * \<self-position\>
       -- ** self-end
     , selfEnd
       -- ** self-start
@@ -100,33 +93,12 @@ import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
 
 
--- * Baseline Position
+-- * DATA TYPES
 
 
--- | Represents the CSS @\<baseline-position\>@ data type.
-newtype BaselinePosition = BaselinePosition Builder
+-- | Represents the CSS @\<align-*\>@ data type.
+newtype Align = Align Builder
     deriving (Buildable, Show)
-
-
--- | Generates the CSS @baseline@ keyword.
-baseline :: BaselinePosition
-baseline = BaselinePosition "baseline"
-{-# INLINE baseline #-}
-
-
--- | Generates the CSS @first baseline@ @\<baseline-position\>@ value.
-firstBaseline :: BaselinePosition
-firstBaseline = BaselinePosition "first baseline"
-{-# INLINE firstBaseline #-}
-
-
--- | Generates the CSS @last baseline@ @\<baseline-position\>@ value.
-lastBaseline :: BaselinePosition
-lastBaseline = BaselinePosition "last baseline"
-{-# INLINE lastBaseline #-}
-
-
--- * Content Distribution
 
 
 -- | Represents the CSS @\<content-distribution\>@ data type.
@@ -134,9 +106,33 @@ newtype ContentDistribution = ContentDistribution Builder
     deriving (Buildable, Show)
 
 
--- | Represents the CSS @stretch@ @\<content-distribution\>@ value.
-newtype Stretch = Stretch Builder
+-- | Represents the CSS @\<self-position\>@ data type.
+newtype SelfPosition = SelfPosition Builder
     deriving (Buildable, Show)
+
+
+-- * BASELINE-POSITION
+
+
+-- | Generates the CSS @baseline@ \<baseline-position\> value.
+baseline :: Align
+baseline = Align "baseline"
+{-# INLINE baseline #-}
+
+
+-- | Generates the CSS @first baseline@ @\<baseline-position\>@ value.
+firstBaseline :: Align
+firstBaseline = Align "first baseline"
+{-# INLINE firstBaseline #-}
+
+
+-- | Generates the CSS @last baseline@ @\<baseline-position\>@ value.
+lastBaseline :: Align
+lastBaseline = Align "last baseline"
+{-# INLINE lastBaseline #-}
+
+
+-- * CONTENT-DISTRIBUTION
 
 
 -- | Generates the CSS @space-around@ @\<content-distribution\>@ value.
@@ -158,166 +154,131 @@ spaceEvenly = ContentDistribution "space-evenly"
 
 
 -- | Generates the CSS @stretch@ @\<content-distribution\>@ value.
-stretch :: Stretch
-stretch = Stretch "stretch"
+stretch :: Align
+stretch = Align "stretch"
 
 
--- * Content Position
-
-
--- | Represents the CSS @\<content-position\>@ data type.
-newtype ContentPosition = ContentPosition Builder
-    deriving (Buildable, Show)
+-- * CONTENT-POSITION
 
 
 -- | Generates the CSS @center@ @\<content-position\>@ value.
-center :: ContentPosition
-center = ContentPosition "center"
+center :: Align
+center = Align "center"
 {-# INLINE center #-}
 
 
 -- | Generates the CSS @end@ @\<content-position\>@ value.
-end :: ContentPosition
-end = ContentPosition "end"
+end :: Align
+end = Align "end"
 {-# INLINE end #-}
 
 
 -- | Generates the CSS @flex-end@ @\<content-position\>@ value.
-flexEnd :: ContentPosition
-flexEnd = ContentPosition "flex-end"
+flexEnd :: Align
+flexEnd = Align "flex-end"
 {-# INLINE flexEnd #-}
 
 
 -- | Generates the CSS @flex-start@ @\<content-position\>@ value.
-flexStart :: ContentPosition
-flexStart = ContentPosition "flex-start"
+flexStart :: Align
+flexStart = Align "flex-start"
 {-# INLINE flexStart #-}
 
 
 -- | Generates the CSS @start@ @\<content-position\>@ value.
-start :: ContentPosition
-start = ContentPosition "start"
+start :: Align
+start = Align "start"
 {-# INLINE start #-}
 
 
--- * Overflow Position
-
-
--- | Represents the CSS @\<overflow-position\>@ data type.
-newtype OverflowPosition = OverflowPosition Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @safe self-end@ @\<overflow-position\>@ value.
-newtype SafeSelfEnd = SafeSelfEnd Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @safe self-start@ @\<overflow-position\>@ value.
-newtype SafeSelfStart = SafeSelfStart Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @unsafe self-end@ @\<overflow-position\>@ value.
-newtype UnsafeSelfEnd = UnsafeSelfEnd Builder
-    deriving (Buildable, Show)
-
-
--- | Represents the CSS @unsafe self-start@ @\<overflow-position\>@ value.
-newtype UnsafeSelfStart = UnsafeSelfStart Builder
-    deriving (Buildable, Show)
+-- * OVERFLOW-POSITION
 
 
 -- | Generates the CSS @safe center@ @\<overflow-position\>@ value.
-safeCenter :: OverflowPosition
-safeCenter = OverflowPosition "safe center"
+safeCenter :: Align
+safeCenter = Align "safe center"
 {-# INLINE safeCenter #-}
 
 
 -- | Generates the CSS @safe end@ @\<overflow-position\>@ value.
-safeEnd :: OverflowPosition
-safeEnd = OverflowPosition "safe end"
+safeEnd :: Align
+safeEnd = Align "safe end"
 {-# INLINE safeEnd #-}
 
 
 -- | Generates the CSS @safe flex-end@ @\<overflow-position\>@ value.
-safeFlexEnd :: OverflowPosition
-safeFlexEnd = OverflowPosition "safe flex-end"
+safeFlexEnd :: Align
+safeFlexEnd = Align "safe flex-end"
 {-# INLINE safeFlexEnd #-}
 
 
 -- | Generates the CSS @safe flex-start@ @\<overflow-position\>@ value.
-safeFlexStart :: OverflowPosition
-safeFlexStart = OverflowPosition "safe flex-start"
+safeFlexStart :: Align
+safeFlexStart = Align "safe flex-start"
 {-# INLINE safeFlexStart #-}
 
 
 -- | Generates the CSS @safe self-end@ @\<overflow-position\>@ value.
-safeSelfEnd :: SafeSelfEnd
-safeSelfEnd = SafeSelfEnd "safe self-end"
+safeSelfEnd :: SelfPosition
+safeSelfEnd = SelfPosition "safe self-end"
 {-# INLINE safeSelfEnd #-}
 
 
 -- | Generates the CSS @safe self-start@ @\<overflow-position\>@ value.
-safeSelfStart :: SafeSelfStart
-safeSelfStart = SafeSelfStart "safe self-start"
+safeSelfStart :: SelfPosition
+safeSelfStart = SelfPosition "safe self-start"
 {-# INLINE safeSelfStart #-}
 
 
 -- | Generates the CSS @safe start@ @\<overflow-position\>@ value.
-safeStart :: OverflowPosition
-safeStart = OverflowPosition "safe start"
+safeStart :: Align
+safeStart = Align "safe start"
 {-# INLINE safeStart #-}
 
 
 -- | Generates the CSS @unsafe center@ @\<overflow-position\>@ value.
-unsafeCenter :: OverflowPosition
-unsafeCenter = OverflowPosition "unsafe center"
+unsafeCenter :: Align
+unsafeCenter = Align "unsafe center"
 {-# INLINE unsafeCenter #-}
 
 
 -- | Generates the CSS @unsafe end@ @\<overflow-position\>@ value.
-unsafeEnd :: OverflowPosition
-unsafeEnd = OverflowPosition "unsafe end"
+unsafeEnd :: Align
+unsafeEnd = Align "unsafe end"
 {-# INLINE unsafeEnd #-}
 
 
 -- | Generates the CSS @unsafe flex-end@ @\<overflow-position\>@ value.
-unsafeFlexEnd :: OverflowPosition
-unsafeFlexEnd = OverflowPosition "unsafe flex-end"
+unsafeFlexEnd :: Align
+unsafeFlexEnd = Align "unsafe flex-end"
 {-# INLINE unsafeFlexEnd #-}
 
 
 -- | Generates the CSS @unsafe flex-start@ @\<overflow-position\>@ value.
-unsafeFlexStart :: OverflowPosition
-unsafeFlexStart = OverflowPosition "unsafe flex-start"
+unsafeFlexStart :: Align
+unsafeFlexStart = Align "unsafe flex-start"
 {-# INLINE unsafeFlexStart #-}
 
 
 -- | Generates the CSS @unsafe self-end@ @\<overflow-position\>@ value.
-unsafeSelfEnd :: UnsafeSelfEnd
-unsafeSelfEnd = UnsafeSelfEnd "unsafe self-end"
+unsafeSelfEnd :: SelfPosition
+unsafeSelfEnd = SelfPosition "unsafe self-end"
 {-# INLINE unsafeSelfEnd #-}
 
 
 -- | Generates the CSS @unsafe self-start@ @\<overflow-position\>@ value.
-unsafeSelfStart :: UnsafeSelfStart
-unsafeSelfStart = UnsafeSelfStart "unsafe self-start"
+unsafeSelfStart :: SelfPosition
+unsafeSelfStart = SelfPosition "unsafe self-start"
 {-# INLINE unsafeSelfStart #-}
 
 
 -- | Generates the CSS @unsafe start@ @\<overflow-position\>@ value.
-unsafeStart :: OverflowPosition
-unsafeStart = OverflowPosition "unsafe start"
+unsafeStart :: Align
+unsafeStart = Align "unsafe start"
 {-# INLINE unsafeStart #-}
 
 
--- * Self Position
-
-
--- | Represents the CSS @\<self-position\>@ data type.
-newtype SelfPosition = SelfPosition Builder
-    deriving (Buildable, Show)
+-- * SELF-POSITION
 
 
 -- | Generates the CSS @self-end@ @\<self-position\>@ value.

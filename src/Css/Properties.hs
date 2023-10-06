@@ -708,12 +708,9 @@ accentColor = prop "accent-color:"
 class Buildable a => AlignContent a
 
 
-instance AlignContent BaselinePosition
+instance AlignContent Align
 instance AlignContent ContentDistribution
-instance AlignContent ContentPosition
 instance AlignContent Normal
-instance AlignContent OverflowPosition
-instance AlignContent Stretch
 
 instance AlignContent Inherit
 instance AlignContent Initial
@@ -731,16 +728,9 @@ alignContent = prop "align-content:"
 class Buildable a => AlignItems a
 
 
-instance AlignItems BaselinePosition
-instance AlignItems ContentPosition
+instance AlignItems Align
 instance AlignItems Normal
-instance AlignItems OverflowPosition
-instance AlignItems SafeSelfEnd
-instance AlignItems SafeSelfStart
 instance AlignItems SelfPosition
-instance AlignItems Stretch
-instance AlignItems UnsafeSelfEnd
-instance AlignItems UnsafeSelfStart
 
 instance AlignItems Inherit
 instance AlignItems Initial
@@ -759,16 +749,9 @@ class Buildable a => AlignSelf a
 
 
 instance AlignSelf Auto
-instance AlignSelf BaselinePosition
-instance AlignSelf ContentPosition
+instance AlignSelf Align
 instance AlignSelf Normal
-instance AlignSelf OverflowPosition
-instance AlignSelf SafeSelfEnd
-instance AlignSelf SafeSelfStart
 instance AlignSelf SelfPosition
-instance AlignSelf Stretch
-instance AlignSelf UnsafeSelfEnd
-instance AlignSelf UnsafeSelfStart
 
 instance AlignSelf Inherit
 instance AlignSelf Initial
