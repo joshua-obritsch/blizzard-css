@@ -38,7 +38,8 @@ import Html                             (Html(..), Attribute(..), Buildable(..),
 -- UTILITIES
 
 
-instance Buildable Double where build = realFloat
+instance Buildable Double  where build = realFloat
+instance Buildable Integer where build = decimal
 
 
 lazyShow :: Buildable a => a -> String

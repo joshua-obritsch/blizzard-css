@@ -19,6 +19,9 @@ module Css.Keywords
       -- ** content-box
     , ContentBox
     , contentBox
+      -- ** end
+    , End
+    , end
       -- ** hidden
     , Hidden
     , hidden
@@ -40,6 +43,9 @@ module Css.Keywords
       -- ** revert
     , Revert
     , revert
+      -- ** start
+    , Start
+    , start
       -- ** unset
     , Unset
     , unset
@@ -85,6 +91,16 @@ newtype ContentBox = ContentBox Builder
 -- | Generates the CSS @content-box@ keyword.
 contentBox :: ContentBox
 contentBox = ContentBox "content-box"
+
+
+-- | Represents the CSS @end@ keyword.
+newtype End = End Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @end@ keyword.
+end :: End
+end = End "end"
 
 
 -- | Represents the CSS @hidden@ keyword.
@@ -155,6 +171,16 @@ newtype Revert = Revert Builder
 -- | Generates the CSS @revert@ keyword.
 revert :: Revert
 revert = Revert "revert"
+
+
+-- | Represents the CSS @start@ keyword.
+newtype Start = Start Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @start@ keyword.
+start :: Start
+start = Start "start"
 
 
 -- | Represents the CSS @unset@ keyword.

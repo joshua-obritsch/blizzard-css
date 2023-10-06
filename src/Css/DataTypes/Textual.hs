@@ -9,14 +9,16 @@
 --
 -- The "Css.DataTypes.Textual" module provides a set of types and functions for generating textual data types in CSS.
 module Css.DataTypes.Textual
-    ( -- * Identifiers
+    ( -- * Data Types
       -- ** \<custom-ident\>
       CustomIdent
-    , customIdent
-
-      -- * Quoted Strings
       -- ** \<string\>
     , String
+
+      -- * \<custom-ident\>
+    , customIdent
+
+      -- * \<string\>
     , string
     ) where
 
@@ -28,12 +30,20 @@ import Data.Text.Lazy.Builder (Builder, singleton)
 import Html                   (Buildable(..))
 
 
--- * Identifiers
+-- * DATA TYPES
 
 
 -- | Represents the CSS @\<custom-ident\>@ data type.
 newtype CustomIdent = CustomIdent Builder
     deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<string\>@ data type.
+newtype String = String Builder
+    deriving (Buildable, Show)
+
+
+-- * CUSTOM-IDENT
 
 
 -- | Generates a CSS @\<custom-ident\>@ value.
@@ -42,12 +52,7 @@ customIdent = CustomIdent
 {-# INLINE customIdent #-}
 
 
--- * Quoted Strings
-
-
--- | Represents the CSS @\<string\>@ data type.
-newtype String = String Builder
-    deriving (Buildable, Show)
+-- * STRING
 
 
 -- | Generates a CSS @\<string\>@ value.

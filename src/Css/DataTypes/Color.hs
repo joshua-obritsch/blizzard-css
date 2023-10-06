@@ -481,7 +481,7 @@ instance PercentageNone Percentage
 -- * ABSOLUTE-COLOR-BASE
 
 
--- | Generates the CSS @transparent@ \<absolute-color-base\> value.
+-- | Generates the CSS @transparent@ @\<absolute-color-base\>@ value.
 transparent :: Color
 transparent = Color "transparent"
 {-# INLINE transparent #-}
@@ -490,7 +490,7 @@ transparent = Color "transparent"
 -- * ABSOLUTE-COLOR-FUNCTION
 
 
--- | Generates a CSS \<color()\> value.
+-- | Generates a CSS @\<color()\>@ value without @\<alpha-value\>@.
 color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => ColorspaceParams -> a -> b -> c -> Color
 color colorspaceParams c1 c2 c3
     =  Color
@@ -505,7 +505,7 @@ color colorspaceParams c1 c2 c3
     <> singleton ')'
 
 
--- | Generates a CSS \<color()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<color()\>@ value with @\<alpha-value\>@.
 colora :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d)
        => ColorspaceParams -> a -> b -> c -> d -> Color
 colora colorspaceParams c1 c2 c3 alpha
@@ -523,7 +523,7 @@ colora colorspaceParams c1 c2 c3 alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<hsl()\> value.
+-- | Generates a CSS @\<hsl()\>@ value without @\<alpha-value\>@.
 hsl :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
 hsl hue saturation lightness
     =  Color
@@ -536,7 +536,7 @@ hsl hue saturation lightness
     <> singleton ')'
 
 
--- | Generates a CSS \<hsl()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<hsl()\>@ value with @\<alpha-value\>@.
 hsla :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
 hsla hue saturation lightness alpha
     =  Color
@@ -551,7 +551,7 @@ hsla hue saturation lightness alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<hwb()\> value.
+-- | Generates a CSS @\<hwb()\>@ value without @\<alpha-value\>@.
 hwb :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
 hwb hue whiteness blackness
     =  Color
@@ -564,7 +564,7 @@ hwb hue whiteness blackness
     <> singleton ')'
 
 
--- | Generates a CSS \<hwb()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<hwb()\>@ value with @\<alpha-value\>@.
 hwba :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
 hwba hue whiteness blackness alpha
     =  Color
@@ -579,7 +579,7 @@ hwba hue whiteness blackness alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<lab()\> value.
+-- | Generates a CSS @\<lab()\>@ value without @\<alpha-value\>@.
 lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
 lab lightness a b
     =  Color
@@ -592,7 +592,7 @@ lab lightness a b
     <> singleton ')'
 
 
--- | Generates a CSS \<lab()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<lab()\>@ value with @\<alpha-value\>@.
 laba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
 laba lightness a b alpha
     =  Color
@@ -607,7 +607,7 @@ laba lightness a b alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<lch()\> value.
+-- | Generates a CSS @\<lch()\>@ value without @\<alpha-value\>@.
 lch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> Color
 lch lightness chroma hue
     =  Color
@@ -620,7 +620,7 @@ lch lightness chroma hue
     <> singleton ')'
 
 
--- | Generates a CSS \<lch()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<lch()\>@ value with @\<alpha-value\>@.
 lcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> Color
 lcha lightness chroma hue alpha
     =  Color
@@ -635,7 +635,7 @@ lcha lightness chroma hue alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<oklab()\> value.
+-- | Generates a CSS @\<oklab()\>@ value without @\<alpha-value\>@.
 oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
 oklab lightness a b
     =  Color
@@ -648,7 +648,7 @@ oklab lightness a b
     <> singleton ')'
 
 
--- | Generates a CSS \<oklab()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<oklab()\>@ value with @\<alpha-value\>@.
 oklaba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
 oklaba lightness a b alpha
     =  Color
@@ -663,7 +663,7 @@ oklaba lightness a b alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<oklch()\> value.
+-- | Generates a CSS @\<oklch()\>@ value without @\<alpha-value\>@.
 oklch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> Color
 oklch lightness chroma hue
     =  Color
@@ -676,7 +676,7 @@ oklch lightness chroma hue
     <> singleton ')'
 
 
--- | Generates a CSS \<oklch()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<oklch()\>@ value with @\<alpha-value\>@.
 oklcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> Color
 oklcha lightness chroma hue alpha
     =  Color
@@ -691,7 +691,7 @@ oklcha lightness chroma hue alpha
     <> singleton ')'
 
 
--- | Generates a CSS \<rgb()\> value.
+-- | Generates a CSS @\<rgb()\>@ value without @\<alpha-value\>@.
 rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
 rgb red green blue
     =  Color
@@ -704,7 +704,7 @@ rgb red green blue
     <> singleton ')'
 
 
--- | Generates a CSS \<rgb()\> value with \<alpha-value\>.
+-- | Generates a CSS @\<rgb()\>@ value with @\<alpha-value\>@.
 rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
 rgba red green blue alpha
     =  Color
@@ -722,7 +722,7 @@ rgba red green blue alpha
 -- * COLOR
 
 
--- | Generates the CSS @currentcolor@ \<color\> value.
+-- | Generates the CSS @currentcolor@ @\<color\>@ value.
 currentcolor :: Color
 currentcolor = Color "currentcolor"
 {-# INLINE currentcolor #-}
@@ -731,7 +731,7 @@ currentcolor = Color "currentcolor"
 -- * HEX-COLOR
 
 
--- | Generates a CSS \<hex-color\> value.
+-- | Generates a CSS @\<hex-color\>@ value.
 hex :: Word32 -> Color
 hex = Color . showHex
 {-# INLINE hex #-}
@@ -740,61 +740,61 @@ hex = Color . showHex
 -- * NAMED-COLOR
 
 
--- | Generates the CSS @aliceblue@ \<named-color\> value.
+-- | Generates the CSS @aliceblue@ @\<named-color\>@ value.
 aliceblue :: Color
 aliceblue = Color "aliceblue"
 {-# INLINE aliceblue #-}
 
 
--- | Generates the CSS @antiquewhite@ \<named-color\> value.
+-- | Generates the CSS @antiquewhite@ @\<named-color\>@ value.
 antiquewhite :: Color
 antiquewhite = Color "antiquewhite"
 {-# INLINE antiquewhite #-}
 
 
--- | Generates the CSS @aqua@ \<named-color\> value.
+-- | Generates the CSS @aqua@ @\<named-color\>@ value.
 aqua :: Color
 aqua = Color "aqua"
 {-# INLINE aqua #-}
 
 
--- | Generates the CSS @aquamarine@ \<named-color\> value.
+-- | Generates the CSS @aquamarine@ @\<named-color\>@ value.
 aquamarine :: Color
 aquamarine = Color "aquamarine"
 {-# INLINE aquamarine #-}
 
 
--- | Generates the CSS @azure@ \<named-color\> value.
+-- | Generates the CSS @azure@ @\<named-color\>@ value.
 azure :: Color
 azure = Color "azure"
 {-# INLINE azure #-}
 
 
--- | Generates the CSS @beige@ \<named-color\> value.
+-- | Generates the CSS @beige@ @\<named-color\>@ value.
 beige :: Color
 beige = Color "beige"
 {-# INLINE beige #-}
 
 
--- | Generates the CSS @bisque@ \<named-color\> value.
+-- | Generates the CSS @bisque@ @\<named-color\>@ value.
 bisque :: Color
 bisque = Color "bisque"
 {-# INLINE bisque #-}
 
 
--- | Generates the CSS @black@ \<named-color\> value.
+-- | Generates the CSS @black@ @\<named-color\>@ value.
 black :: Color
 black = Color "black"
 {-# INLINE black #-}
 
 
--- | Generates the CSS @blanchedalmond@ \<named-color\> value.
+-- | Generates the CSS @blanchedalmond@ @\<named-color\>@ value.
 blanchedalmond :: Color
 blanchedalmond = Color "blanchedalmond"
 {-# INLINE blanchedalmond #-}
 
 
--- | Generates the CSS @blue@ \<named-color\> value.
+-- | Generates the CSS @blue@ @\<named-color\>@ value.
 blue :: Color
 blue = Color "blue"
 {-# INLINE blue #-}

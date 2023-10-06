@@ -1,7 +1,6 @@
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 
 -- | Module    : Css.Properties
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -710,7 +709,9 @@ class Buildable a => AlignContent a
 
 instance AlignContent Align
 instance AlignContent ContentDistribution
+instance AlignContent End
 instance AlignContent Normal
+instance AlignContent Start
 
 instance AlignContent Inherit
 instance AlignContent Initial
@@ -729,8 +730,10 @@ class Buildable a => AlignItems a
 
 
 instance AlignItems Align
+instance AlignItems End
 instance AlignItems Normal
 instance AlignItems SelfPosition
+instance AlignItems Start
 
 instance AlignItems Inherit
 instance AlignItems Initial
@@ -750,8 +753,10 @@ class Buildable a => AlignSelf a
 
 instance AlignSelf Auto
 instance AlignSelf Align
+instance AlignSelf End
 instance AlignSelf Normal
 instance AlignSelf SelfPosition
+instance AlignSelf Start
 
 instance AlignSelf Inherit
 instance AlignSelf Initial
@@ -937,9 +942,20 @@ animationPlayState = prop "animation-play-state:"
 {-# INLINE animationPlayState #-}
 
 
--- TODO
+-- | Represents the CSS @animation-timing-function@ property.
+class Buildable a => AnimationTimingFunction a
+
+
+instance AnimationTimingFunction EasingFunction
+
+instance AnimationTimingFunction Inherit
+instance AnimationTimingFunction Initial
+instance AnimationTimingFunction Revert
+instance AnimationTimingFunction Unset
+
+
 -- | Generates a CSS @animation-timing-function@ property with the given value.
-animationTimingFunction :: Builder -> Builder
+animationTimingFunction :: AnimationTimingFunction a => a -> Builder
 animationTimingFunction = prop "animation-timing-function:"
 {-# INLINE animationTimingFunction #-}
 

@@ -1,5 +1,4 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Module    : Css.DataTypes.Alignment
@@ -39,14 +38,10 @@ module Css.DataTypes.Alignment
       -- * \<content-position\>
       -- ** center
     , center
-      -- ** end
-    , end
       -- ** flex-end
     , flexEnd
       -- ** flex-start
     , flexStart
-      -- ** start
-    , start
 
       -- * \<overflow-position\>
       -- ** safe center
@@ -85,8 +80,6 @@ module Css.DataTypes.Alignment
     , selfStart
     ) where
 
-
-import Prelude hiding (last)
 
 import Css.Internal
 import Data.Text.Lazy.Builder (Builder)
@@ -167,12 +160,6 @@ center = Align "center"
 {-# INLINE center #-}
 
 
--- | Generates the CSS @end@ @\<content-position\>@ value.
-end :: Align
-end = Align "end"
-{-# INLINE end #-}
-
-
 -- | Generates the CSS @flex-end@ @\<content-position\>@ value.
 flexEnd :: Align
 flexEnd = Align "flex-end"
@@ -183,12 +170,6 @@ flexEnd = Align "flex-end"
 flexStart :: Align
 flexStart = Align "flex-start"
 {-# INLINE flexStart #-}
-
-
--- | Generates the CSS @start@ @\<content-position\>@ value.
-start :: Align
-start = Align "start"
-{-# INLINE start #-}
 
 
 -- * OVERFLOW-POSITION

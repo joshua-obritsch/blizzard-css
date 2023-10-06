@@ -13,37 +13,37 @@ module Css.Functions
       -- ** attr
       attr
       -- ** calc
-    , calc
+    --, calc
       -- ** conic-gradient
-    , conicGradient
+    --, conicGradient
       -- ** counter
-    , counter
+    --, counter
       -- ** cubic-bezier
-    , cubicBezier
+    --, cubicBezier
       -- ** hsl
     --, hsl
       -- ** hsla
     --, hsla
       -- ** linear-gradient
-    , linearGradient
+    --, linearGradient
       -- ** max
-    , max
+    --, max
       -- ** min
-    , min
+    --, min
       -- ** radial-gradient
-    , radialGradient
+    --, radialGradient
       -- ** repeating-conic-gradient
-    , repeatingConicGradient
+    --, repeatingConicGradient
       -- ** repeating-linear-gradient
-    , repeatingLinearGradient
+    --, repeatingLinearGradient
       -- ** repeating-radial-gradient
-    , repeatingRadialGradient
+    --, repeatingRadialGradient
       -- ** rgb
     --, rgb
       -- ** rgba
     --, rgba
       -- ** var
-    , var
+    --, var
     ) where
 
 

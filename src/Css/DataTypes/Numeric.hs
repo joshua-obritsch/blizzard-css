@@ -1,11 +1,6 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 
 -- | Module    : Css.DataTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -142,6 +137,7 @@ module Css.DataTypes.Numeric
 
       -- * \<ratio\>
     , ratio
+    , ratio2
 
       -- * \<resolution\>
       -- ** dpcm
@@ -162,7 +158,6 @@ module Css.DataTypes.Numeric
 import Prelude hiding (rem)
 
 import Css.Internal
-import Data.Kind                        (Type)
 import Data.Text.Lazy.Builder           (Builder, singleton)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
 import Html                             (Buildable(..))
@@ -524,10 +519,16 @@ pct = Percentage . fromNumber "%"
 -- * RATIO
 
 
--- | Generates a CSS @\<ratio\>@ value.
-ratio :: Number -> Number -> Ratio
-ratio nominator denominator = Ratio $ realFloat nominator <> singleton '/' <> realFloat denominator
+-- | Generates a CSS @\<ratio\>@ value with only the nominator.
+ratio :: Number -> Ratio
+ratio = Ratio . realFloat
 {-# INLINE ratio #-}
+
+
+-- | Generates a CSS @\<ratio\>@ value with both the nominator and denominator.
+ratio2 :: Number -> Number -> Ratio
+ratio2 nominator denominator = Ratio $ realFloat nominator <> singleton '/' <> realFloat denominator
+{-# INLINE ratio2 #-}
 
 
 -- * RESOLUTION
