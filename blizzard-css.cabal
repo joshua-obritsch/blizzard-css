@@ -27,13 +27,13 @@ library
                       , Css.Attributes
                       , Css.DataTypes.Alignment
                       , Css.DataTypes.Animation
-                      , Css.DataTypes.Backgrounds
+                      , Css.DataTypes.Background
                       , Css.DataTypes.Color
+                      , Css.DataTypes.Filter
                       , Css.DataTypes.Fonts
                       , Css.DataTypes.Numeric
                       , Css.DataTypes.Textual
                       , Css.DataTypes.Ui
-                      , Css.Functions
                       , Css.Keywords
                       , Css.Intl
                       , Css.Properties

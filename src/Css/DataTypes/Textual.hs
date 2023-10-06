@@ -1,5 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 -- | Module    : Css.DataTypes.Textual
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -14,12 +15,20 @@ module Css.DataTypes.Textual
       CustomIdent
       -- ** \<string\>
     , String
+      -- ** \<url\>
+    , Url
 
       -- * \<custom-ident\>
     , customIdent
 
       -- * \<string\>
     , string
+
+      -- * \<url\>
+      -- ** \<src()\>
+    , src
+      -- ** \<url()\>
+    , url
     ) where
 
 
@@ -43,6 +52,11 @@ newtype String = String Builder
     deriving (Buildable, Show)
 
 
+-- | Represents the CSS @\<url\>@ data type.
+newtype Url = Url Builder
+    deriving (Buildable, Show)
+
+
 -- * CUSTOM-IDENT
 
 
@@ -59,3 +73,18 @@ customIdent = CustomIdent
 string :: Builder -> String
 string value = String $ singleton '"' <> value <> singleton '"'
 {-# INLINE string #-}
+
+
+-- * URL
+
+
+-- | Generates a CSS @\<src()\>@ value.
+src :: Builder -> Url
+src value = Url $ "src(\"" <> value <> "\")"
+{-# INLINE src #-}
+
+
+-- | Generates a CSS @\<url()\>@ value.
+url :: Builder -> Url
+url value = Url $ "url(\"" <> value <> "\")"
+{-# INLINE url #-}

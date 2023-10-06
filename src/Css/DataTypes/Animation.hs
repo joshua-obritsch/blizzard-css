@@ -84,7 +84,6 @@ module Css.DataTypes.Animation
     , stepStart
       -- ** steps
     , steps
-    , steps2
 
       -- * \<step-position\>
       -- ** jumpBoth
@@ -306,14 +305,9 @@ stepStart = EasingFunction "step-start"
 {-# INLINE stepStart #-}
 
 
--- | Generates a CSS @\<step-easing-function\>@ value without \<step-position\>.
-steps :: Integer -> EasingFunction
-steps intervalCount = EasingFunction $ "steps(" <> build intervalCount <> singleton ')'
-
-
--- | Generates a CSS @\<step-easing-function\>@ value with \<step-position\>.
-steps2 :: StepPosition a => Integer -> a -> EasingFunction
-steps2 intervalCount stepPosition
+-- | Generates a CSS @\<step-easing-function\>@ value.
+steps :: StepPosition a => Integer -> a -> EasingFunction
+steps intervalCount stepPosition
     =  EasingFunction
     $  "steps("
     <> build intervalCount

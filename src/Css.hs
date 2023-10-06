@@ -11,11 +11,11 @@ module Css
     ( -- * Constructors
       -- ** build
       build
-    , module Css.Functions
     , module Css.DataTypes.Animation
     , module Css.DataTypes.Alignment
-    , module Css.DataTypes.Backgrounds
+    , module Css.DataTypes.Background
     , module Css.DataTypes.Color
+    , module Css.DataTypes.Filter
     , module Css.DataTypes.Fonts
     , module Css.DataTypes.Numeric
     , module Css.DataTypes.Textual
@@ -25,17 +25,17 @@ module Css
     ) where
 
 
-import Css.Functions
-import Css.DataTypes.Animation   hiding (reverse)
-import Css.DataTypes.Alignment   hiding (last)
-import Css.DataTypes.Backgrounds
-import Css.DataTypes.Color       hiding (color, accentColor, tan)
+import Css.DataTypes.Animation  hiding (reverse)
+import Css.DataTypes.Alignment  hiding (last)
+import Css.DataTypes.Background
+import Css.DataTypes.Color      hiding (color, accentColor, tan)
+import Css.DataTypes.Filter     hiding (opacity)
 import Css.DataTypes.Fonts
-import Css.DataTypes.Numeric     hiding (rem)
+import Css.DataTypes.Numeric    hiding (rem)
 import Css.DataTypes.Textual
-import Css.DataTypes.Ui          hiding (button, meter, textarea)
+import Css.DataTypes.Ui         hiding (button, meter, textarea)
 import Css.Keywords
-import Css.Properties            hiding (all, filter)
+import Css.Properties           hiding (all, filter)
 
 import Css.Internal                     (extractAndHash)
 import Data.Text.Lazy.Builder           (Builder)

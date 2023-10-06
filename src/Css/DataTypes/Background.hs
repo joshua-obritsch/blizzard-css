@@ -1,14 +1,14 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Module    : Css.DataTypes.Backgrounds
+-- | Module    : Css.DataTypes.Background
 -- Copyright   : (c) Joshua Obritsch, 2022
 -- License     : MIT
 -- Maintainer  : joshua@obritsch.com
 -- Stability   : Experimental
 --
--- The "Css.DataTypes.Backgrounds" module provides a set of types and functions for generating background-related data types in CSS.
-module Css.DataTypes.Backgrounds
+-- The "Css.DataTypes.Background" module provides a set of types and functions for generating background-related data types in CSS.
+module Css.DataTypes.Background
     ( -- * Attachments
       -- ** \<attachment\>
       Attachment

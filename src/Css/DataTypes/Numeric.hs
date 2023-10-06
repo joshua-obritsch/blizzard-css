@@ -27,6 +27,8 @@ module Css.DataTypes.Numeric
     , Resolution
       -- ** \<time\>
     , Time
+      -- ** \<zero\>
+    , Zero
 
       -- * \<angle\>
       -- ** deg
@@ -137,7 +139,6 @@ module Css.DataTypes.Numeric
 
       -- * \<ratio\>
     , ratio
-    , ratio2
 
       -- * \<resolution\>
       -- ** dpcm
@@ -152,6 +153,10 @@ module Css.DataTypes.Numeric
     , ms
       -- ** s
     , s
+
+      -- * \<zero\>
+      -- ** zero
+    , zero
     ) where
 
 
@@ -202,6 +207,11 @@ newtype Resolution = Resolution Builder
 
 -- | Represents the CSS @\<time\>@ data type.
 newtype Time = Time Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<zero\>@ data type.
+newtype Zero = Zero Builder
     deriving (Buildable, Show)
 
 
@@ -519,16 +529,10 @@ pct = Percentage . fromNumber "%"
 -- * RATIO
 
 
--- | Generates a CSS @\<ratio\>@ value with only the nominator.
-ratio :: Number -> Ratio
-ratio = Ratio . realFloat
+-- | Generates a CSS @\<ratio\>@ value.
+ratio :: Number -> Number -> Ratio
+ratio nominator denominator = Ratio $ realFloat nominator <> singleton '/' <> realFloat denominator
 {-# INLINE ratio #-}
-
-
--- | Generates a CSS @\<ratio\>@ value with both the nominator and denominator.
-ratio2 :: Number -> Number -> Ratio
-ratio2 nominator denominator = Ratio $ realFloat nominator <> singleton '/' <> realFloat denominator
-{-# INLINE ratio2 #-}
 
 
 -- * RESOLUTION
@@ -565,6 +569,15 @@ ms = Time . fromNumber "ms"
 s :: Number -> Time
 s = Time . fromNumber "s"
 {-# INLINE s #-}
+
+
+-- * ZERO
+
+
+-- | Generates a CSS @\<zero\>@ value.
+zero :: Zero
+zero = Zero "zero"
+{-# INLINE zero #-}
 
 
 -- HELPER FUNCTIONS

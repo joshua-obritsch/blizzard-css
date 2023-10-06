@@ -124,12 +124,12 @@ textarea = CompatAuto "textarea"
 
 
 -- | Generates the CSS @menulist-button@ @\<compat-special\>@ value.
-menulistButton :: CompatAuto
-menulistButton = CompatAuto "menulist-button"
+menulistButton :: CompatSpecial
+menulistButton = CompatSpecial "menulist-button"
 {-# INLINE menulistButton #-}
 
 
 -- | Generates the CSS @textfield@ @\<compat-special\>@ value.
-textfield :: CompatAuto
-textfield = CompatAuto "textfield"
+textfield :: CompatSpecial
+textfield = CompatSpecial "textfield"
 {-# INLINE textfield #-}
