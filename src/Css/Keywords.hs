@@ -10,27 +10,42 @@
 -- The "Css.Keywords" module provides a set of functions for generating CSS keywords.
 module Css.Keywords
     ( -- * Keywords
-      -- ** Auto
+      -- ** auto
       Auto
     , auto
-      -- ** Inherit
+      -- ** border-box
+    , BorderBox
+    , borderBox
+      -- ** content-box
+    , ContentBox
+    , contentBox
+      -- ** hidden
+    , Hidden
+    , hidden
+      -- ** inherit
     , Inherit
     , inherit
-      -- ** Initial
+      -- ** initial
     , Initial
     , initial
-      -- ** None
+      -- ** none
     , None
     , none
-      -- ** Normal
+      -- ** normal
     , Normal
     , normal
-      -- ** Revert
+      -- ** padding-box
+    , PaddingBox
+    , paddingBox
+      -- ** revert
     , Revert
     , revert
-      -- ** Unset
+      -- ** unset
     , Unset
     , unset
+      -- ** visible
+    , Visible
+    , visible
     ) where
 
 
@@ -50,6 +65,36 @@ newtype Auto = Auto Builder
 -- | Generates the CSS @auto@ keyword.
 auto :: Auto
 auto = Auto "auto"
+
+
+-- | Represents the CSS @border-box@ keyword.
+newtype BorderBox = BorderBox Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @border-box@ keyword.
+borderBox :: BorderBox
+borderBox = BorderBox "border-box"
+
+
+-- | Represents the CSS @content-box@ keyword.
+newtype ContentBox = ContentBox Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @content-box@ keyword.
+contentBox :: ContentBox
+contentBox = ContentBox "content-box"
+
+
+-- | Represents the CSS @hidden@ keyword.
+newtype Hidden = Hidden Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @hidden@ keyword.
+hidden :: Hidden
+hidden = Hidden "hidden"
 
 
 -- | Represents the CSS @inherit@ keyword.
@@ -92,6 +137,16 @@ normal :: Normal
 normal = Normal "normal"
 
 
+-- | Represents the CSS @padding-box@ keyword.
+newtype PaddingBox = PaddingBox Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @padding-box@ keyword.
+paddingBox :: PaddingBox
+paddingBox = PaddingBox "padding-box"
+
+
 -- | Represents the CSS @revert@ keyword.
 newtype Revert = Revert Builder
     deriving (Buildable, Show)
@@ -110,3 +165,13 @@ newtype Unset = Unset Builder
 -- | Generates the CSS @unset@ keyword.
 unset :: Unset
 unset = Unset "unset"
+
+
+-- | Represents the CSS @visible@ keyword.
+newtype Visible = Visible Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @visible@ keyword.
+visible :: Visible
+visible = Visible "visible"

@@ -27,6 +27,7 @@ library
                       , Css.Attributes
                       , Css.DataTypes.Alignment
                       , Css.DataTypes.Animation
+                      , Css.DataTypes.Backgrounds
                       , Css.DataTypes.Color
                       , Css.DataTypes.Fonts
                       , Css.DataTypes.Numeric

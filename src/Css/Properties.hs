@@ -42,6 +42,8 @@ module Css.Properties
     , animationPlayState
       -- ** animation-timing-function
     , animationTimingFunction
+      -- ** appearance
+    , appearance
       -- ** aspect-ratio
     , aspectRatio
       -- ** backdrop-filter
@@ -667,7 +669,8 @@ import Prelude hiding (String, all, filter)
 
 import Css.DataTypes.Alignment
 import Css.DataTypes.Animation
-import Css.DataTypes.Color     hiding (accentColor, color)
+import Css.DataTypes.Backgrounds
+import Css.DataTypes.Color       hiding (accentColor, color)
 import Css.DataTypes.Numeric
 import Css.DataTypes.Textual
 
@@ -685,13 +688,13 @@ import Html                    (Buildable(..))
 class Buildable a => AccentColor a
 
 
-instance {-# OVERLAPPING #-}       AccentColor Auto
-instance (Buildable a, Color a) => AccentColor a
+instance AccentColor Auto
+instance AccentColor Color
 
-instance {-# OVERLAPPING #-}       AccentColor Inherit
-instance {-# OVERLAPPING #-}       AccentColor Initial
-instance {-# OVERLAPPING #-}       AccentColor Revert
-instance {-# OVERLAPPING #-}       AccentColor Unset
+instance AccentColor Inherit
+instance AccentColor Initial
+instance AccentColor Revert
+instance AccentColor Unset
 
 
 
@@ -958,6 +961,13 @@ animationTimingFunction = prop "animation-timing-function:"
 {-# INLINE animationTimingFunction #-}
 
 
+-- TODO
+-- | Generates a CSS @appearance@ property with the given value.
+appearance :: Builder -> Builder
+appearance = prop "appearance:"
+{-# INLINE appearance #-}
+
+
 -- | Represents the CSS @aspect-ratio@ property.
 class Buildable a => AspectRatio a
 
@@ -977,44 +987,98 @@ aspectRatio = prop "aspect-ratio:"
 {-# INLINE aspectRatio #-}
 
 
+-- TODO
 -- | Generates a CSS @backdrop-filter@ property with the given value.
 backdropFilter :: Builder -> Builder
 backdropFilter = prop "backdrop-filter:"
 {-# INLINE backdropFilter #-}
 
 
+-- | Represents the CSS @backface-visibility@ property.
+class Buildable a => BackfaceVisibility a
+
+
+instance BackfaceVisibility Hidden
+instance BackfaceVisibility Visible
+
+instance BackfaceVisibility Inherit
+instance BackfaceVisibility Initial
+instance BackfaceVisibility Revert
+instance BackfaceVisibility Unset
+
+
 -- | Generates a CSS @backface-visibility@ property with the given value.
-backfaceVisibility :: Builder -> Builder
+backfaceVisibility :: BackfaceVisibility a => a -> Builder
 backfaceVisibility = prop "backface-visibility:"
 {-# INLINE backfaceVisibility #-}
 
 
+-- TODO
 -- | Generates a CSS @background@ property with the given value.
 background :: Builder -> Builder
 background = prop "background:"
 {-# INLINE background #-}
 
 
+-- | Represents the CSS @background-attachment@ property.
+class Buildable a => BackgroundAttachment a
+
+
+instance BackgroundAttachment Attachment
+
+instance BackgroundAttachment Inherit
+instance BackgroundAttachment Initial
+instance BackgroundAttachment Revert
+instance BackgroundAttachment Unset
+
+
 -- | Generates a CSS @background-attachment@ property with the given value.
-backgroundAttachment :: Builder -> Builder
+backgroundAttachment :: BackgroundAttachment a => a -> Builder
 backgroundAttachment = prop "background-attachment:"
 {-# INLINE backgroundAttachment #-}
 
 
+-- TODO
 -- | Generates a CSS @background-blend-mode@ property with the given value.
 backgroundBlendMode :: Builder -> Builder
 backgroundBlendMode = prop "background-blend-mode:"
 {-# INLINE backgroundBlendMode #-}
 
 
+-- | Represents the CSS @background-clip@ property.
+class Buildable a => BackgroundClip a
+
+
+instance BackgroundClip BorderBox
+instance BackgroundClip ContentBox
+instance BackgroundClip PaddingBox
+
+instance BackgroundClip Inherit
+instance BackgroundClip Initial
+instance BackgroundClip Revert
+instance BackgroundClip Unset
+
+
 -- | Generates a CSS @background-clip@ property with the given value.
-backgroundClip :: Builder -> Builder
+backgroundClip :: BackgroundClip a => a -> Builder
 backgroundClip = prop "background-clip:"
 {-# INLINE backgroundClip #-}
 
 
+-- | Represents the CSS @background-color@ property.
+class Buildable a => BackgroundColor a
+
+
+instance BackgroundColor Color
+
+instance BackgroundColor Inherit
+instance BackgroundColor Initial
+instance BackgroundColor Revert
+instance BackgroundColor Unset
+
+
 -- | Generates a CSS @background-color@ property with the given value.
-backgroundColor :: Builder -> Builder
+backgroundColor :: BackgroundColor a => a -> Builder
 backgroundColor = prop "background-color:"
 {-# INLINE backgroundColor #-}
 

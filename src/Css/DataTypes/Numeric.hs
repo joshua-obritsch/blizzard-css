@@ -1,7 +1,11 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 -- | Module    : Css.DataTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -174,6 +178,7 @@ module Css.DataTypes.Numeric
 import Prelude hiding (rem)
 
 import Css.Internal
+import Data.Kind                        (Type)
 import Data.Text.Lazy.Builder           (Builder, singleton)
 import Data.Text.Lazy.Builder.RealFloat (realFloat)
 import Html                             (Buildable(..))
