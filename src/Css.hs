@@ -14,6 +14,7 @@ module Css
     , module Css.DataTypes.Animation
     , module Css.DataTypes.Alignment
     , module Css.DataTypes.Background
+    , module Css.DataTypes.Blending
     , module Css.DataTypes.Color
     , module Css.DataTypes.Filter
     , module Css.DataTypes.Fonts
@@ -28,6 +29,7 @@ module Css
 import Css.DataTypes.Animation  hiding (reverse)
 import Css.DataTypes.Alignment  hiding (last)
 import Css.DataTypes.Background
+import Css.DataTypes.Blending   hiding (color)
 import Css.DataTypes.Color      hiding (color, accentColor, tan)
 import Css.DataTypes.Filter     hiding (opacity)
 import Css.DataTypes.Fonts

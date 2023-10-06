@@ -28,6 +28,7 @@ library
                       , Css.DataTypes.Alignment
                       , Css.DataTypes.Animation
                       , Css.DataTypes.Background
+                      , Css.DataTypes.Blending
                       , Css.DataTypes.Color
                       , Css.DataTypes.Filter
                       , Css.DataTypes.Fonts

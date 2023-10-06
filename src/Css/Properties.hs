@@ -676,6 +676,7 @@ import Prelude hiding (String, all, filter)
 import Css.DataTypes.Alignment
 import Css.DataTypes.Animation
 import Css.DataTypes.Background
+import Css.DataTypes.Blending   hiding (color)
 import Css.DataTypes.Color      hiding (accentColor, color)
 import Css.DataTypes.Filter     hiding (opacity)
 import Css.DataTypes.Numeric
@@ -1174,9 +1175,21 @@ backgroundAttachment = prop "background-attachment:"
 {-# INLINE backgroundAttachment #-}
 
 
--- TODO
+-- | Represents the CSS @background-blend-mode@ property.
+class Buildable a => BackgroundBlendMode a
+
+
+instance BackgroundBlendMode BlendMode
+instance BackgroundBlendMode Normal
+
+instance BackgroundBlendMode Inherit
+instance BackgroundBlendMode Initial
+instance BackgroundBlendMode Revert
+instance BackgroundBlendMode Unset
+
+
 -- | Generates a CSS @background-blend-mode@ property with the given value.
-backgroundBlendMode :: Builder -> Builder
+backgroundBlendMode :: BackgroundBlendMode a => a -> Builder
 backgroundBlendMode = prop "background-blend-mode:"
 {-# INLINE backgroundBlendMode #-}
 
