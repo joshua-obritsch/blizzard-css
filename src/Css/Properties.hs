@@ -672,6 +672,7 @@ import Css.DataTypes.Backgrounds
 import Css.DataTypes.Color       hiding (accentColor, color)
 import Css.DataTypes.Numeric
 import Css.DataTypes.Textual
+import Css.DataTypes.Ui
 
 import Css.Keywords
 import Data.Foldable           (fold)
@@ -960,9 +961,23 @@ animationTimingFunction = prop "animation-timing-function:"
 {-# INLINE animationTimingFunction #-}
 
 
--- TODO
+-- | Represents the CSS @appearance@ property.
+class Buildable a => Appearance a
+
+
+instance Appearance Auto
+instance Appearance CompatAuto
+instance Appearance CompatSpecial
+instance Appearance None
+
+instance Appearance Inherit
+instance Appearance Initial
+instance Appearance Revert
+instance Appearance Unset
+
+
 -- | Generates a CSS @appearance@ property with the given value.
-appearance :: Builder -> Builder
+appearance :: Appearance a => a -> Builder
 appearance = prop "appearance:"
 {-# INLINE appearance #-}
 
@@ -971,7 +986,7 @@ appearance = prop "appearance:"
 class Buildable a => AspectRatio a
 
 
-instance AspectRatio Number
+instance AspectRatio Auto
 instance AspectRatio Ratio
 
 instance AspectRatio Inherit

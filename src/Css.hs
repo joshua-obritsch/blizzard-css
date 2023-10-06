@@ -19,6 +19,7 @@ module Css
     , module Css.DataTypes.Fonts
     , module Css.DataTypes.Numeric
     , module Css.DataTypes.Textual
+    , module Css.DataTypes.Ui
     , module Css.Keywords
     , module Css.Properties
     ) where
@@ -32,6 +33,7 @@ import Css.DataTypes.Color       hiding (color, accentColor, tan)
 import Css.DataTypes.Fonts
 import Css.DataTypes.Numeric     hiding (rem)
 import Css.DataTypes.Textual
+import Css.DataTypes.Ui          hiding (button, meter, textarea)
 import Css.Keywords
 import Css.Properties            hiding (all, filter)
 

@@ -32,6 +32,7 @@ library
                       , Css.DataTypes.Fonts
                       , Css.DataTypes.Numeric
                       , Css.DataTypes.Textual
+                      , Css.DataTypes.Ui
                       , Css.Functions
                       , Css.Keywords
                       , Css.Intl
