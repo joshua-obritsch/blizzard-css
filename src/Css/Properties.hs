@@ -1622,8 +1622,22 @@ borderWidth = prop "border-width:"
 {-# INLINE borderWidth #-}
 
 
+-- | Represents the CSS @bottom@ property.
+class Buildable a => Bottom a
+
+
+instance Bottom Auto
+instance Bottom Length
+instance Bottom Percentage
+
+instance Bottom Inherit
+instance Bottom Initial
+instance Bottom Revert
+instance Bottom Unset
+
+
 -- | Generates a CSS @bottom@ property with the given value.
-bottom :: Builder -> Builder
+bottom :: Bottom a => a -> Builder
 bottom = prop "bottom:"
 {-# INLINE bottom #-}
 
