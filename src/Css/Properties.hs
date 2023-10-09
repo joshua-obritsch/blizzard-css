@@ -1690,8 +1690,21 @@ captionSide = prop "caption-side:"
 {-# INLINE captionSide #-}
 
 
+-- | Represents the CSS @caret-color@ property.
+class Buildable a => CaretColor a
+
+
+instance CaretColor Auto
+instance CaretColor Color
+
+instance CaretColor Inherit
+instance CaretColor Initial
+instance CaretColor Revert
+instance CaretColor Unset
+
+
 -- | Generates a CSS @caret-color@ property with the given value.
-caretColor :: Builder -> Builder
+caretColor :: CaretColor a => a -> Builder
 caretColor = prop "caret-color:"
 {-# INLINE caretColor #-}
 
