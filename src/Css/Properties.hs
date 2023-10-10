@@ -1232,14 +1232,29 @@ backgroundColor = prop "background-color:"
 {-# INLINE backgroundColor #-}
 
 
+-- TODO
 -- | Generates a CSS @background-image@ property with the given value.
 backgroundImage :: Builder -> Builder
 backgroundImage = prop "background-image:"
 {-# INLINE backgroundImage #-}
 
 
+-- | Represents the CSS @background-origin@ property.
+class Buildable a => BackgroundOrigin a
+
+
+instance BackgroundOrigin BorderBox
+instance BackgroundOrigin ContentBox
+instance BackgroundOrigin PaddingBox
+
+instance BackgroundOrigin Inherit
+instance BackgroundOrigin Initial
+instance BackgroundOrigin Revert
+instance BackgroundOrigin Unset
+
+
 -- | Generates a CSS @background-origin@ property with the given value.
-backgroundOrigin :: Builder -> Builder
+backgroundOrigin :: BackgroundOrigin a => a -> Builder
 backgroundOrigin = prop "background-origin:"
 {-# INLINE backgroundOrigin #-}
 

@@ -13,8 +13,10 @@
 -- The "Css.DataTypes.Color" module provides a set of types and functions for generating color data types in CSS.
 module Css.DataTypes.Color
     ( -- * Data Types
+      -- ** \<absolute-color-function\>
+      AbsoluteColorFunction
       -- ** \<alpha-value\>
-      AlphaValue
+    , AlphaValue
       -- ** \<color\>
     , Color
       -- ** \<colorspace-params\>
@@ -54,7 +56,6 @@ module Css.DataTypes.Color
     , oklcha
       -- ** \<rgb()\>
     , rgb
-    , rgba
 
       -- * \<color\>
       -- ** currentcolor
@@ -438,6 +439,19 @@ import Html                   (Buildable(..))
 -- * DATA TYPES
 
 
+-- | Represents the CSS @\<absolute-color-function\>@ data type.
+class AbsoluteColorFunction a where
+    buildAbsoluteColorFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => AbsoluteColorFunction (a, b, c) where
+    buildAbsoluteColorFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => AbsoluteColorFunction (a, b, c, d) where
+    buildAbsoluteColorFunction (a, b, c, d) = buildAbsoluteColorFunction (a, b, c) <> " / " <> build d
+
+
 -- | Represents the CSS @\<alpha-value\>@ data type.
 type AlphaValue = NumberPercentageNone
 
@@ -490,7 +504,7 @@ transparent = Color "transparent"
 -- * ABSOLUTE-COLOR-FUNCTION
 
 
--- | Generates a CSS @\<color()\>@ value without @\<alpha-value\>@.
+-- | Generates a CSS @\<color()\>@ value.
 color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => ColorspaceParams -> a -> b -> c -> Color
 color colorspaceParams c1 c2 c3
     =  Color
@@ -691,32 +705,9 @@ oklcha lightness chroma hue alpha
     <> singleton ')'
 
 
--- | Generates a CSS @\<rgb()\>@ value without @\<alpha-value\>@.
-rgb :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
-rgb red green blue
-    =  Color
-    $  "rgb("
-    <> build red
-    <> singleton ' '
-    <> build green
-    <> singleton ' '
-    <> build blue
-    <> singleton ')'
-
-
--- | Generates a CSS @\<rgb()\>@ value with @\<alpha-value\>@.
-rgba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
-rgba red green blue alpha
-    =  Color
-    $  "rgb("
-    <> build red
-    <> singleton ' '
-    <> build green
-    <> singleton ' '
-    <> build blue
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+-- | Generates a CSS @\<rgb()\>@ value.
+rgb :: AbsoluteColorFunction a => a -> Color
+rgb value = Color $ "rgb(" <> buildAbsoluteColorFunction value <> singleton ')'
 
 
 -- * COLOR

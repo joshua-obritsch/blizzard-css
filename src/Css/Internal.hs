@@ -41,6 +41,15 @@ import Html                             (Html(..), Attribute(..), Buildable(..),
 instance Buildable Double  where build = realFloat
 instance Buildable Integer where build = decimal
 
+instance (Buildable a, Buildable b) => Buildable (a, b) where
+    build (a, b) = build a <> singleton ' ' <> build b
+
+instance (Buildable a, Buildable b, Buildable c) => Buildable (a, b, c) where
+    build (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+instance (Buildable a, Buildable b, Buildable c, Buildable d) => Buildable (a, b, c, d) where
+    build (a, b, c, d) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c <> singleton ' ' <> build d
+
 
 lazyShow :: Buildable a => a -> String
 lazyShow = unpack . toLazyText . build
