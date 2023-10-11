@@ -1,4 +1,5 @@
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -13,20 +14,30 @@
 -- The "Css.DataTypes.Color" module provides a set of types and functions for generating color data types in CSS.
 module Css.DataTypes.Color
     ( -- * Data Types
-      -- ** \<absolute-color-function\>
-      AbsoluteColorFunction
       -- ** \<alpha-value\>
-    , AlphaValue
+      AlphaValue
       -- ** \<color\>
     , Color
+      -- ** \<color()\>
+    , ColorFunction
       -- ** \<colorspace-params\>
     , ColorspaceParams
+      -- ** \<hsl()\>
+    , HslFunction
       -- ** \<hue\>|none
     , HueNone
-      -- ** \<number\>|\<percentage\>|none
-    , NumberPercentageNone
-      -- ** \<percentage\>|none
-    , PercentageNone
+      -- ** \<hwb()\>
+    , HwbFunction
+      -- ** \<lab()\>
+    , LabFunction
+      -- ** \<lch()\>
+    , LchFunction
+      -- ** \<oklab()\>
+    , OklabFunction
+      -- ** \<oklch()\>
+    , OklchFunction
+      -- ** \<rgb()\>
+    , RgbFunction
 
       -- * \<absolute-color-base\>
       -- ** transparent
@@ -35,25 +46,18 @@ module Css.DataTypes.Color
       -- * \<absolute-color-function\>
       -- ** \<color()\>
     , color
-    , colora
       -- ** \<hsl()\>
     , hsl
-    , hsla
       -- ** \<hwb()\>
     , hwb
-    , hwba
       -- ** \<lab()\>
     , lab
-    , laba
       -- ** \<lch()\>
     , lch
-    , lcha
       -- ** \<oklab()\>
     , oklab
-    , oklaba
       -- ** \<oklch()\>
     , oklch
-    , oklcha
       -- ** \<rgb()\>
     , rgb
 
@@ -428,7 +432,7 @@ module Css.DataTypes.Color
 
 import Prelude hiding (tan)
 
-import Css.DataTypes.Numeric  (Angle, Number, Percentage)
+import Css.DataTypes.Numeric  (Angle, Number, NumberPercentageNone, PercentageNone)
 import Css.Internal           (showHex)
 import Css.Keywords           (None)
 import Data.Text.Lazy.Builder (Builder, singleton)
@@ -437,19 +441,6 @@ import Html                   (Buildable(..))
 
 
 -- * DATA TYPES
-
-
--- | Represents the CSS @\<absolute-color-function\>@ data type.
-class AbsoluteColorFunction a where
-    buildAbsoluteColorFunction :: a -> Builder
-
-
-instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => AbsoluteColorFunction (a, b, c) where
-    buildAbsoluteColorFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
-
-
-instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => AbsoluteColorFunction (a, b, c, d) where
-    buildAbsoluteColorFunction (a, b, c, d) = buildAbsoluteColorFunction (a, b, c) <> " / " <> build d
 
 
 -- | Represents the CSS @\<alpha-value\>@ data type.
@@ -461,9 +452,37 @@ newtype Color = Color Builder
     deriving (Buildable, Show)
 
 
+-- | Represents the CSS @\<color()\>@ data type.
+class ColorFunction a where
+    buildColorFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => ColorFunction (ColorspaceParams, a, b, c) where
+    buildColorFunction (a, b, c, d) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c <> singleton ' ' <> build d
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d)
+    => ColorFunction (ColorspaceParams, a, b, c, d) where
+    buildColorFunction (a, b, c, d, e)
+        = build a <> singleton ' ' <> build b <> singleton ' ' <> build c <> singleton ' ' <> build d <> " / " <> build e
+
+
 -- | Represents the CSS @\<colorspace-params\>@ data type.
 newtype ColorspaceParams = ColorspaceParams Builder
     deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<hsl()\>@ data type.
+class HslFunction a where
+    buildHslFunction :: a -> Builder
+
+
+instance (HueNone a, PercentageNone b, PercentageNone c) => HslFunction (a, b, c) where
+    buildHslFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => HslFunction (a, b, c, d) where
+    buildHslFunction (a, b, c, d) = buildHslFunction (a, b, c) <> " / " <> build d
 
 
 -- | Represents the CSS @\<hue\>|none@ data type.
@@ -471,25 +490,87 @@ class Buildable a => HueNone a
 
 
 instance HueNone Angle
+instance HueNone Double
+instance HueNone Integer
 instance HueNone None
-instance HueNone Number
 
 
--- | Represents the CSS @\<number\>|\<percentage\>|none@ data type.
-class Buildable a => NumberPercentageNone a
+-- | Represents the CSS @\<hwb()\>@ data type.
+class HwbFunction a where
+    buildHwbFunction :: a -> Builder
 
 
-instance NumberPercentageNone None
-instance NumberPercentageNone Number
-instance NumberPercentageNone Percentage
+instance (HueNone a, PercentageNone b, PercentageNone c) => HwbFunction (a, b, c) where
+    buildHwbFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
 
 
--- | Represents the CSS @\<percentage\>|none@ data type.
-class Buildable a => PercentageNone a
+instance (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => HwbFunction (a, b, c, d) where
+    buildHwbFunction (a, b, c, d) = buildHwbFunction (a, b, c) <> " / " <> build d
 
 
-instance PercentageNone None
-instance PercentageNone Percentage
+-- | Represents the CSS @\<lab()\>@ data type.
+class LabFunction a where
+    buildLabFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => LabFunction (a, b, c) where
+    buildLabFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => LabFunction (a, b, c, d) where
+    buildLabFunction (a, b, c, d) = buildLabFunction (a, b, c) <> " / " <> build d
+
+
+-- | Represents the CSS @\<lch()\>@ data type.
+class LchFunction a where
+    buildLchFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => LchFunction (a, b, c) where
+    buildLchFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => LchFunction (a, b, c, d) where
+    buildLchFunction (a, b, c, d) = buildLchFunction (a, b, c) <> " / " <> build d
+
+
+-- | Represents the CSS @\<oklab()\>@ data type.
+class OklabFunction a where
+    buildOklabFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => OklabFunction (a, b, c) where
+    buildOklabFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => OklabFunction (a, b, c, d) where
+    buildOklabFunction (a, b, c, d) = buildOklabFunction (a, b, c) <> " / " <> build d
+
+
+-- | Represents the CSS @\<oklch()\>@ data type.
+class OklchFunction a where
+    buildOklchFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => OklchFunction (a, b, c) where
+    buildOklchFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => OklchFunction (a, b, c, d) where
+    buildOklchFunction (a, b, c, d) = buildOklchFunction (a, b, c) <> " / " <> build d
+
+
+-- | Represents the CSS @\<rgb()\>@ data type.
+class RgbFunction a where
+    buildRgbFunction :: a -> Builder
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => RgbFunction (a, b, c) where
+    buildRgbFunction (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
+
+
+instance (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => RgbFunction (a, b, c, d) where
+    buildRgbFunction (a, b, c, d) = buildRgbFunction (a, b, c) <> " / " <> build d
 
 
 -- * ABSOLUTE-COLOR-BASE
@@ -505,209 +586,43 @@ transparent = Color "transparent"
 
 
 -- | Generates a CSS @\<color()\>@ value.
-color :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => ColorspaceParams -> a -> b -> c -> Color
-color colorspaceParams c1 c2 c3
-    =  Color
-    $  "color("
-    <> build colorspaceParams
-    <> singleton ' '
-    <> build c1
-    <> singleton ' '
-    <> build c2
-    <> singleton ' '
-    <> build c3
-    <> singleton ')'
-
-
--- | Generates a CSS @\<color()\>@ value with @\<alpha-value\>@.
-colora :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d)
-       => ColorspaceParams -> a -> b -> c -> d -> Color
-colora colorspaceParams c1 c2 c3 alpha
-    =  Color
-    $  "color("
-    <> build colorspaceParams
-    <> singleton ' '
-    <> build c1
-    <> singleton ' '
-    <> build c2
-    <> singleton ' '
-    <> build c3
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+color :: ColorFunction a => a -> Color
+color value = Color $ "color(" <> buildColorFunction value <> singleton ')'
 
 
 -- | Generates a CSS @\<hsl()\>@ value without @\<alpha-value\>@.
-hsl :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
-hsl hue saturation lightness
-    =  Color
-    $  "hsl("
-    <> build hue
-    <> singleton ' '
-    <> build saturation
-    <> singleton ' '
-    <> build lightness
-    <> singleton ')'
-
-
--- | Generates a CSS @\<hsl()\>@ value with @\<alpha-value\>@.
-hsla :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
-hsla hue saturation lightness alpha
-    =  Color
-    $  "hsl("
-    <> build hue
-    <> singleton ' '
-    <> build saturation
-    <> singleton ' '
-    <> build lightness
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+hsl :: HslFunction a => a -> Color
+hsl value = Color $ "hsl(" <> buildHslFunction value <> singleton ')'
 
 
 -- | Generates a CSS @\<hwb()\>@ value without @\<alpha-value\>@.
-hwb :: (HueNone a, PercentageNone b, PercentageNone c) => a -> b -> c -> Color
-hwb hue whiteness blackness
-    =  Color
-    $  "hwb("
-    <> build hue
-    <> singleton ' '
-    <> build whiteness
-    <> singleton ' '
-    <> build blackness
-    <> singleton ')'
-
-
--- | Generates a CSS @\<hwb()\>@ value with @\<alpha-value\>@.
-hwba :: (HueNone a, PercentageNone b, PercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
-hwba hue whiteness blackness alpha
-    =  Color
-    $  "hwb("
-    <> build hue
-    <> singleton ' '
-    <> build whiteness
-    <> singleton ' '
-    <> build blackness
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+hwb :: HwbFunction a => a -> Color
+hwb value = Color $ "hwb(" <> buildHwbFunction value <> singleton ')'
 
 
 -- | Generates a CSS @\<lab()\>@ value without @\<alpha-value\>@.
-lab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
-lab lightness a b
-    =  Color
-    $  "lab("
-    <> build lightness
-    <> singleton ' '
-    <> build a
-    <> singleton ' '
-    <> build b
-    <> singleton ')'
-
-
--- | Generates a CSS @\<lab()\>@ value with @\<alpha-value\>@.
-laba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
-laba lightness a b alpha
-    =  Color
-    $  "lab("
-    <> build lightness
-    <> singleton ' '
-    <> build a
-    <> singleton ' '
-    <> build b
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+lab :: LabFunction a => a -> Color
+lab value = Color $ "lab(" <> buildLabFunction value <> singleton ')'
 
 
 -- | Generates a CSS @\<lch()\>@ value without @\<alpha-value\>@.
-lch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> Color
-lch lightness chroma hue
-    =  Color
-    $  "lch("
-    <> build lightness
-    <> singleton ' '
-    <> build chroma
-    <> singleton ' '
-    <> build hue
-    <> singleton ')'
+lch :: LchFunction a => a -> Color
+lch value = Color $ "lch(" <> buildLchFunction value <> singleton ')'
 
 
--- | Generates a CSS @\<lch()\>@ value with @\<alpha-value\>@.
-lcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> Color
-lcha lightness chroma hue alpha
-    =  Color
-    $  "lch("
-    <> build lightness
-    <> singleton ' '
-    <> build chroma
-    <> singleton ' '
-    <> build hue
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+-- | Generates a CSS @\<oklab()\>@ value.
+oklab :: OklabFunction a => a -> Color
+oklab value = Color $ "oklab(" <> buildOklabFunction value <> singleton ')'
 
 
--- | Generates a CSS @\<oklab()\>@ value without @\<alpha-value\>@.
-oklab :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c) => a -> b -> c -> Color
-oklab lightness a b
-    =  Color
-    $  "oklab("
-    <> build lightness
-    <> singleton ' '
-    <> build a
-    <> singleton ' '
-    <> build b
-    <> singleton ')'
-
-
--- | Generates a CSS @\<oklab()\>@ value with @\<alpha-value\>@.
-oklaba :: (NumberPercentageNone a, NumberPercentageNone b, NumberPercentageNone c, AlphaValue d) => a -> b -> c -> d -> Color
-oklaba lightness a b alpha
-    =  Color
-    $  "oklab("
-    <> build lightness
-    <> singleton ' '
-    <> build a
-    <> singleton ' '
-    <> build b
-    <> " / "
-    <> build alpha
-    <> singleton ')'
-
-
--- | Generates a CSS @\<oklch()\>@ value without @\<alpha-value\>@.
-oklch :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c) => a -> b -> c -> Color
-oklch lightness chroma hue
-    =  Color
-    $  "oklch("
-    <> build lightness
-    <> singleton ' '
-    <> build chroma
-    <> singleton ' '
-    <> build hue
-    <> singleton ')'
-
-
--- | Generates a CSS @\<oklch()\>@ value with @\<alpha-value\>@.
-oklcha :: (NumberPercentageNone a, NumberPercentageNone b, HueNone c, AlphaValue d) => a -> b -> c -> d -> Color
-oklcha lightness chroma hue alpha
-    =  Color
-    $  "oklch("
-    <> build lightness
-    <> singleton ' '
-    <> build chroma
-    <> singleton ' '
-    <> build hue
-    <> " / "
-    <> build alpha
-    <> singleton ')'
+-- | Generates a CSS @\<oklch()\>@ value.
+oklch :: OklchFunction a => a -> Color
+oklch value = Color $ "oklch(" <> buildOklchFunction value <> singleton ')'
 
 
 -- | Generates a CSS @\<rgb()\>@ value.
-rgb :: AbsoluteColorFunction a => a -> Color
-rgb value = Color $ "rgb(" <> buildAbsoluteColorFunction value <> singleton ')'
+rgb :: RgbFunction a => a -> Color
+rgb value = Color $ "rgb(" <> buildRgbFunction value <> singleton ')'
 
 
 -- * COLOR

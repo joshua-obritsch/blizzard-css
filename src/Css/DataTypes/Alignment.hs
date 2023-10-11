@@ -1,4 +1,5 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Module    : Css.DataTypes.Alignment
@@ -12,6 +13,8 @@ module Css.DataTypes.Alignment
     ( -- * Data Types
       -- ** \<align-*\>
       Align
+      -- ** \<baseline-position\>
+    , BaselinePosition
       -- ** \<content-distribution\>
     , ContentDistribution
       -- ** \<self-position\>
@@ -19,11 +22,12 @@ module Css.DataTypes.Alignment
 
       -- * \<baseline-position\>
       -- ** baseline
+    , Baseline
     , baseline
-      -- ** first baseline
-    , firstBaseline
-      -- ** last baseline
-    , lastBaseline
+      -- ** first
+    , first
+      -- ** last
+    , last
 
       -- * \<content-distribution\>
       -- ** space-around
@@ -81,6 +85,8 @@ module Css.DataTypes.Alignment
     ) where
 
 
+import Prelude hiding (last)
+
 import Css.Internal
 import Data.Text.Lazy.Builder (Builder)
 import Html                   (Buildable(..))
@@ -91,6 +97,11 @@ import Html                   (Buildable(..))
 
 -- | Represents the CSS @\<align-*\>@ data type.
 newtype Align = Align Builder
+    deriving (Buildable, Show)
+
+
+-- | Represents the CSS @\<baseline-position\>@ data type.
+newtype BaselinePosition = BaselinePosition Builder
     deriving (Buildable, Show)
 
 
@@ -107,22 +118,27 @@ newtype SelfPosition = SelfPosition Builder
 -- * BASELINE-POSITION
 
 
--- | Generates the CSS @baseline@ \<baseline-position\> value.
-baseline :: Align
-baseline = Align "baseline"
+-- | Represents the CSS @\<baseline\>@ keyword.
+newtype Baseline = Baseline Builder
+    deriving (Buildable, Show)
+
+
+-- | Generates the CSS @baseline@ @\<baseline-position\>@ value.
+baseline :: Baseline
+baseline = Baseline "baseline"
 {-# INLINE baseline #-}
 
 
--- | Generates the CSS @first baseline@ @\<baseline-position\>@ value.
-firstBaseline :: Align
-firstBaseline = Align "first baseline"
-{-# INLINE firstBaseline #-}
+-- | Generates the CSS @first@ @\<baseline-position\>@ value.
+first :: Baseline -> BaselinePosition
+first (Baseline value) = BaselinePosition $ "first " <> value
+{-# INLINE first #-}
 
 
--- | Generates the CSS @last baseline@ @\<baseline-position\>@ value.
-lastBaseline :: Align
-lastBaseline = Align "last baseline"
-{-# INLINE lastBaseline #-}
+-- | Generates the CSS @last@ @\<baseline-position\>@ value.
+last :: Baseline -> BaselinePosition
+last (Baseline value) = BaselinePosition $ "last " <> value
+{-# INLINE last #-}
 
 
 -- * CONTENT-DISTRIBUTION

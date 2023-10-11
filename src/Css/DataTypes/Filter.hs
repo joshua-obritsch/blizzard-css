@@ -61,7 +61,8 @@ newtype FilterFunction = FilterFunction Builder
 class Buildable a => NumberPercentage a
 
 
-instance NumberPercentage Number
+instance NumberPercentage Double
+instance NumberPercentage Integer
 instance NumberPercentage Percentage
 
 

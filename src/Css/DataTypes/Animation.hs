@@ -180,7 +180,7 @@ easeOut = EasingFunction "ease-out"
 
 
 -- | Generates a CSS @\<cubic-bezier-easing-function\>@ value.
-cubicBezier :: Number -> Number -> Number -> Number -> EasingFunction
+cubicBezier :: (Number a, Number b, Number c, Number d) => a -> b -> c -> d -> EasingFunction
 cubicBezier x1 y1 x2 y2
     =  EasingFunction
     $  "cubic-bezier("

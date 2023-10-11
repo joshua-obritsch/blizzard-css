@@ -717,6 +717,8 @@ accentColor = prop "accent-color:"
 class Buildable a => AlignContent a
 
 
+instance AlignContent Baseline
+instance AlignContent BaselinePosition
 instance AlignContent Align
 instance AlignContent ContentDistribution
 instance AlignContent End
@@ -1000,7 +1002,8 @@ animationFillMode = prop "animation-fill-mode:"
 class Buildable a => AnimationIterationCount a
 
 
-instance AnimationIterationCount Number
+instance AnimationIterationCount Double
+instance AnimationIterationCount Integer
 instance AnimationIterationCount SingleAnimationIterationCount
 
 instance AnimationIterationCount Inherit
