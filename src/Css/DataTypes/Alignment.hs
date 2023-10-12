@@ -13,8 +13,6 @@ module Css.DataTypes.Alignment
     ( -- * Data Types
       -- ** \<align-*\>
       Align
-      -- ** \<baseline-position\>
-    , BaselinePosition
       -- ** \<content-distribution\>
     , ContentDistribution
       -- ** \<self-position\>
@@ -22,12 +20,11 @@ module Css.DataTypes.Alignment
 
       -- * \<baseline-position\>
       -- ** baseline
-    , Baseline
     , baseline
-      -- ** first
-    , first
-      -- ** last
-    , last
+      -- ** first baseline
+    , firstBaseline
+      -- ** last baseline
+    , lastBaseline
 
       -- * \<content-distribution\>
       -- ** space-around
@@ -100,11 +97,6 @@ newtype Align = Align Builder
     deriving (Buildable, Show)
 
 
--- | Represents the CSS @\<baseline-position\>@ data type.
-newtype BaselinePosition = BaselinePosition Builder
-    deriving (Buildable, Show)
-
-
 -- | Represents the CSS @\<content-distribution\>@ data type.
 newtype ContentDistribution = ContentDistribution Builder
     deriving (Buildable, Show)
@@ -118,27 +110,22 @@ newtype SelfPosition = SelfPosition Builder
 -- * BASELINE-POSITION
 
 
--- | Represents the CSS @\<baseline\>@ keyword.
-newtype Baseline = Baseline Builder
-    deriving (Buildable, Show)
-
-
 -- | Generates the CSS @baseline@ @\<baseline-position\>@ value.
-baseline :: Baseline
-baseline = Baseline "baseline"
+baseline :: Align
+baseline = Align "baseline"
 {-# INLINE baseline #-}
 
 
--- | Generates the CSS @first@ @\<baseline-position\>@ value.
-first :: Baseline -> BaselinePosition
-first (Baseline value) = BaselinePosition $ "first " <> value
-{-# INLINE first #-}
+-- | Generates the CSS @first baseline@ @\<baseline-position\>@ value.
+firstBaseline :: Align
+firstBaseline = Align "first baseline"
+{-# INLINE firstBaseline #-}
 
 
--- | Generates the CSS @last@ @\<baseline-position\>@ value.
-last :: Baseline -> BaselinePosition
-last (Baseline value) = BaselinePosition $ "last " <> value
-{-# INLINE last #-}
+-- | Generates the CSS @last baseline@ @\<baseline-position\>@ value.
+lastBaseline :: Align
+lastBaseline = Align "last baseline"
+{-# INLINE lastBaseline #-}
 
 
 -- * CONTENT-DISTRIBUTION

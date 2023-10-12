@@ -71,6 +71,7 @@ newtype Auto = Auto Builder
 -- | Generates the CSS @auto@ keyword.
 auto :: Auto
 auto = Auto "auto"
+{-# INLINE auto #-}
 
 
 -- | Represents the CSS @border-box@ keyword.
@@ -81,6 +82,7 @@ newtype BorderBox = BorderBox Builder
 -- | Generates the CSS @border-box@ keyword.
 borderBox :: BorderBox
 borderBox = BorderBox "border-box"
+{-# INLINE borderBox #-}
 
 
 -- | Represents the CSS @content-box@ keyword.
@@ -91,6 +93,7 @@ newtype ContentBox = ContentBox Builder
 -- | Generates the CSS @content-box@ keyword.
 contentBox :: ContentBox
 contentBox = ContentBox "content-box"
+{-# INLINE contentBox #-}
 
 
 -- | Represents the CSS @end@ keyword.
@@ -101,6 +104,7 @@ newtype End = End Builder
 -- | Generates the CSS @end@ keyword.
 end :: End
 end = End "end"
+{-# INLINE end #-}
 
 
 -- | Represents the CSS @hidden@ keyword.
@@ -111,6 +115,7 @@ newtype Hidden = Hidden Builder
 -- | Generates the CSS @hidden@ keyword.
 hidden :: Hidden
 hidden = Hidden "hidden"
+{-# INLINE hidden #-}
 
 
 -- | Represents the CSS @inherit@ keyword.
@@ -121,6 +126,7 @@ newtype Inherit = Inherit Builder
 -- | Generates the CSS @inhert@ keyword.
 inherit :: Inherit
 inherit = Inherit "inherit"
+{-# INLINE inherit #-}
 
 
 -- | Represents the CSS @initial@ keyword.
@@ -131,6 +137,7 @@ newtype Initial = Initial Builder
 -- | Generates the CSS @initial@ keyword.
 initial :: Initial
 initial = Initial "initial"
+{-# INLINE initial #-}
 
 
 -- | Represents the CSS @none@ keyword.
@@ -141,6 +148,7 @@ newtype None = None Builder
 -- | Generates the CSS @none@ keyword.
 none :: None
 none = None "none"
+{-# INLINE none #-}
 
 
 -- | Represents the CSS @normal@ keyword.
@@ -151,6 +159,7 @@ newtype Normal = Normal Builder
 -- | Generates the CSS @normal@ keyword.
 normal :: Normal
 normal = Normal "normal"
+{-# INLINE normal #-}
 
 
 -- | Represents the CSS @padding-box@ keyword.
@@ -161,6 +170,7 @@ newtype PaddingBox = PaddingBox Builder
 -- | Generates the CSS @padding-box@ keyword.
 paddingBox :: PaddingBox
 paddingBox = PaddingBox "padding-box"
+{-# INLINE paddingBox #-}
 
 
 -- | Represents the CSS @revert@ keyword.
@@ -171,6 +181,7 @@ newtype Revert = Revert Builder
 -- | Generates the CSS @revert@ keyword.
 revert :: Revert
 revert = Revert "revert"
+{-# INLINE revert #-}
 
 
 -- | Represents the CSS @start@ keyword.
@@ -181,6 +192,7 @@ newtype Start = Start Builder
 -- | Generates the CSS @start@ keyword.
 start :: Start
 start = Start "start"
+{-# INLINE start #-}
 
 
 -- | Represents the CSS @unset@ keyword.
@@ -191,6 +203,7 @@ newtype Unset = Unset Builder
 -- | Generates the CSS @unset@ keyword.
 unset :: Unset
 unset = Unset "unset"
+{-# INLINE unset #-}
 
 
 -- | Represents the CSS @visible@ keyword.
@@ -201,3 +214,4 @@ newtype Visible = Visible Builder
 -- | Generates the CSS @visible@ keyword.
 visible :: Visible
 visible = Visible "visible"
+{-# INLINE visible #-}

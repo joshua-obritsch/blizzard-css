@@ -1,8 +1,6 @@
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 
 -- | Module    : Css.DataTypes.Numeric
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -266,25 +264,25 @@ newtype Zero = Zero Builder
 
 -- | Generates a CSS @deg@ @\<angle\>@ value.
 deg :: Number a => a -> Angle
-deg = Angle . fromNumber "deg"
+deg = Angle . suffix "deg"
 {-# INLINE deg #-}
 
 
 -- | Generates a CSS @grad@ @\<angle\>@ value.
 grad :: Number a => a -> Angle
-grad = Angle . fromNumber "grad"
+grad = Angle . suffix "grad"
 {-# INLINE grad #-}
 
 
 -- | Generates a CSS @rad@ @\<angle\>@ value.
 rad :: Number a => a -> Angle
-rad = Angle . fromNumber "rad"
+rad = Angle . suffix "rad"
 {-# INLINE rad #-}
 
 
 -- | Generates a CSS @turn@ @\<angle\>@ value.
 turn :: Number a => a -> Angle
-turn = Angle . fromNumber "turn"
+turn = Angle . suffix "turn"
 {-# INLINE turn #-}
 
 
@@ -293,13 +291,13 @@ turn = Angle . fromNumber "turn"
 
 -- | Generates a CSS @Hz@ @\<frequency\>@ value.
 hz :: Number a => a -> Frequency
-hz = Frequency . fromNumber "Hz"
+hz = Frequency . suffix "Hz"
 {-# INLINE hz #-}
 
 
 -- | Generates a CSS @kHz@ @\<frequency\>@ value.
 khz :: Number a => a -> Frequency
-khz = Frequency . fromNumber "kHz"
+khz = Frequency . suffix "kHz"
 {-# INLINE khz #-}
 
 
@@ -308,259 +306,259 @@ khz = Frequency . fromNumber "kHz"
 
 -- | Generates a CSS @cap@ @\<length\>@ value.
 cap :: Number a => a -> Length
-cap = Length . fromNumber "cap"
+cap = Length . suffix "cap"
 {-# INLINE cap #-}
 
 
 -- | Generates a CSS @ch@ @\<length\>@ value.
 ch :: Number a => a -> Length
-ch = Length . fromNumber "ch"
+ch = Length . suffix "ch"
 {-# INLINE ch #-}
 
 
 -- | Generates a CSS @cm@ @\<length\>@ value.
 cm :: Number a => a -> Length
-cm = Length . fromNumber "cm"
+cm = Length . suffix "cm"
 {-# INLINE cm #-}
 
 
 -- | Generates a CSS @dvb@ @\<length\>@ value.
 dvb :: Number a => a -> Length
-dvb = Length . fromNumber "dvb"
+dvb = Length . suffix "dvb"
 {-# INLINE dvb #-}
 
 
 -- | Generates a CSS @dvh@ @\<length\>@ value.
 dvh :: Number a => a -> Length
-dvh = Length . fromNumber "dvh"
+dvh = Length . suffix "dvh"
 {-# INLINE dvh #-}
 
 
 -- | Generates a CSS @dvi@ @\<length\>@ value.
 dvi :: Number a => a -> Length
-dvi = Length . fromNumber "dvi"
+dvi = Length . suffix "dvi"
 {-# INLINE dvi #-}
 
 
 -- | Generates a CSS @dvmax@ @\<length\>@ value.
 dvmax :: Number a => a -> Length
-dvmax = Length . fromNumber "dvmax"
+dvmax = Length . suffix "dvmax"
 {-# INLINE dvmax #-}
 
 
 -- | Generates a CSS @dvmin@ @\<length\>@ value.
 dvmin :: Number a => a -> Length
-dvmin = Length . fromNumber "dvmin"
+dvmin = Length . suffix "dvmin"
 {-# INLINE dvmin #-}
 
 
 -- | Generates a CSS @dvw@ @\<length\>@ value.
 dvw :: Number a => a -> Length
-dvw = Length . fromNumber "dvw"
+dvw = Length . suffix "dvw"
 {-# INLINE dvw #-}
 
 
 -- | Generates a CSS @em@ @\<length\>@ value.
 em :: Number a => a -> Length
-em = Length . fromNumber "em"
+em = Length . suffix "em"
 {-# INLINE em #-}
 
 
 -- | Generates a CSS @ex@ @\<length\>@ value.
 ex :: Number a => a -> Length
-ex = Length . fromNumber "ex"
+ex = Length . suffix "ex"
 {-# INLINE ex #-}
 
 
 -- | Generates a CSS @ic@ @\<length\>@ value.
 ic :: Number a => a -> Length
-ic = Length . fromNumber "ic"
+ic = Length . suffix "ic"
 {-# INLINE ic #-}
 
 
 -- | Generates a CSS @in@ @\<length\>@ value.
 in_ :: Number a => a -> Length
-in_ = Length . fromNumber "in"
+in_ = Length . suffix "in"
 {-# INLINE in_ #-}
 
 
 -- | Generates a CSS @lh@ @\<length\>@ value.
 lh :: Number a => a -> Length
-lh = Length . fromNumber "lh"
+lh = Length . suffix "lh"
 {-# INLINE lh #-}
 
 
 -- | Generates a CSS @lvb@ @\<length\>@ value.
 lvb :: Number a => a -> Length
-lvb = Length . fromNumber "lvb"
+lvb = Length . suffix "lvb"
 {-# INLINE lvb #-}
 
 
 -- | Generates a CSS @lvh@ @\<length\>@ value.
 lvh :: Number a => a -> Length
-lvh = Length . fromNumber "lvh"
+lvh = Length . suffix "lvh"
 {-# INLINE lvh #-}
 
 
 -- | Generates a CSS @lvi@ @\<length\>@ value.
 lvi :: Number a => a -> Length
-lvi = Length . fromNumber "lvi"
+lvi = Length . suffix "lvi"
 {-# INLINE lvi #-}
 
 
 -- | Generates a CSS @lvmax@ @\<length\>@ value.
 lvmax :: Number a => a -> Length
-lvmax = Length . fromNumber "lvmax"
+lvmax = Length . suffix "lvmax"
 {-# INLINE lvmax #-}
 
 
 -- | Generates a CSS @lvmin@ @\<length\>@ value.
 lvmin :: Number a => a -> Length
-lvmin = Length . fromNumber "lvmin"
+lvmin = Length . suffix "lvmin"
 {-# INLINE lvmin #-}
 
 
 -- | Generates a CSS @lvw@ @\<length\>@ value.
 lvw :: Number a => a -> Length
-lvw = Length . fromNumber "lvw"
+lvw = Length . suffix "lvw"
 {-# INLINE lvw #-}
 
 
 -- | Generates a CSS @mm@ @\<length\>@ value.
 mm :: Number a => a -> Length
-mm = Length . fromNumber "mm"
+mm = Length . suffix "mm"
 {-# INLINE mm #-}
 
 
 -- | Generates a CSS @pc@ @\<length\>@ value.
 pc :: Number a => a -> Length
-pc = Length . fromNumber "pc"
+pc = Length . suffix "pc"
 {-# INLINE pc #-}
 
 
 -- | Generates a CSS @pt@ @\<length\>@ value.
 pt :: Number a => a -> Length
-pt = Length . fromNumber "pt"
+pt = Length . suffix "pt"
 {-# INLINE pt #-}
 
 
 -- | Generates a CSS @px@ @\<length\>@ value.
 px :: Number a => a -> Length
-px = Length . fromNumber "px"
+px = Length . suffix "px"
 {-# INLINE px #-}
 
 
 -- | Generates a CSS @Q@ @\<length\>@ value.
 q :: Number a => a -> Length
-q = Length . fromNumber "Q"
+q = Length . suffix "Q"
 {-# INLINE q #-}
 
 
 -- | Generates a CSS @rcap@ @\<length\>@ value.
 rcap :: Number a => a -> Length
-rcap = Length . fromNumber "rcap"
+rcap = Length . suffix "rcap"
 {-# INLINE rcap #-}
 
 
 -- | Generates a CSS @rch@ @\<length\>@ value.
 rch :: Number a => a -> Length
-rch = Length . fromNumber "rch"
+rch = Length . suffix "rch"
 {-# INLINE rch #-}
 
 
 -- | Generates a CSS @rem@ @\<length\>@ value.
 rem :: Number a => a -> Length
-rem = Length . fromNumber "rem"
+rem = Length . suffix "rem"
 {-# INLINE rem #-}
 
 
 -- | Generates a CSS @rex@ @\<length\>@ value.
 rex :: Number a => a -> Length
-rex = Length . fromNumber "rex"
+rex = Length . suffix "rex"
 {-# INLINE rex #-}
 
 
 -- | Generates a CSS @ric@ @\<length\>@ value.
 ric :: Number a => a -> Length
-ric = Length . fromNumber "ric"
+ric = Length . suffix "ric"
 {-# INLINE ric #-}
 
 
 -- | Generates a CSS @rlh@ @\<length\>@ value.
 rlh :: Number a => a -> Length
-rlh = Length . fromNumber "rlh"
+rlh = Length . suffix "rlh"
 {-# INLINE rlh #-}
 
 
 -- | Generates a CSS @svb@ @\<length\>@ value.
 svb :: Number a => a -> Length
-svb = Length . fromNumber "svb"
+svb = Length . suffix "svb"
 {-# INLINE svb #-}
 
 
 -- | Generates a CSS @svh@ @\<length\>@ value.
 svh :: Number a => a -> Length
-svh = Length . fromNumber "svh"
+svh = Length . suffix "svh"
 {-# INLINE svh #-}
 
 
 -- | Generates a CSS @svi@ @\<length\>@ value.
 svi :: Number a => a -> Length
-svi = Length . fromNumber "svi"
+svi = Length . suffix "svi"
 {-# INLINE svi #-}
 
 
 -- | Generates a CSS @svmax@ @\<length\>@ value.
 svmax :: Number a => a -> Length
-svmax = Length . fromNumber "svmax"
+svmax = Length . suffix "svmax"
 {-# INLINE svmax #-}
 
 
 -- | Generates a CSS @svmin@ @\<length\>@ value.
 svmin :: Number a => a -> Length
-svmin = Length . fromNumber "svmin"
+svmin = Length . suffix "svmin"
 {-# INLINE svmin #-}
 
 
 -- | Generates a CSS @svw@ @\<length\>@ value.
 svw :: Number a => a -> Length
-svw = Length . fromNumber "svw"
+svw = Length . suffix "svw"
 {-# INLINE svw #-}
 
 
 -- | Generates a CSS @vb@ @\<length\>@ value.
 vb :: Number a => a -> Length
-vb = Length . fromNumber "vb"
+vb = Length . suffix "vb"
 {-# INLINE vb #-}
 
 
 -- | Generates a CSS @vh@ @\<length\>@ value.
 vh :: Number a => a -> Length
-vh = Length . fromNumber "vh"
+vh = Length . suffix "vh"
 {-# INLINE vh #-}
 
 
 -- | Generates a CSS @vi@ @\<length\>@ value.
 vi :: Number a => a -> Length
-vi = Length . fromNumber "vi"
+vi = Length . suffix "vi"
 {-# INLINE vi #-}
 
 
 -- | Generates a CSS @vmax@ @\<length\>@ value.
 vmax :: Number a => a -> Length
-vmax = Length . fromNumber "vmax"
+vmax = Length . suffix "vmax"
 {-# INLINE vmax #-}
 
 
 -- | Generates a CSS @vmin@ @\<length\>@ value.
 vmin :: Number a => a -> Length
-vmin = Length . fromNumber "vmin"
+vmin = Length . suffix "vmin"
 {-# INLINE vmin #-}
 
 
 -- | Generates a CSS @vw@ @\<length\>@ value.
 vw :: Number a => a -> Length
-vw = Length . fromNumber "vw"
+vw = Length . suffix "vw"
 {-# INLINE vw #-}
 
 
@@ -569,7 +567,7 @@ vw = Length . fromNumber "vw"
 
 -- | Generates a CSS @\<percentage\>@ value.
 pct :: Number a => a -> Percentage
-pct = Percentage . fromNumber "%"
+pct = Percentage . suffix "%"
 
 
 -- * RATIO
@@ -586,19 +584,19 @@ ratio = Ratio . buildRatioParams
 
 -- | Generates a CSS @dpcm@ @\<resolution\>@ value.
 dpcm :: Number a => a -> Resolution
-dpcm = Resolution . fromNumber "dpcm"
+dpcm = Resolution . suffix "dpcm"
 {-# INLINE dpcm #-}
 
 
 -- | Generates a CSS @dpi@ @\<resolution\>@ value.
 dpi :: Number a => a -> Resolution
-dpi = Resolution . fromNumber "dpi"
+dpi = Resolution . suffix "dpi"
 {-# INLINE dpi #-}
 
 
 -- | Generates a CSS @dppx@ @\<resolution\>@ value.
 dppx :: Number a => a -> Resolution
-dppx = Resolution . fromNumber "dppx"
+dppx = Resolution . suffix "dppx"
 {-# INLINE dppx #-}
 
 
@@ -607,20 +605,20 @@ dppx = Resolution . fromNumber "dppx"
 
 -- | Generates a CSS @ms@ @\<time\>@ value.
 ms :: Number a => a -> Time
-ms = Time . fromNumber "ms"
+ms = Time . suffix "ms"
 {-# INLINE ms #-}
 
 
 -- | Generates a CSS @s@ @\<time\>@ value.
 s :: Number a => a -> Time
-s = Time . fromNumber "s"
+s = Time . suffix "s"
 {-# INLINE s #-}
 
 
 -- * ZERO
 
 
--- | Generates a CSS @\<zero\>@ value.
+-- | Generates the CSS @\<zero\>@ value.
 zero :: Zero
 zero = Zero "zero"
 {-# INLINE zero #-}
@@ -629,5 +627,5 @@ zero = Zero "zero"
 -- HELPER FUNCTIONS
 
 
-fromNumber :: Number a => Builder -> a -> Builder
-fromNumber suffix value = build value <> suffix
+suffix :: Number a => Builder -> a -> Builder
+suffix suffix' value = build value <> suffix'

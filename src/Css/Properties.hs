@@ -686,6 +686,7 @@ import Css.DataTypes.Ui
 import Css.Keywords
 import Data.Foldable           (fold)
 import Data.List               (intersperse)
+import Data.String             (IsString)
 import Data.Text.Lazy.Builder  (Builder, singleton)
 import Html                    (Buildable(..))
 
@@ -717,8 +718,6 @@ accentColor = prop "accent-color:"
 class Buildable a => AlignContent a
 
 
-instance AlignContent Baseline
-instance AlignContent BaselinePosition
 instance AlignContent Align
 instance AlignContent ContentDistribution
 instance AlignContent End
