@@ -41,14 +41,98 @@ import Html                             (Html(..), Attribute(..), Buildable(..),
 instance Buildable Double  where build = realFloat
 instance Buildable Integer where build = decimal
 
+
 instance (Buildable a, Buildable b) => Buildable (a, b) where
     build (a, b) = build a <> singleton ' ' <> build b
+
 
 instance (Buildable a, Buildable b, Buildable c) => Buildable (a, b, c) where
     build (a, b, c) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c
 
+
 instance (Buildable a, Buildable b, Buildable c, Buildable d) => Buildable (a, b, c, d) where
     build (a, b, c, d) = build a <> singleton ' ' <> build b <> singleton ' ' <> build c <> singleton ' ' <> build d
+
+
+instance (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e) => Buildable (a, b, c, d, e) where
+    build (a, b, c, d, e)
+        =  build a
+        <> singleton ' '
+        <> build b
+        <> singleton ' '
+        <> build c
+        <> singleton ' '
+        <> build d
+        <> singleton ' '
+        <> build e
+
+
+instance (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e, Buildable f) => Buildable (a, b, c, d, e, f) where
+    build (a, b, c, d, e, f)
+        =  build a
+        <> singleton ' '
+        <> build b
+        <> singleton ' '
+        <> build c
+        <> singleton ' '
+        <> build d
+        <> singleton ' '
+        <> build e
+        <> singleton ' '
+        <> build f
+
+
+instance
+    ( Buildable a
+    , Buildable b
+    , Buildable c
+    , Buildable d
+    , Buildable e
+    , Buildable f
+    , Buildable g
+    ) => Buildable (a, b, c, d, e, f, g) where
+    build (a, b, c, d, e, f, g)
+        =  build a
+        <> singleton ' '
+        <> build b
+        <> singleton ' '
+        <> build c
+        <> singleton ' '
+        <> build d
+        <> singleton ' '
+        <> build e
+        <> singleton ' '
+        <> build f
+        <> singleton ' '
+        <> build g
+
+
+instance
+    ( Buildable a
+    , Buildable b
+    , Buildable c
+    , Buildable d
+    , Buildable e
+    , Buildable f
+    , Buildable g
+    , Buildable h
+    ) => Buildable (a, b, c, d, e, f, g, h) where
+    build (a, b, c, d, e, f, g, h)
+        =  build a
+        <> singleton ' '
+        <> build b
+        <> singleton ' '
+        <> build c
+        <> singleton ' '
+        <> build d
+        <> singleton ' '
+        <> build e
+        <> singleton ' '
+        <> build f
+        <> singleton ' '
+        <> build g
+        <> singleton ' '
+        <> build h
 
 
 lazyShow :: Buildable a => a -> String

@@ -1,6 +1,9 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MonoLocalBinds #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 -- | Module    : Css.Properties
 -- Copyright   : (c) Joshua Obritsch, 2022
@@ -12,41 +15,49 @@
 module Css.Properties
     ( -- * Properties
       -- ** accent-color
-      accentColor
+      AccentColor
+    , accentColor
       -- ** align-content
+    , AlignContent
     , alignContent
       -- ** align-items
+    , AlignItems
     , alignItems
       -- ** align-self
+    , AlignSelf
     , alignSelf
       -- ** all
+    , All
     , all
       -- ** animation
+    , Animation
     , animation
-    , animation2
-    , animation3
-    , animation4
-    , animation5
-    , animation6
-    , animation7
-    , animation8
       -- ** animation-composition
+    , AnimationComposition
     , animationComposition
       -- ** animation-delay
+    , AnimationDelay
     , animationDelay
       -- ** animation-direction
+    , AnimationDirection
     , animationDirection
       -- ** animation-duration
+    , AnimationDuration
     , animationDuration
       -- ** animation-fill-mode
+    , AnimationFillMode
     , animationFillMode
       -- ** animation-iteration-count
+    , AnimationIterationCount
     , animationIterationCount
       -- ** animation-name
+    , AnimationName
     , animationName
       -- ** animation-play-state
+    , AnimationPlayState
     , animationPlayState
       -- ** animation-timing-function
+    , AnimationTimingFunction
     , animationTimingFunction
       -- ** appearance
     , appearance
@@ -797,112 +808,73 @@ all = prop "all:"
 {-# INLINE all #-}
 
 
+-- | Represents the CSS @animmation@ property.
+class Buildable a => Animation a
+
+
+instance {-# OVERLAPPING #-} (Buildable a, AnimationDuration a) => Animation a
+
+
+instance {-# OVERLAPPING #-} (AnimationDuration a, AnimationTimingFunction b) => Animation (a, b)
+
+
+instance {-# OVERLAPPING #-} (AnimationDuration a, AnimationTimingFunction b, AnimationDelay c) => Animation (a, b, c)
+
+
+instance {-# OVERLAPPING #-} (AnimationDuration a, AnimationTimingFunction b, AnimationDelay c, AnimationIterationCount d)
+    => Animation (a, b, c, d)
+
+
+instance {-# OVERLAPPING #-}
+    ( AnimationDuration a
+    , AnimationTimingFunction b
+    , AnimationDelay c
+    , AnimationIterationCount d
+    , AnimationDirection e
+    )
+    => Animation (a, b, c, d, e)
+
+
+instance {-# OVERLAPPING #-}
+    ( AnimationDuration a
+    , AnimationTimingFunction b
+    , AnimationDelay c
+    , AnimationIterationCount d
+    , AnimationDirection e
+    , AnimationFillMode f
+    )
+    => Animation (a, b, c, d, e, f)
+
+
+instance {-# OVERLAPPING #-}
+    ( AnimationDuration a
+    , AnimationTimingFunction b
+    , AnimationDelay c
+    , AnimationIterationCount d
+    , AnimationDirection e
+    , AnimationFillMode f
+    , AnimationPlayState g
+    )
+    => Animation (a, b, c, d, e, f, g)
+
+
+instance {-# OVERLAPPING #-}
+    ( AnimationDuration a
+    , AnimationTimingFunction b
+    , AnimationDelay c
+    , AnimationIterationCount d
+    , AnimationDirection e
+    , AnimationFillMode f
+    , AnimationPlayState g
+    , AnimationName h
+    )
+    => Animation (a, b, c, d, e, f, g, h)
+
+
 -- | Generates a CSS @animation@ property with the given \<animation-duration\>.
-animation :: AnimationDuration a => a -> Builder
+animation :: Animation a => a -> Builder
 animation = prop "animation:"
 {-# INLINE animation #-}
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
-animation2 :: (AnimationDuration a, AnimationTimingFunction b) => a -> b -> Builder
-animation2 = prop2 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
-animation3 :: (AnimationDuration a, AnimationTimingFunction b, AnimationDelay c) => a -> b -> c -> Builder
-animation3 = prop3 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
--- * \<animation-iteration-count\>
-animation4 :: (AnimationDuration a, AnimationTimingFunction b, AnimationDelay c, AnimationIterationCount d) => a -> b -> c -> d -> Builder
-animation4 = prop4 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
--- * \<animation-iteration-count\>
--- * \<animation-direction\>
-animation5 :: (AnimationDuration a, AnimationTimingFunction b, AnimationDelay c, AnimationIterationCount d, AnimationDirection e)
-           => a -> b -> c -> d -> e -> Builder
-animation5 = prop5 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
--- * \<animation-iteration-count\>
--- * \<animation-direction\>
--- * \<animation-fill-mode\>
-animation6 :: ( AnimationDuration a
-              , AnimationTimingFunction b
-              , AnimationDelay c
-              , AnimationIterationCount d
-              , AnimationDirection e
-              , AnimationFillMode f
-              )
-           => a -> b -> c -> d -> e -> f -> Builder
-animation6 = prop6 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
--- * \<animation-iteration-count\>
--- * \<animation-direction\>
--- * \<animation-fill-mode\>
--- * \<animation-play-state\>
-animation7 :: ( AnimationDuration a
-              , AnimationTimingFunction b
-              , AnimationDelay c
-              , AnimationIterationCount d
-              , AnimationDirection e
-              , AnimationFillMode f
-              , AnimationPlayState g
-              )
-           => a -> b -> c -> d -> e -> f -> g -> Builder
-animation7 = prop7 "animation:"
-
-
--- | Generates a CSS @animation@ property with the given values in the following order:
---
--- * \<animation-duration\>
--- * \<animation-timing-function\>
--- * \<animation-delay\>
--- * \<animation-iteration-count\>
--- * \<animation-direction\>
--- * \<animation-fill-mode\>
--- * \<animation-play-state\>
--- * \<animation-name\>
-animation8 :: ( AnimationDuration a
-              , AnimationTimingFunction b
-              , AnimationDelay c
-              , AnimationIterationCount d
-              , AnimationDirection e
-              , AnimationFillMode f
-              , AnimationPlayState g
-              , AnimationName h
-              )
-           => a -> b -> c -> d -> e -> f -> g -> h -> Builder
-animation8 = prop8 "animation:"
 
 
 -- | Represents the CSS @animation-composition@ property.
@@ -3087,101 +3059,6 @@ zIndex = prop "z-index:"
 
 prop :: Buildable a => Builder -> a -> Builder
 prop key value = key <> build value <> singleton ';'
-
-
-prop2 :: (Buildable a, Buildable b) => Builder -> a -> b -> Builder
-prop2 key value1 value2 = key <> build value1 <> singleton ' ' <> build value2 <> singleton ';'
-
-
-prop3 :: (Buildable a, Buildable b, Buildable c) => Builder -> a -> b -> c -> Builder
-prop3 key value1 value2 value3 = key <> build value1 <> singleton ' ' <> build value2 <> singleton ' ' <> build value3 <> singleton ';'
-
-
-prop4 :: (Buildable a, Buildable b, Buildable c, Buildable d) => Builder -> a -> b -> c -> d -> Builder
-prop4 key value1 value2 value3 value4
-    =  key
-    <> build value1
-    <> singleton ' '
-    <> build value2
-    <> singleton ' '
-    <> build value3
-    <> singleton ' '
-    <> build value4
-    <> singleton ';'
-
-
-prop5 :: (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e) => Builder -> a -> b -> c -> d -> e -> Builder
-prop5 key value1 value2 value3 value4 value5
-    =  key
-    <> build value1
-    <> singleton ' '
-    <> build value2
-    <> singleton ' '
-    <> build value3
-    <> singleton ' '
-    <> build value4
-    <> singleton ' '
-    <> build value5
-    <> singleton ';'
-
-
-prop6 :: (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e, Buildable f) => Builder -> a -> b -> c -> d -> e -> f -> Builder
-prop6 key value1 value2 value3 value4 value5 value6
-    =  key
-    <> build value1
-    <> singleton ' '
-    <> build value2
-    <> singleton ' '
-    <> build value3
-    <> singleton ' '
-    <> build value4
-    <> singleton ' '
-    <> build value5
-    <> singleton ' '
-    <> build value6
-    <> singleton ';'
-
-
-prop7 :: (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e, Buildable f, Buildable g)
-      => Builder -> a -> b -> c -> d -> e -> f -> g -> Builder
-prop7 key value1 value2 value3 value4 value5 value6 value7
-    =  key
-    <> build value1
-    <> singleton ' '
-    <> build value2
-    <> singleton ' '
-    <> build value3
-    <> singleton ' '
-    <> build value4
-    <> singleton ' '
-    <> build value5
-    <> singleton ' '
-    <> build value6
-    <> singleton ' '
-    <> build value7
-    <> singleton ';'
-
-
-prop8 :: (Buildable a, Buildable b, Buildable c, Buildable d, Buildable e, Buildable f, Buildable g, Buildable h)
-      => Builder -> a -> b -> c -> d -> e -> f -> g -> h -> Builder
-prop8 key value1 value2 value3 value4 value5 value6 value7 value8
-    =  key
-    <> build value1
-    <> singleton ' '
-    <> build value2
-    <> singleton ' '
-    <> build value3
-    <> singleton ' '
-    <> build value4
-    <> singleton ' '
-    <> build value5
-    <> singleton ' '
-    <> build value6
-    <> singleton ' '
-    <> build value7
-    <> singleton ' '
-    <> build value8
-    <> singleton ';'
 
 
 props :: Builder -> [Builder] -> Builder

@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -25,7 +26,7 @@ module Css.DataTypes.Animation
     , SingleAnimationPlayState
       -- ** \<step-position\>
     , StepPosition
-    , StepPositionKeyword
+    , StepPositionParams
 
       -- * \<cubic-bezier-easing-function\>
       -- ** ease
@@ -139,17 +140,29 @@ newtype SingleAnimationPlayState = SingleAnimationPlayState Builder
 
 
 -- | Represents the CSS @\<step-position\>@ data type.
-class Buildable a => StepPosition a
-
-
-instance StepPosition End
-instance StepPosition Start
-instance StepPosition StepPositionKeyword
-
-
--- | Represents a CSS keyword in the @\<step-position\>@ data type.
-newtype StepPositionKeyword = StepPositionKeyword Builder
+newtype StepPosition = StepPosition Builder
     deriving (Buildable, Show)
+
+
+-- | Represents the CSS params for the @\<step-position\>@ data type.
+class Buildable a => StepPositionParams a where
+    buildStepPositionParams :: a -> Builder
+
+
+instance StepPositionParams Integer where
+    buildStepPositionParams = build
+
+
+instance StepPositionParams (Integer, End) where
+    buildStepPositionParams (a, b) = build a <> singleton ',' <> build b
+
+
+instance StepPositionParams (Integer, Start) where
+    buildStepPositionParams (a, b) = build a <> singleton ',' <> build b
+
+
+instance StepPositionParams (Integer, StepPosition) where
+    buildStepPositionParams (a, b) = build a <> singleton ',' <> build b
 
 
 -- * CUBIC-BEZIER-EASING-FUNCTION
@@ -306,38 +319,32 @@ stepStart = EasingFunction "step-start"
 
 
 -- | Generates a CSS @\<step-easing-function\>@ value.
-steps :: StepPosition a => Integer -> a -> EasingFunction
-steps intervalCount stepPosition
-    =  EasingFunction
-    $  "steps("
-    <> build intervalCount
-    <> singleton ','
-    <> build stepPosition
-    <> singleton ')'
+steps :: StepPositionParams a => a -> EasingFunction
+steps value = EasingFunction $ "steps(" <> buildStepPositionParams value <> singleton ')'
 
 
 -- * STEP-POSITION
 
 
 -- | Generates the CSS @jump-both@ @\<step-position\>@ value.
-jumpBoth :: StepPositionKeyword
-jumpBoth = StepPositionKeyword "jump-both"
+jumpBoth :: StepPosition
+jumpBoth = StepPosition "jump-both"
 {-# INLINE jumpBoth #-}
 
 
 -- | Generates the CSS @jump-end@ @\<step-position\>@ value.
-jumpEnd :: StepPositionKeyword
-jumpEnd = StepPositionKeyword "jump-end"
+jumpEnd :: StepPosition
+jumpEnd = StepPosition "jump-end"
 {-# INLINE jumpEnd #-}
 
 
 -- | Generates the CSS @jump-none@ @\<step-position\>@ value.
-jumpNone :: StepPositionKeyword
-jumpNone = StepPositionKeyword "jump-none"
+jumpNone :: StepPosition
+jumpNone = StepPosition "jump-none"
 {-# INLINE jumpNone #-}
 
 
 -- | Generates the CSS @jump-start@ @\<step-position\>@ value.
-jumpStart :: StepPositionKeyword
-jumpStart = StepPositionKeyword "jump-start"
+jumpStart :: StepPosition
+jumpStart = StepPosition "jump-start"
 {-# INLINE jumpStart #-}
